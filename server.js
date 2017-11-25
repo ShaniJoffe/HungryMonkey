@@ -1,8 +1,10 @@
-const express=require('express');
-const app =express();
+var express=require('express');
+var bodyParser=require('body-parser');
+var app =express();
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-app.use(express.static('public'));
-app.listen(process.env.PORT || 3000,()=>console.log("all cool man"));
-
-
-
+app.post(urlencodedParser, function (req, res) {
+	console.log(req.body);
+})
+ 
+app.listen(3000)
