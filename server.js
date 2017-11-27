@@ -12,5 +12,5 @@ app.post('/',urlencodedParser,function(req,res){
 	res.send('welcome, ' + req.body.user)
 });
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000)
 
