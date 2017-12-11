@@ -17,26 +17,18 @@ module.exports = router => {
 
 		const credentials = auth(req);
 
-		if (!credentials) {
-
+		if (!credentials)
+		{
 			res.status(400).json({ message: 'Invalid Request !' });
-
-		} else {
-				res.end(credentials.name, credentials.pass);
-			/*
-			login.loginUser(credentials.name, credentials.pass)
-
-			.then(result => {
-
-				const token = jwt.sign(result, config.secret, { expiresIn: 1440 });
-
-				res.status(result.status).json({ message: result.message, token: token });
-				*/
-
-			})
-
-			.catch(err => res.status(err.status).json({ message: err.message }));
+		} 
+		else
+		{
+			console.log(credentials.name, credentials.pass);
+			
 		}
+
+			//.catch(err => res.status(err.status).json({ message: err.message }));
+		
 	});
 
 	router.post('/users', (req, res) => {
