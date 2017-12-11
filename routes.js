@@ -30,7 +30,7 @@ module.exports = router => {
 			//.catch(err => res.status(err.status).json({ message: err.message }));
 		
 	});
-
+/*
 	router.post('/users', (req, res) => {
 
 		const name = req.body.name;
@@ -54,7 +54,8 @@ module.exports = router => {
 			.catch(err => res.status(err.status).json({ message: err.message }));
 		}
 	});
-
+*/
+/*
 	router.get('/users/:id', (req,res) => {
 
 		if (checkToken(req)) {
@@ -120,7 +121,7 @@ module.exports = router => {
 			.catch(err => res.status(err.status).json({ message: err.message }));
 		}
 	});
-
+*/
 	function checkToken(req) {
 
 		const token = req.headers['x-access-token'];
