@@ -11,10 +11,13 @@ const config = require('./config/config.json');
 
 module.exports = router => {
 	
-	router.get('/', (req, res) => res.end('Welcome to Learn2Crack !'));
+	router.get('/', (req, res) =>{
+		
+		res.end('Welcome to Learn2Crack !')});
 
-	router.post('/authenticate', (req, res) => {
-
+	router.post('/auth', (req, res) => {
+		console.log(`in here`);
+		//res.send('im the about page!'); 
 		const credentials = auth(req);
 
 		if (!credentials)
@@ -23,7 +26,7 @@ module.exports = router => {
 		} 
 		else
 		{
-			console.log(credentials.name, credentials.pass);
+			res.end(credentials.name, credentials.pass);
 			
 		}
 
