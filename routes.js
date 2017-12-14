@@ -8,7 +8,7 @@ const login = require('./functions/login');
 const profile = require('./functions/profile');
 const password = require('./functions/password');
 const config = require('./config/config.json');
-
+//var bodyParser = require('body-parser');
 module.exports = router => {
 	
 	router.get('/', (req, res) =>{
@@ -16,22 +16,14 @@ module.exports = router => {
 		res.end('Welcome to Learn2Crack !')});
 
 	router.post('/auth', (req, res) => {
-		console.log(`in here`);
-		//res.send('im the about page!'); 
-		const credentials = auth(req);
-
-		if (!credentials)
-		{
-			res.status(400).json({ message: 'Invalid Request !' });
-		} 
-		else
-		{
-			res.end(credentials.name, credentials.pass);
-			
-		}
-
+		var temp3=req.body;
+		var temp=req.body.name;
+		var temp2=req.body.pass;
+		console.log(temp3);
+		console.log(temp);
+		console.log(temp2);
 			//.catch(err => res.status(err.status).json({ message: err.message }));
-		
+		res.end('fuck u '+temp2);
 	});
 /*
 	router.post('/users', (req, res) => {
