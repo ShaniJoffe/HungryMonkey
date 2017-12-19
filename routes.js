@@ -16,14 +16,22 @@ module.exports = router => {
 		res.end('Welcome to Learn2Crack !')});
 
 	router.post('/auth', (req, res) => {
-		var temp3=req.body;
-		var temp=req.body.name;
-		var temp2=req.body.pass;
-		console.log(temp3);
-		console.log(temp);
-		console.log(temp2);
+		
+		var tempName=req.body.name;
+		var tempPass=req.body.pass;
+		//console.log(tempName+' '+tempPass);
+		login.loginUser(tempName, tempPass)
+		.then(result => {
+			//console.log('result.body:'+result+' result.message: '+result.message+' result.status: '+result.status);
+			const token = jwt.sign(result, config.secret, { expiresIn: 1440 });
+			res.status(result.status).json({ message: result.message, token: token });
+		})
+		.catch(err => res.status(err.status).json({ message: err.message }));
+		//console.log(temp4);
+		//console.log(temp);
+		//console.log(temp2);
 			//.catch(err => res.status(err.status).json({ message: err.message }));
-		res.end('fuck u '+temp2);
+		//res.end('fuck u '+temp2);
 	});
 /*
 	router.post('/users', (req, res) => {

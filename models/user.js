@@ -7,4 +7,9 @@ const esClient = new elasticsearch.Client({
 	log: 'error'
 });
 
+const search = function search(index, body) {
+    return esClient.search({index: index, body: body});
+  };
+  
+  
 

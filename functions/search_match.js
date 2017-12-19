@@ -13,7 +13,7 @@
 
   // only for testing purposes
   // all calls should be initiated through the module
-  const test = function test() {
+ /* const test = function test() {
     let body = {
       size: 20,
       from: 0,
@@ -28,18 +28,18 @@
       }
     };
 
-    console.log(`retrieving documents whose title matches '${body.query.match.name.query}' (displaying ${body.size} items at a time)...`);
-    search('hungrymonkey', body)
-    .then(results => {
-      console.log(`found ${results.hits.total} items in ${results.took}ms`);
-      if (results.hits.total > 0) console.log(`returned article titles:`);
-      results.hits.hits.forEach((hit, index) => console.log(`\t${body.from + ++index} - ${hit._source.name} (score: ${hit._score})`));
+    //console.log(`retrieving documents whose title matches '${body.query.match.name.query}' (displaying ${body.size} items at a time)...`);
+    //search('hungrymonkey', body)
+    //.then(results => {
+      //console.log(`found ${results.hits.total} items in ${results.took}ms`);
+      //if (results.hits.total > 0) console.log(`returned article titles:`);
+      //results.hits.hits.forEach((hit, index) => console.log(`\t${body.from + ++index} - ${hit._source.name} (score: ${hit._score})`));
     })
     .catch(console.error);
   };
 
   test();
-
+*/
   module.exports = {
     search
   };
