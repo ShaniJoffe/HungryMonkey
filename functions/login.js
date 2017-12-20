@@ -5,7 +5,7 @@
 const bcrypt = require('bcryptjs');
 const elasticsearch = require('elasticsearch');
 const esClient = new elasticsearch.Client({
-		host: '127.0.0.1:9200',
+		host: 'https://search-houngrymonkey-uruztihwwk4eyxbnlddezqrsxm.us-east-1.es.amazonaws.com',
 		log: 'error'
 	});
 const search = function search(index, body){

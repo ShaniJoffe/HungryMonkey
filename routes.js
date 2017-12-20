@@ -33,31 +33,29 @@ module.exports = router => {
 			//.catch(err => res.status(err.status).json({ message: err.message }));
 		//res.end('fuck u '+temp2);
 	});
-/*
 	router.post('/users', (req, res) => {
 
 		const name = req.body.name;
-		const email = req.body.email;
 		const password = req.body.password;
 
-		if (!name || !email || !password || !name.trim() || !email.trim() || !password.trim()) {
+		if (!name || !password || !name.trim() || !password.trim()) {
 
 			res.status(400).json({message: 'Invalid Request !'});
 
 		} else {
 
-			register.registerUser(name, email, password)
+			register.registerUser(name, password)
 
 			.then(result => {
 
-				res.setHeader('Location', '/users/'+email);
+				//res.setHeader('Location', '/users/'+email);
 				res.status(result.status).json({ message: result.message })
 			})
 
 			.catch(err => res.status(err.status).json({ message: err.message }));
 		}
 	});
-*/
+
 /*
 	router.get('/users/:id', (req,res) => {
 
