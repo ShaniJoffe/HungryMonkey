@@ -1,0 +1,55 @@
+Index: app/src/main/res/layout/searchable.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/searchable.xml	(revision )
++++ app/src/main/res/layout/searchable.xml	(revision )
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<searchable xmlns:android="http://schemas.android.com/apk/res/android"
++    android:label="app label"
++    android:hint="hint" >
++</searchable>
+\ No newline at end of file
+Index: app/src/main/java/com/example/shanijoffe/hungry_monkey/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/shanijoffe/hungry_monkey/MainActivity.java	(revision )
++++ app/src/main/java/com/example/shanijoffe/hungry_monkey/MainActivity.java	(revision )
+@@ -101,9 +101,9 @@
+        loginButton = (Button) findViewById( R.id.btn_login );
+        search=(SearchView)findViewById( R.id.DishSearch );
+        searchResults =(ListView)findViewById( R.id.listview_search );
+-        adapter2=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,teams);
++       adapter2=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,teams);
+        searchResults.setAdapter( adapter2 );
+-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
++       search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+             @Override
+             public boolean onQueryTextSubmit(String text) {
+                 // TODO Auto-generated method stub
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision )
++++ app/src/main/AndroidManifest.xml	(revision )
+@@ -18,7 +18,13 @@
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
+-        <activity android:name=".ExistUserHomePage" />
++        <activity android:name=".basic_results" >
++            <intent-filter>
++                <action android:name="android.intent.action.SEARCH" />
++            </intent-filter>
++            <meta-data android:name="android.app.searchable"
++                android:resource="@xml/searchable"/>
++        </activity>
+         <activity android:name=".GuestUserHomePage" />
+         <activity android:name=".FavioratesResults" />
+         <activity android:name=".HistoryResults" />
