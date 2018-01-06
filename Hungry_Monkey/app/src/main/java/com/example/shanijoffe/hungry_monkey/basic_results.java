@@ -25,20 +25,30 @@ import static com.loopj.android.http.AsyncHttpClient.log;
 public class basic_results extends AppCompatActivity {
 
 
-
+    ListView lv;
     JSONObject job;
     String Jsonoutput;
     String val;
     TextView PriceDish;
     TextView Dish_name;
     TextView nameRes;
-
+    ArrayAdapter<String> adapter;
     protected void onCreate(Bundle savedInstanceState) {
-        String[] teams={"Man Utd","Man City","Chelsea","Arsenal","Liverpool","Totenham"};
+        String[] teams={"Man Utd","Man City","Chelsea","Arsenal","Liverpool","Totenham","Man Utd","Man City","Chelsea","Arsenal","Liverpool","Totenham"};
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_basic_results );
+        //connecting the UI
         nameRes=findViewById( R.id.nameRestxtv );
         Log.i("sup","in basic");
+        lv=(ListView) findViewById(R.id.listView1);
+
+        //connecting  adapter
+        adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,teams);
+
+        lv.setAdapter(adapter);
+
+
+
         if(getIntent().hasExtra("JSON_OBJECT"))
         {
             JsonObject mJsonObject;
@@ -49,7 +59,9 @@ public class basic_results extends AppCompatActivity {
 //now parse this job to get your name and email.or anuy other data in jobj.
 
         log.i("my json :",val);
-        nameRes.setText( "heyooo" );
+       // nameRes.setText( "heyooo" );
 
     }
+
 }
+

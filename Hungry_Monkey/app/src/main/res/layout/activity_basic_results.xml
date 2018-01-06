@@ -7,7 +7,6 @@
     tools:context="com.example.shanijoffe.hungry_monkey.basic_results">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,7 +25,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="64dp"
             android:orientation="horizontal">
 
             <TextView
@@ -79,6 +78,13 @@
             android:layout_alignParentTop="true"
             android:gravity="right|center"
             tools:text="צפייה במסעדה " />
+
+        <ListView
+            android:id="@+id/listView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="22dp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
