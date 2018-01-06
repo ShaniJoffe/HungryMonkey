@@ -1,6 +1,8 @@
 package com.example.shanijoffe.hungry_monkey;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -97,26 +99,39 @@ public class MainActivity extends AppCompatActivity
 
             }
         } );
-
-       loginButton = (Button) findViewById( R.id.btn_login );
-       search=(SearchView)findViewById( R.id.DishSearch );
-       searchResults =(ListView)findViewById( R.id.listview_search );
-        adapter2=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,teams);
-       searchResults.setAdapter( adapter2 );
+        loginButton = (Button) findViewById( R.id.btn_login );
+        search=(SearchView)findViewById( R.id.DishSearch );
+        search.setQueryHint(getResources().getString(R.string.app_name));
+//        searchResults =(ListView)findViewById( R.id.listview_search );
+//        adapter2=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,teams);
+//        searchResults.setAdapter( adapter2 );
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String text) {
-                // TODO Auto-generated method stub
+
+            public boolean onQueryTextSubmit(String text)
+            {
+                // searchResults.setVisibility(myFragmentView.VISIBLE);
+                myAsyncTask m= (myAsyncTask) new myAsyncTask().execute(text);
+
                 return false;
             }
             @Override
             public boolean onQueryTextChange(String text) {
-                adapter2.getFilter().filter(text);
+//                adapter2.getFilter().filter(text);
                 Log.i(TAG,"HAYOOO");
                 return false;
             }
+
+
+
         });
         Log.i("sup","sup");
+
+
+
+
+
+
+
 
     }
 
@@ -136,26 +151,21 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
     public void OnClickShowAdvancedSearch(View view)
     {
-       View v1 = findViewById(R.id.txtv_dis);
+        View v1 = findViewById(R.id.txtv_dis);
         View v2 = findViewById(R.id.txtv_price);
         View v3 = findViewById(R.id.txtv_kosher);
         View v4 = findViewById(R.id.sk_dis);
         View v5 = findViewById(R.id.sk_price);
         View v6 = findViewById(R.id.sp_kosher);
-
         v1.setVisibility(View.VISIBLE);
         v2.setVisibility(View.VISIBLE);
         v3.setVisibility(View.VISIBLE);
         v4.setVisibility(View.VISIBLE);
         v5.setVisibility(View.VISIBLE);
         v6.setVisibility(View.VISIBLE);
-
     }
-
-
     public void OnClick(View view)
     {
         log.i( "hi", "sup" );
@@ -198,15 +208,9 @@ public class MainActivity extends AppCompatActivity
         }
         protected void onPostExecute(String result)
         {
-
             super.onPostExecute(result);
 
-
-                //calling this method to filter the search results from productResults and move them to
-                //filteredProductResults
-              //  filterProductArray(textSearch);
-                searchResults.setAdapter(new SearchResultsAdapter(MainActivity.this,DishResults ));
-                pd.dismiss();
+            pd.dismiss();
 
         }
         public String getDishList(String url) {
@@ -218,7 +222,7 @@ public class MainActivity extends AppCompatActivity
             JSONObject json ;
             nameDish = null;
             try {
-
+                Log.i("123","1");
                 URL url2 = new URL( "http://echo.jsontest.com/key/value/one/two " );
                 // Send POST data request
 
@@ -228,7 +232,7 @@ public class MainActivity extends AppCompatActivity
                 reader = new BufferedReader( new InputStreamReader( conn.getInputStream() ) );
                 StringBuilder sb = new StringBuilder();
                 String line = null;
-
+                Log.i("123","2");
                 // Read Server Response
                 while ((line = reader.readLine()) != null) {
                     // Append server response in string
@@ -238,6 +242,13 @@ public class MainActivity extends AppCompatActivity
 
                 text = sb.toString();
                 Log.i("MainActivity ",text);
+                Log.i("onPostExecute"," in onPostExecute");
+                Intent i2 = new Intent( MainActivity.this, basic_results.class );
+                Log.i("what im sending",text);
+
+                i2.putExtra("JSON_OBJECT", text);
+                //intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivityForResult( i2, CODE_REQ );
                 // get json string from url
                 json=new JSONObject( text );
                 text= (String) json.get("one");
@@ -254,6 +265,9 @@ public class MainActivity extends AppCompatActivity
 
                     // show the values in our logcat
                     Log.e( TAG, "nameDish: " + nameDish );
+
+
+                    //  searchResults.setAdapter(new SearchResultsAdapter(MainActivity.this,DishResults ));
                 }
 
             } catch (JSONException e) {
@@ -330,7 +344,7 @@ public class MainActivity extends AppCompatActivity
             return convertView;
         }
 
-         class ViewHolder
+        class ViewHolder
         {
             TextView Dish_name;
         }

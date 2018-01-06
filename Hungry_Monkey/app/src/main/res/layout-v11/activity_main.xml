@@ -28,18 +28,7 @@
 
             </SearchView>
 
-            <ListView
-                android:id="@+id/listview_search"
-                android:layout_width="match_parent"
-                android:layout_height="243dp"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/DishSearch"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="25dp"
-                android:divider="#E6E6E6"
-                android:dividerHeight="5dp"
 
-                />
 
         </LinearLayout>
 
