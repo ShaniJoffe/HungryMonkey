@@ -1,14 +1,27 @@
 package com.example.shanijoffe.hungry_monkey;
-
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.telephony.PhoneStateListener;
+import android.telephony.SignalStrength;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,17 +36,21 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.os.AsyncTask;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -41,13 +58,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-
-
 import static com.loopj.android.http.AsyncHttpClient.log;
 
-public class MainActivity extends AppCompatActivity
-{
+public class MainActivity extends AppCompatActivity  implements GoogleApiClient.ConnectionCallbacks,View.OnClickListener, LocationListener,  GoogleApiClient.OnConnectionFailedListener {
 
+    private static final int UNKNOW_CODE = 99;
+    GoogleApiClient mGoogleApiClient;
+    LocationRequest mLocationRequest;
+    private RecyclerView.Adapter mAdapter;
+    private final int MY_PERMISSIONS_REQUEST_LOCATION = 1;
     String url=new String();
     Spinner spinner;
     ArrayAdapter<String> adapter2;
@@ -56,6 +75,7 @@ public class MainActivity extends AppCompatActivity
     EditText password_edit;
     Button loginButton;
     String user="";
+
     String user_pass="";
     final int CODE_REQ=1;
     String line="";
@@ -66,6 +86,13 @@ public class MainActivity extends AppCompatActivity
     SearchView search;
     ListView searchResults;
     View myFragmentView;
+    int gsm;
+    Location  lastLocation;
+    JSONArray jsonArray = new JSONArray();
+    JSONObject jsonObject = new JSONObject();
+    TelephonyManager tManager;
+    MyPhoneStateListener myPhoneStateListener;
+    boolean show=false;
     protected void onCreate(Bundle savedInstanceState)
     {
 
@@ -83,6 +110,21 @@ public class MainActivity extends AppCompatActivity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN ,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView( R.layout.activity_main );
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder( this )
+                    .addConnectionCallbacks( this )
+                    .addOnConnectionFailedListener( this )
+                    .addApi( LocationServices.API )
+                    .build();
+            ///location
+            myPhoneStateListener = new MyPhoneStateListener();
+            tManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+            tManager.listen(myPhoneStateListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+
+        }
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}
+                , MY_PERMISSIONS_REQUEST_LOCATION);
+        //
         spinner=(Spinner) findViewById( R.id.sp_kosher );
         adapter=ArrayAdapter.createFromResource( this,R.array.planets_array ,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_item );
@@ -90,7 +132,7 @@ public class MainActivity extends AppCompatActivity
         spinner.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("MainActivity","fuka u ");
+                Log.e("MainActivity"," MainActivity ");
                 Toast.makeText( getBaseContext(),adapterView.getItemAtPosition(i)+"isSalected",Toast.LENGTH_SHORT ).show();
             }
 
@@ -101,7 +143,7 @@ public class MainActivity extends AppCompatActivity
         } );
         loginButton = (Button) findViewById( R.id.btn_login );
         search=(SearchView)findViewById( R.id.DishSearch );
-        search.setQueryHint(getResources().getString(R.string.app_name));
+        search.setQueryHint("הכנס שם מנה ");
 //        searchResults =(ListView)findViewById( R.id.listview_search );
 //        adapter2=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,teams);
 //        searchResults.setAdapter( adapter2 );
@@ -125,16 +167,32 @@ public class MainActivity extends AppCompatActivity
 
         });
         Log.i("sup","sup");
-
-
-
-
-
-
-
-
+    }
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
     }
 
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+    private class MyPhoneStateListener extends PhoneStateListener {
+        /* Get the Signal strength from the provider, each time there is an update */
+        @Override
+        public void onSignalStrengthsChanged(SignalStrength signalStrength)
+        {
+            super.onSignalStrengthsChanged(signalStrength);
+            if (null != signalStrength && signalStrength.getGsmSignalStrength() != UNKNOW_CODE) {
+                int signalStrengthPercent = signalStrength.getGsmSignalStrength();
+               // System.out.println(signalStrength);
+
+
+                gsm=signalStrength.getGsmSignalStrength();
+                //Log.i( "gsm comes here","in gsm changed");
+            }
+        }
+    }
 
 
     public void OnClickSign(View view)
@@ -153,18 +211,39 @@ public class MainActivity extends AppCompatActivity
 
     public void OnClickShowAdvancedSearch(View view)
     {
-        View v1 = findViewById(R.id.txtv_dis);
-        View v2 = findViewById(R.id.txtv_price);
-        View v3 = findViewById(R.id.txtv_kosher);
-        View v4 = findViewById(R.id.sk_dis);
-        View v5 = findViewById(R.id.sk_price);
-        View v6 = findViewById(R.id.sp_kosher);
-        v1.setVisibility(View.VISIBLE);
-        v2.setVisibility(View.VISIBLE);
-        v3.setVisibility(View.VISIBLE);
-        v4.setVisibility(View.VISIBLE);
-        v5.setVisibility(View.VISIBLE);
-        v6.setVisibility(View.VISIBLE);
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.adv_leyout);
+        LinearLayout linearLayout2 = (LinearLayout) findViewById(R.id.adv_leyout2);
+        LinearLayout linearLayout3 = (LinearLayout) findViewById(R.id.adv_leyout3);
+        if (show==false)
+        {
+
+            linearLayout.setVisibility(View.VISIBLE);
+            linearLayout2.setVisibility(View.VISIBLE);
+            linearLayout3.setVisibility(View.VISIBLE);
+            show=true;
+
+        }
+        else
+        {
+            linearLayout.setVisibility(View.INVISIBLE);
+            linearLayout2.setVisibility(View.INVISIBLE);
+            linearLayout3.setVisibility(View.INVISIBLE);
+            show=false;
+
+        }
+
+//        View v1 = findViewById(R.id.txtv_dis);
+//        View v2 = findViewById(R.id.txtv_price);
+//        View v3 = findViewById(R.id.txtv_kosher);
+//        View v4 = findViewById(R.id.sk_dis);
+//        View v5 = findViewById(R.id.sk_price);
+//        View v6 = findViewById(R.id.sp_kosher);
+//        v1.setVisibility(View.VISIBLE);
+//        v2.setVisibility(View.VISIBLE);
+//        v3.setVisibility(View.VISIBLE);
+//        v4.setVisibility(View.VISIBLE);
+//        v5.setVisibility(View.VISIBLE);
+//        v6.setVisibility(View.VISIBLE);
     }
     public void OnClick(View view)
     {
@@ -179,6 +258,118 @@ public class MainActivity extends AppCompatActivity
             startActivityForResult( i, CODE_REQ );
         }
     }
+
+    @Override
+    public void onLocationChanged(Location location)
+    {
+        Log.i("onLocationChanged","onLocationChanged");
+        double lat  =location.getLatitude();
+        double lon =location.getLongitude();
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
+        Log.e("latitude", location.getLatitude() + "");
+        Log.e("longitude", location.getLongitude() + "");
+        String MNO="";
+
+        SharedPreferences settings0 = getSharedPreferences("MNO",Context.MODE_PRIVATE);
+        MNO = settings0.getString("MNO", "");
+
+
+        try
+        {
+            jsonObject.put( "MNO", MNO );
+            jsonObject.put( "latitude", location.getLatitude() );
+            jsonObject.put( "longitude", location.getLongitude() );
+            jsonArray.put( jsonObject );
+        }
+
+
+        catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        Log.e("request", jsonArray.toString());
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle)
+    {
+        Log.i("onConnected"," in onConnected");
+        if (ContextCompat.checkSelfPermission( this, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED) {
+            lastLocation = LocationServices.FusedLocationApi.getLastLocation( mGoogleApiClient );
+            createLocationRequest();
+           Toast.makeText( this, "Last location " + lastLocation.getAltitude() + ", " + lastLocation.getLongitude(), Toast.LENGTH_SHORT ).show();
+
+        } else {
+            Toast.makeText( this, "No permissions", Toast.LENGTH_SHORT ).show();
+        }
+
+    }
+
+    @SuppressWarnings({"ResourceType"})
+    protected void createLocationRequest() {
+
+        Log.i("createLocationRequest"," in createLocationRequest");
+        System.out.printf("gggg");
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval( 60000 );
+        //  mLocationRequest.setFastestInterval(5000);
+//        mLocationRequest.setPriority( LocationRequest.PRIORITY_HIGH_ACCURACY );
+        mLocationRequest.setSmallestDisplacement( (float) 50.00 );
+
+    //    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, (com.google.android.gms.location.LocationListener) this );
+        Log.i("createLocationRequest"," in createLocationRequest");
+        // LocationServices.FusedLocationApi.requestLocationUpdates( mGoogleApiClient, mLocationRequest, (LocationListener) this );
+    }
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.w("MainActivity", "Permissions was granteed");
+
+                } else {
+                    Log.e("MainActivity", "Permissions was denied");
+
+                }
+            }
+        }
+    }
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+
     class myAsyncTask extends AsyncTask<String, Void, String>
     {
         JSONParser jParser;
@@ -213,6 +404,7 @@ public class MainActivity extends AppCompatActivity
             pd.dismiss();
 
         }
+        @SuppressLint("MissingPermission")
         public String getDishList(String url) {
             Dish tempDish = new Dish();
             String matchFound = "N";
@@ -244,14 +436,21 @@ public class MainActivity extends AppCompatActivity
                 Log.i("MainActivity ",text);
                 Log.i("onPostExecute"," in onPostExecute");
                 Intent i2 = new Intent( MainActivity.this, basic_results.class );
-                Log.i("what im sending",text);
 
-                i2.putExtra("JSON_OBJECT", text);
+                lastLocation = LocationServices.FusedLocationApi.getLastLocation( mGoogleApiClient );
+                jsonObject.put( "latitude", lastLocation.getLatitude() );
+                jsonObject.put( "longitude", lastLocation.getLongitude() );
+                jsonObject.put( "dish",text.toString() );
+
+                jsonArray.put( jsonObject );
+                i2.putExtra("JSON_OBJECT", jsonArray.toString());
+                Log.i("my new json object lat ",jsonArray.toString());
                 //intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivityForResult( i2, CODE_REQ );
                 // get json string from url
                 json=new JSONObject( text );
                 text= (String) json.get("one");
+                Log.i("jsontext:",text);
 
                 // get the array of users
                 dataJsonArr = (JSONArray) json.get( "Dishes" );
@@ -267,7 +466,7 @@ public class MainActivity extends AppCompatActivity
                     Log.e( TAG, "nameDish: " + nameDish );
 
 
-                    //  searchResults.setAdapter(new SearchResultsAdapter(MainActivity.this,DishResults ));
+
                 }
 
             } catch (JSONException e) {
@@ -350,8 +549,5 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
-
-
-
 
 }

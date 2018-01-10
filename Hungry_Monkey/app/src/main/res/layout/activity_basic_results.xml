@@ -34,21 +34,26 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="מחיר מנה " />
+                android:text="מחיר מנה: "
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/Dish_name"
-                android:layout_width="91dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/DishImage"
                 android:layout_weight="1"
-                android:text="שם מנה "
+                android:text="שם מנה : "
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#000000"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -61,7 +66,10 @@
                 android:layout_width="138dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="שם של מסעדה " />
+                android:text="שם מסעדה : "
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
 
 
@@ -76,7 +84,11 @@
 
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:gravity="right|center"
+            android:background="@drawable/buttonstylesselector"
+            android:gravity="center"
+            android:text="צפייה במסעדה "
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
             tools:text="צפייה במסעדה " />
 
         <ListView
@@ -84,7 +96,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="22dp" />
+            android:layout_marginTop="22dp"
+            android:visibility="invisible" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

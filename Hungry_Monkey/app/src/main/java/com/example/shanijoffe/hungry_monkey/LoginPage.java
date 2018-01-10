@@ -28,8 +28,6 @@ import static com.loopj.android.http.AsyncHttpClient.log;
 
 public class LoginPage extends AppCompatActivity {
 
-
-
     EditText user_name_edit;
     EditText password_edit;
     Button loginButton;
@@ -59,13 +57,12 @@ public class LoginPage extends AppCompatActivity {
         user = user_name_edit.getText().toString();
         user_pass = password_edit.getText().toString();
         new SendPostRequest().execute();
-//        if (line == line)
-//        {
-//            Intent i = new Intent( this, ExistUserHomePage.class );
-//            String s = "משתשמש קיים  ";
-//            i.putExtra( "myString", s );
-//            startActivityForResult( i, CODE_REQ );
-//        }
+        Log.i( "response from server :", line );
+        Intent i = new Intent( this, MainActivity.class );
+//        String s = "משתשמש קיים  ";
+//        i.putExtra( "myString", line );
+//        startActivityForResult( i, CODE_REQ );
+
     }
 
 
@@ -77,10 +74,10 @@ public class LoginPage extends AppCompatActivity {
             try
             {
                 log.i("in doInBackground ","1");
-                URL url = new URL("https://rocky-thicket-82184.herokuapp.com/api/v1/auth"); // here is your URL path
+                URL url = new URL("http://hungrymonkey-env.vivacrpttt.eu-central-1.elasticbeanstalk.com/api/v1/auth"); // here is your URL path
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("name",user);
-                postDataParams.put("pass",user_pass);
+                postDataParams.put("password",user_pass);
                 Log.e("params",postDataParams.toString());
 
                 //POST
@@ -98,7 +95,7 @@ public class LoginPage extends AppCompatActivity {
                 writer.flush();
                 writer.close();
                 os.close();
-                int responseCode=conn.getResponseCode();
+                 int responseCode=conn.getResponseCode();
                 Log.i("responseCode@:", String.valueOf( responseCode ) );
 
                 if (responseCode == HttpsURLConnection.HTTP_OK) {
@@ -107,8 +104,8 @@ public class LoginPage extends AppCompatActivity {
                             new InputStreamReader(
                                     conn.getInputStream()));
                     StringBuffer sb = new StringBuffer("");
-                    String line="";
 
+                    Log.i("hey dan","hey shan");
                     while((line = in.readLine()) != null)
                     {
                         Log.i("line:",line);
