@@ -37,6 +37,7 @@ public class LoginPage extends AppCompatActivity {
     String line="";
     private static final String TAG = "MyActivity";
     String user2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -57,11 +58,14 @@ public class LoginPage extends AppCompatActivity {
         user = user_name_edit.getText().toString();
         user_pass = password_edit.getText().toString();
         new SendPostRequest().execute();
+        Toast.makeText( getBaseContext(),"Welcome " +line,Toast.LENGTH_SHORT ).show();
         Log.i( "response from server :", line );
         Intent i = new Intent( this, MainActivity.class );
+        startActivityForResult( i, CODE_REQ );
+
 //        String s = "משתשמש קיים  ";
 //        i.putExtra( "myString", line );
-//        startActivityForResult( i, CODE_REQ );
+
 
     }
 
@@ -109,7 +113,6 @@ public class LoginPage extends AppCompatActivity {
                     while((line = in.readLine()) != null)
                     {
                         Log.i("line:",line);
-
                         sb.append(line);
                         break;
                     }

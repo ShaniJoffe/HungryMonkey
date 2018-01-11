@@ -1,6 +1,8 @@
 package com.example.shanijoffe.hungry_monkey;
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.ComponentName;
@@ -59,6 +61,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import static com.loopj.android.http.AsyncHttpClient.log;
+import static java.lang.Thread.sleep;
 
 public class MainActivity extends AppCompatActivity  implements GoogleApiClient.ConnectionCallbacks,View.OnClickListener, LocationListener,  GoogleApiClient.OnConnectionFailedListener {
 
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
     EditText password_edit;
     Button loginButton;
     String user="";
-
+    boolean st=false;
     String user_pass="";
     final int CODE_REQ=1;
     String line="";
@@ -91,8 +94,10 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
     JSONArray jsonArray = new JSONArray();
     JSONObject jsonObject = new JSONObject();
     TelephonyManager tManager;
+    boolean search_finshed =false;
     MyPhoneStateListener myPhoneStateListener;
     boolean show=false;
+    Button btn_f;
     protected void onCreate(Bundle savedInstanceState)
     {
 
@@ -105,11 +110,12 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
 
         }
 
-        Log.i( TAG, "in main activity" );
         requestWindowFeature( Window.FEATURE_NO_TITLE );
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN ,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView( R.layout.activity_main );
+        btn_f=findViewById( R.id.btn_f1 );
+        Log.i( TAG, "in main activity" );
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder( this )
                     .addConnectionCallbacks( this )
@@ -125,22 +131,22 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}
                 , MY_PERMISSIONS_REQUEST_LOCATION);
         //
-        spinner=(Spinner) findViewById( R.id.sp_kosher );
-        adapter=ArrayAdapter.createFromResource( this,R.array.planets_array ,android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource( android.R.layout.simple_spinner_item );
-        spinner.setAdapter( adapter );
-        spinner.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("MainActivity"," MainActivity ");
-                Toast.makeText( getBaseContext(),adapterView.getItemAtPosition(i)+"isSalected",Toast.LENGTH_SHORT ).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        } );
+//        spinner=(Spinner) findViewById( R.id.sp_kosher );
+//        adapter=ArrayAdapter.createFromResource( this,R.array.planets_array ,android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource( android.R.layout.simple_spinner_item );
+//        spinner.setAdapter( adapter );
+//        spinner.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                Log.e("MainActivity"," MainActivity ");
+//                Toast.makeText( getBaseContext(),adapterView.getItemAtPosition(i)+"isSalected",Toast.LENGTH_SHORT ).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        } );
         loginButton = (Button) findViewById( R.id.btn_login );
         search=(SearchView)findViewById( R.id.DishSearch );
         search.setQueryHint("הכנס שם מנה ");
@@ -153,6 +159,8 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             {
                 // searchResults.setVisibility(myFragmentView.VISIBLE);
                 myAsyncTask m= (myAsyncTask) new myAsyncTask().execute(text);
+
+
 
                 return false;
             }
@@ -194,7 +202,28 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         }
     }
 
+    public void onClickFreg1(View view)
+    {
+        FragmentManager fm =getFragmentManager();
+        FragmentTransaction ft=fm.beginTransaction();
+           if(!st)
+           {
+              fregment_BasicRes f1=new fregment_BasicRes();
+              ft.replace( R.id.fragment_container,f1 );
+              ft.commit();
+              btn_f.setText( "load f2" );
+              st=true;
+           }
+           else
+           {
+               fregment2 fr2=new fregment2();
+               ft.replace( R.id.fragment_container,fr2 );
+               ft.commit();
+               btn_f.setText( "load f1" );
+               st=false;
 
+           }
+    }
     public void OnClickSign(View view)
     {
         log.i( "hi", "sup" );
@@ -231,21 +260,8 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             show=false;
 
         }
-
-//        View v1 = findViewById(R.id.txtv_dis);
-//        View v2 = findViewById(R.id.txtv_price);
-//        View v3 = findViewById(R.id.txtv_kosher);
-//        View v4 = findViewById(R.id.sk_dis);
-//        View v5 = findViewById(R.id.sk_price);
-//        View v6 = findViewById(R.id.sp_kosher);
-//        v1.setVisibility(View.VISIBLE);
-//        v2.setVisibility(View.VISIBLE);
-//        v3.setVisibility(View.VISIBLE);
-//        v4.setVisibility(View.VISIBLE);
-//        v5.setVisibility(View.VISIBLE);
-//        v6.setVisibility(View.VISIBLE);
     }
-    public void OnClick(View view)
+    public void OnClick(View view)//login button
     {
         log.i( "hi", "sup" );
         //new SendPostRequest().execute();
@@ -320,7 +336,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         if (ContextCompat.checkSelfPermission( this, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED) {
             lastLocation = LocationServices.FusedLocationApi.getLastLocation( mGoogleApiClient );
             createLocationRequest();
-           Toast.makeText( this, "Last location " + lastLocation.getAltitude() + ", " + lastLocation.getLongitude(), Toast.LENGTH_SHORT ).show();
+           // Toast.makeText( this, "Last location " + lastLocation.getAltitude() + ", " + lastLocation.getLongitude(), Toast.LENGTH_SHORT ).show();
 
         } else {
             Toast.makeText( this, "No permissions", Toast.LENGTH_SHORT ).show();
@@ -368,15 +384,24 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+    public void callFreg1() {
+        FragmentManager fm =getFragmentManager();
+        FragmentTransaction ft=fm.beginTransaction();
 
+            fregment2 f2=new fregment2();
+            ft.replace( R.id.fragment_container,f2 );
+            ft.commit();
+            btn_f.setText( "load f1" );
+            st=false;
+
+
+    }
 
     class myAsyncTask extends AsyncTask<String, Void, String>
     {
         JSONParser jParser;
         JSONArray productList;
         JSONArray dataJsonArr = null;
-
-        String textSearch;
         ProgressDialog pd ;
         @Override
         protected void onPreExecute() {
@@ -395,14 +420,20 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
 
             Log.i("in do ","in do");
             String returnResult = getDishList(url);
+            search_finshed=true;
             return returnResult;
         }
         protected void onPostExecute(String result)
         {
             super.onPostExecute(result);
-
+            try {
+                sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             pd.dismiss();
-
+            Log.i("caling:","freg1");
+            callFreg1();
         }
         @SuppressLint("MissingPermission")
         public String getDishList(String url) {
@@ -417,10 +448,8 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
                 Log.i("123","1");
                 URL url2 = new URL( "http://echo.jsontest.com/key/value/one/two " );
                 // Send POST data request
-
                 URLConnection conn = url2.openConnection();
                 conn.setDoOutput( true );
-
                 reader = new BufferedReader( new InputStreamReader( conn.getInputStream() ) );
                 StringBuilder sb = new StringBuilder();
                 String line = null;
@@ -430,28 +459,27 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
                     // Append server response in string
                     sb.append( line + "\n" );
                 }
-
-
                 text = sb.toString();
                 Log.i("MainActivity ",text);
                 Log.i("onPostExecute"," in onPostExecute");
                 Intent i2 = new Intent( MainActivity.this, basic_results.class );
 
-                lastLocation = LocationServices.FusedLocationApi.getLastLocation( mGoogleApiClient );
-                jsonObject.put( "latitude", lastLocation.getLatitude() );
-                jsonObject.put( "longitude", lastLocation.getLongitude() );
-                jsonObject.put( "dish",text.toString() );
+//                lastLocation = LocationServices.FusedLocationApi.getLastLocation( mGoogleApiClient );
+//                jsonObject.put( "latitude", lastLocation.getLatitude() );
+//                jsonObject.put( "longitude", lastLocation.getLongitude() );
+//                jsonObject.put( "dish",text.toString() );
 
                 jsonArray.put( jsonObject );
-                i2.putExtra("JSON_OBJECT", jsonArray.toString());
+
+
+              //  i2.putExtra("JSON_OBJECT", jsonArray.toString());
                 Log.i("my new json object lat ",jsonArray.toString());
                 //intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivityForResult( i2, CODE_REQ );
+               // startActivityForResult( i2, CODE_REQ );
                 // get json string from url
                 json=new JSONObject( text );
                 text= (String) json.get("one");
                 Log.i("jsontext:",text);
-
                 // get the array of users
                 dataJsonArr = (JSONArray) json.get( "Dishes" );
                 // loop through all users
@@ -464,9 +492,6 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
 
                     // show the values in our logcat
                     Log.e( TAG, "nameDish: " + nameDish );
-
-
-
                 }
 
             } catch (JSONException e) {
@@ -527,8 +552,6 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
                 convertView = layoutInflater.inflate(R.layout.single_dish_item, null);
                 holder = new ViewHolder();
                 holder.Dish_name = (TextView) convertView.findViewById(R.id.Dish_name);
-
-
                 convertView.setTag(holder);
             }
             else

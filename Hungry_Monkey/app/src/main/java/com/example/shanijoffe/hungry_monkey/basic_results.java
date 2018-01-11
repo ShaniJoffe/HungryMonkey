@@ -41,14 +41,9 @@ public class basic_results extends AppCompatActivity {
         nameRes=findViewById( R.id.nameRestxtv );
         Log.i("sup","in basic");
         lv=(ListView) findViewById(R.id.listView1);
-
         //connecting  adapter
         adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,teams);
-
         lv.setAdapter(adapter);
-
-
-
         if(getIntent().hasExtra("JSON_OBJECT"))
         {
             JsonObject mJsonObject;
