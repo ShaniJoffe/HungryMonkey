@@ -2,12 +2,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:style="http://schemas.android.com/apk/res-auto"
+    android:background="#99FFFFCC"
+
     tools:context="com.example.shanijoffe.hungry_monkey.fregment2">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
+        android:id="@+id/freg2_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#26999999"
+
         android:orientation="vertical">
 
         <LinearLayout
@@ -17,8 +23,8 @@
 
             <ImageView
                 android:id="@+id/DishImage"
-                android:layout_width="match_parent"
-                android:layout_height="123dp"
+                android:layout_width="320dp"
+                android:layout_height="221dp"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
@@ -27,8 +33,10 @@
                 android:backgroundTint="@android:color/holo_blue_bright" />
 
             <LinearLayout
+                android:id="@+id/price_layout"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
+                android:background="#99FFFFCC"
                 android:orientation="horizontal">
 
                 <TextView
@@ -37,7 +45,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/edittextstyle"
-                    android:backgroundTint="@android:color/darker_gray"
                     android:gravity="right"
                     android:text="מחיר מנה: "
                     android:textAllCaps="false"
@@ -55,18 +62,21 @@
                     android:layout_toRightOf="@+id/DishImage"
                     android:layout_weight="1"
                     android:background="@drawable/edittextstyle"
-                    android:backgroundTint="@android:color/darker_gray"
                     android:text="שם מנה : "
-                    android:textAlignment="viewEnd"
+
                     android:textAllCaps="true"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#000000"
                     android:textSize="18dp"
                     android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
+                android:background="#99FFFFCC"
+                android:id="@+id/desc_layout"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
+
                 android:orientation="horizontal">
 
                 <TextView
@@ -75,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/edittextstyle"
-                    android:backgroundTint="@android:color/darker_gray"
+
                     android:gravity="right"
                     android:text="תיאור של המנה "
                     android:textAllCaps="false"
@@ -93,16 +103,18 @@
                     android:layout_toRightOf="@+id/DishImage"
                     android:layout_weight="1"
                     android:background="@drawable/edittextstyle"
-                    android:backgroundTint="@android:color/darker_gray"
                     android:text="שם מנה : "
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#000000"
                     android:textSize="18dp"
                     android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
+                android:id="@+id/name_layout"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
+                android:background="#99FFFFCC"
                 android:orientation="horizontal">
 
                 <TextView
@@ -111,7 +123,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/edittextstyle"
-                    android:backgroundTint="@android:color/darker_gray"
                     android:gravity="center_vertical|center"
                     android:text="res "
                     android:textColor="@android:color/black"
@@ -127,32 +138,40 @@
                     android:layout_toRightOf="@+id/DishImage"
                     android:layout_weight="1"
                     android:background="@drawable/edittextstyle"
-                    android:backgroundTint="@android:color/darker_gray"
                     android:text="שם מנה : "
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#000000"
                     android:textSize="18dp"
+
                     android:textStyle="bold" />
 
 
             </LinearLayout>
 
             <Button
+
                 android:id="@+id/choose_Dish"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
-
                 android:layout_height="40dp"
-
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/buttonstylesselector"
                 android:backgroundTint="@android:color/darker_gray"
                 android:gravity="center"
+                android:radius="20dp"
                 android:text="צפייה במסעדה "
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 tools:text="צפייה במסעדה " />
+
+            <RelativeLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            </RelativeLayout>
 
             <ListView
                 android:id="@+id/listView1"

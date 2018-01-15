@@ -12,16 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+
         tools:context="comv.example.shanijoffe.a1.MainActivity">
 
         <TextView
             android:id="@+id/monospace"
             android:layout_width="match_parent"
-            android:layout_height="87dp"
+            android:layout_height="43dp"
             android:layout_weight="1"
             android:autoSizeTextType="none"
             android:background="@drawable/edittextstyle"
-
             android:backgroundTintMode="src_atop"
             android:fontFamily="monospace"
             android:gravity="center_vertical|center"
@@ -33,8 +33,6 @@
             android:textSize="18sp"
             android:textStyle="bold"
             tools:text="Welcome to Hungry Monkey app " />
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -45,178 +43,19 @@
 
                 android:id="@+id/DishSearch"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="77dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/common_google_signin_btn_text_dark_disabled"
+                android:background="#CC999999"
                 android:hint="הכנס/י שם מנה "
-
-                android:paddingTop="10dp">
-
-
-            </SearchView>
-
-            <!--<Button-->
-                <!--android:id="@+id/btn_f1"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1"-->
-                <!--android:onClick="onClickFreg1"-->
-                <!--android:text="show freg1 " />-->
-
+                android:paddingTop="10dp"></SearchView>
             <RelativeLayout
                 android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <!--<LinearLayout-->
-                    <!--android:id="@+id/freg1"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:orientation="vertical"-->
-                    <!--android:paddingTop="10dp"-->
-                    <!--android:visibility="visible">-->
-
-                    <!--<Button-->
-                        <!--android:id="@+id/Advnced_btn"-->
-
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="right"-->
-                        <!--android:background="@drawable/buttonstylesselector"-->
-                        <!--android:elevation="6dp"-->
-                        <!--android:onClick="OnClickShowAdvancedSearch"-->
-                        <!--android:text="הצג חיפוש מתקדם "-->
-                        <!--android:textColor="#FFF"-->
-                        <!--android:textStyle="bold"-->
-                        <!--android:visibility="visible" />-->
-
-                    <!--<LinearLayout-->
-                        <!--android:id="@+id/adv_leyout"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_marginTop="10dp"-->
-                        <!--android:orientation="vertical"-->
-                        <!--android:paddingTop="25dp"-->
-                        <!--android:visibility="invisible">-->
-
-                        <!--<LinearLayout-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:orientation="horizontal">-->
-
-                            <!--<SeekBar-->
-                                <!--android:id="@+id/sk_dis"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_weight="1" />-->
-
-                            <!--<TextView-->
-                                <!--android:id="@+id/txtv_dis"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_weight="1"-->
-                                <!--android:paddingLeft="10dp"-->
-                                <!--android:text="מרחק" />-->
-                        <!--</LinearLayout>-->
-                    <!--</LinearLayout>-->
-
-                    <!--<LinearLayout-->
-                        <!--android:id="@+id/adv_leyout2"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:orientation="vertical"-->
-                        <!--android:paddingTop="25dp"-->
-                        <!--android:visibility="invisible">-->
-
-                        <!--<LinearLayout-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:orientation="horizontal">-->
-
-                            <!--<SeekBar-->
-                                <!--android:id="@+id/sk_price"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_weight="1" />-->
-
-                            <!--<TextView-->
-                                <!--android:id="@+id/txtv_price"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_weight="1"-->
-                                <!--android:paddingLeft="10dp"-->
-                                <!--android:text="מחיר" />-->
-                        <!--</LinearLayout>-->
-                    <!--</LinearLayout>-->
-
-                    <!--<LinearLayout-->
-                        <!--android:id="@+id/adv_leyout3"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:orientation="vertical"-->
-                        <!--android:paddingTop="25dp"-->
-                        <!--android:visibility="invisible">-->
-
-                        <!--<LinearLayout-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:orientation="horizontal">-->
-
-
-                            <!--<Spinner-->
-                                <!--android:id="@+id/sp_kosher"-->
-                                <!--android:layout_width="140dp"-->
-                                <!--android:layout_height="34dp" />-->
-
-                            <!--<TextView-->
-                                <!--android:id="@+id/txtv_kosher"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_weight="1"-->
-                                <!--android:paddingLeft="10dp"-->
-                                <!--android:text="כשרות" />-->
-                        <!--</LinearLayout>-->
-                    <!--</LinearLayout>-->
-                <!--</LinearLayout>-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:orientation="vertical"-->
-                    <!--android:paddingTop="50dp">-->
-
-                    <!--<Button-->
-                        <!--android:id="@+id/btn_login"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:background="@drawable/buttonstylesselector"-->
-                        <!--android:hint="התחבר"-->
-                        <!--android:onClick="OnClick"-->
-                        <!--android:text="התחבר"-->
-                        <!--android:textColor="#FFF"-->
-                        <!--android:textStyle="bold" />-->
-
-                    <!--<Button-->
-                        <!--android:id="@+id/btn_reg"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginTop="10dp"-->
-                        <!--android:background="@drawable/buttonstylesselector"-->
-                        <!--android:onClick="OnClickSign"-->
-                        <!--android:paddingTop="25dp"-->
-                        <!--android:text="הרשם"-->
-                        <!--android:textColor="#FFF"-->
-                        <!--android:textStyle="bold" />-->
-                <!--</LinearLayout>-->
             </RelativeLayout>
         </LinearLayout>
-
-
-
-
 
     </LinearLayout>
 

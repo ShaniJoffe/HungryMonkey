@@ -1,39 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:background="@drawable/bg_hm"
-    xmlns:tools="http://schemas.android.com/tools"
-
-    tools:contex=".MainActivity">
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#26999999"
-
-
-    tools:context="com.example.shanijoffe.hungry_monkey.basic_results">
-
+    tools:context="com.example.shanijoffe.hungry_monkey.resturantResFragment">
 
     <LinearLayout
-        android:id="@+id/res_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:background="#99FFFFCC"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/DishImage"
@@ -47,32 +21,24 @@
             android:backgroundTint="@android:color/holo_blue_bright" />
 
         <LinearLayout
-            android:id="@+id/layout_name"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:background="#99FFFFCC"
-
-
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/PriceDish"
-
                 android:layout_width="92dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/edittextstyle"
                 android:gravity="right"
                 android:text="מחיר מנה: "
                 android:textAllCaps="false"
-
                 android:textColor="#000000"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/Dish_name"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -80,7 +46,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/DishImage"
                 android:layout_weight="1"
-                android:background="@drawable/edittextstyle"
                 android:text="שם מנה : "
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#000000"
@@ -89,10 +54,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/res_name_layout"
             android:layout_width="match_parent"
             android:layout_height="58dp"
-            android:background="#99FFFFCC"
             android:orientation="horizontal">
 
             <TextView
@@ -100,11 +63,13 @@
                 android:layout_width="138dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/edittextstyle"
                 android:text="שם מסעדה : "
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
+
+
         </LinearLayout>
 
         <Button
@@ -120,8 +85,7 @@
             android:gravity="center"
             android:text="צפייה במסעדה "
             android:textColor="@android:color/white"
-            android:textStyle="bold"
-            tools:text="פרטי מסעדה " />
+            android:textStyle="bold" />
 
         <ListView
             android:id="@+id/listView1"
@@ -132,5 +96,5 @@
             android:visibility="invisible" />
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
-</ScrollView>
+
+</FrameLayout>

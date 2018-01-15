@@ -1,6 +1,8 @@
 package com.example.shanijoffe.hungry_monkey;
 
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,6 +39,7 @@ public class fregment2 extends Fragment {
     ArrayAdapter<String> adapter;
     boolean show=false;
     View view;
+    Button det;
     public fregment2() {
         // Required empty public constructor
     }
@@ -55,6 +59,8 @@ public class fregment2 extends Fragment {
         view= inflater.inflate( R.layout.fragment_fregment2, container, false );
         return view;
     }
+
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
 
@@ -65,6 +71,23 @@ public class fregment2 extends Fragment {
         Log.i("freg2 ","i got :"+myValue);
         // Displaying the user details on the screen
         nres.setText(myValue);
+        det=getView().findViewById( R.id.choose_Dish );
+        det.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent( getActivity(),basic_results.class );
+                startActivity( i );
+//                FragmentManager fm =getFragmentManager();
+//                FragmentTransaction ft=fm.beginTransaction();
+//
+//
+//                ItemFragment f1 = new ItemFragment();
+//                ft.replace( R.id.fragment_container, f1 );
+//                ft.commit();
+
+            }
+        } );
+
     }
 
 }
