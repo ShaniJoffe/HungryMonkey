@@ -141,7 +141,7 @@
                 android:id="@+id/choose_Dish"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
-               />/ android:onClick="chooseDishOnClick"
+
                 android:layout_height="40dp"
 
                 android:layout_alignParentEnd="true"
