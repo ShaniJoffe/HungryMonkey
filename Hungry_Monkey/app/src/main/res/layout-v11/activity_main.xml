@@ -2,6 +2,7 @@
 <ScrollView android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@drawable/bg_hm"
     xmlns:tools="http://schemas.android.com/tools"
 
     tools:contex=".MainActivity">
@@ -19,8 +20,8 @@
             android:layout_height="87dp"
             android:layout_weight="1"
             android:autoSizeTextType="none"
-            android:background="#f177"
-            android:backgroundTint="#f177"
+            android:background="@drawable/edittextstyle"
+
             android:backgroundTintMode="src_atop"
             android:fontFamily="monospace"
             android:gravity="center_vertical|center"
@@ -30,6 +31,7 @@
             android:textColor="@android:color/black"
             android:textColorHighlight="@color/colorPrimaryDark"
             android:textSize="18sp"
+            android:textStyle="bold"
             tools:text="Welcome to Hungry Monkey app " />
 
 
@@ -40,24 +42,26 @@
             android:orientation="vertical">
 
             <SearchView
+
                 android:id="@+id/DishSearch"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
                 android:background="@color/common_google_signin_btn_text_dark_disabled"
                 android:hint="הכנס/י שם מנה "
+
                 android:paddingTop="10dp">
 
 
             </SearchView>
 
-            <Button
-                android:id="@+id/btn_f1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onClickFreg1"
-                android:text="show freg1 " />
+            <!--<Button-->
+                <!--android:id="@+id/btn_f1"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:onClick="onClickFreg1"-->
+                <!--android:text="show freg1 " />-->
 
             <RelativeLayout
                 android:id="@+id/fragment_container"
@@ -215,6 +219,7 @@
 
 
     </LinearLayout>
+
 </ScrollView>
 
 

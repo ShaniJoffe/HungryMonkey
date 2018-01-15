@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import static com.loopj.android.http.AsyncHttpClient.log;
 
@@ -31,9 +32,10 @@ public class fregment2 extends Fragment {
     String val;
     TextView PriceDish;
     TextView Dish_name;
-    TextView nameRes;
+    TextView nres;
     ArrayAdapter<String> adapter;
     boolean show=false;
+    View view;
     public fregment2() {
         // Required empty public constructor
     }
@@ -44,25 +46,25 @@ public class fregment2 extends Fragment {
     {
         String[] teams={"Man Utd","Man City","Chelsea","Arsenal","Liverpool","Totenham","Man Utd","Man City","Chelsea","Arsenal","Liverpool","Totenham"};
         View view = inflater.inflate(R.layout.fragment_fregment2, container, false);
-        nameRes=view.findViewById( R.id.nameRestxtv );
         Log.i("sup","in basic");
         lv=(ListView)view.findViewById(R.id.listView1);
         //connecting  adapter
         adapter=new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,teams);
         lv.setAdapter(adapter);
-        if(getActivity().getIntent().hasExtra("JSON_OBJECT"))
-        {
-            Intent i =getActivity().getIntent();
-            JsonObject mJsonObject;
-
-            val = i.getStringExtra("JSON_OBJECT");
-        }
-//now parse this job to get your name and email.or anuy other data in jobj.
-        log.i("my json :",val);
-        // nameRes.setText( "heyooo" );
         // Inflate the layout for this fragment
-        return inflater.inflate( R.layout.fragment_fregment2, container, false );
+        view= inflater.inflate( R.layout.fragment_fregment2, container, false );
+        return view;
     }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
 
+        nres = (TextView) getActivity().findViewById(R.id.res_name22);
+        Bundle bundle = this.getArguments();
+
+        String myValue = bundle.getString("message");
+        Log.i("freg2 ","i got :"+myValue);
+        // Displaying the user details on the screen
+        nres.setText(myValue);
+    }
 
 }

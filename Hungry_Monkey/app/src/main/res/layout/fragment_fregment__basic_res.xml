@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:background="@drawable/buttonstylesselector"
+                android:background="@android:color/darker_gray"
                 android:elevation="6dp"
                 android:onClick="OnClickShowAdvancedSearch"
                 android:text="הצג חיפוש מתקדם "
@@ -61,6 +61,8 @@
                         android:layout_weight="1" />
 
                     <TextView
+                        android:background="@drawable/edittextstyle"
+
                         android:id="@+id/txtv_dis"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -90,6 +92,7 @@
                         android:layout_weight="1" />
 
                     <TextView
+                        android:background="@drawable/edittextstyle"
                         android:id="@+id/txtv_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -119,6 +122,8 @@
                         android:layout_height="34dp" />
 
                     <TextView
+                        android:background="@drawable/edittextstyle"
+
                         android:id="@+id/txtv_kosher"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -140,7 +145,7 @@
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/buttonstylesselector"
+                android:background="@android:color/darker_gray"
                 android:hint="התחבר"
                 android:onClick="OnClick"
                 android:text="התחבר"
@@ -152,7 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/buttonstylesselector"
+                android:background="@android:color/darker_gray"
                 android:onClick="OnClickSign"
                 android:paddingTop="25dp"
                 android:text="הרשם"

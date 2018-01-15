@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
     EditText password_edit;
     Button loginButton;
     String user="";
+    String   dish_result="";
     boolean st=false;
     String user_pass="";
     final int CODE_REQ=1;
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN ,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView( R.layout.activity_main );
-        btn_f=findViewById( R.id.btn_f1 );
+      ///  btn_f=findViewById( R.id.btn_f1 );
         Log.i( TAG, "in main activity" );
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder( this )
@@ -159,9 +160,6 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             {
                 // searchResults.setVisibility(myFragmentView.VISIBLE);
                 myAsyncTask m= (myAsyncTask) new myAsyncTask().execute(text);
-
-
-
                 return false;
             }
             @Override
@@ -170,11 +168,18 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
                 Log.i(TAG,"HAYOOO");
                 return false;
             }
-
-
-
         });
         Log.i("sup","sup");
+        FragmentManager fm =getFragmentManager();
+        FragmentTransaction ft=fm.beginTransaction();
+        if(!st)
+        {
+            fregment_BasicRes f1 = new fregment_BasicRes();
+            ft.replace( R.id.fragment_container, f1 );
+            ft.commit();
+//            btn_f.setText( "load f2" );
+            st = true;
+        }
     }
     protected void onStart() {
         mGoogleApiClient.connect();
@@ -193,7 +198,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             super.onSignalStrengthsChanged(signalStrength);
             if (null != signalStrength && signalStrength.getGsmSignalStrength() != UNKNOW_CODE) {
                 int signalStrengthPercent = signalStrength.getGsmSignalStrength();
-               // System.out.println(signalStrength);
+                // System.out.println(signalStrength);
 
 
                 gsm=signalStrength.getGsmSignalStrength();
@@ -206,23 +211,23 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
     {
         FragmentManager fm =getFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
-           if(!st)
-           {
-              fregment_BasicRes f1=new fregment_BasicRes();
-              ft.replace( R.id.fragment_container,f1 );
-              ft.commit();
-              btn_f.setText( "load f2" );
-              st=true;
-           }
-           else
-           {
-               fregment2 fr2=new fregment2();
-               ft.replace( R.id.fragment_container,fr2 );
-               ft.commit();
-               btn_f.setText( "load f1" );
-               st=false;
+        if(!st)
+        {
+            fregment_BasicRes f1=new fregment_BasicRes();
+            ft.replace( R.id.fragment_container,f1 );
+            ft.commit();
+           // btn_f.setText( "load f2" );
+            st=true;
+        }
+        else
+        {
+            fregment2 fr2=new fregment2();
+            ft.replace( R.id.fragment_container,fr2 );
+            ft.commit();
+          //  btn_f.setText( "load f1" );
+            st=false;
 
-           }
+        }
     }
     public void OnClickSign(View view)
     {
@@ -336,7 +341,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         if (ContextCompat.checkSelfPermission( this, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED) {
             lastLocation = LocationServices.FusedLocationApi.getLastLocation( mGoogleApiClient );
             createLocationRequest();
-           // Toast.makeText( this, "Last location " + lastLocation.getAltitude() + ", " + lastLocation.getLongitude(), Toast.LENGTH_SHORT ).show();
+            // Toast.makeText( this, "Last location " + lastLocation.getAltitude() + ", " + lastLocation.getLongitude(), Toast.LENGTH_SHORT ).show();
 
         } else {
             Toast.makeText( this, "No permissions", Toast.LENGTH_SHORT ).show();
@@ -355,7 +360,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
 //        mLocationRequest.setPriority( LocationRequest.PRIORITY_HIGH_ACCURACY );
         mLocationRequest.setSmallestDisplacement( (float) 50.00 );
 
-    //    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, (com.google.android.gms.location.LocationListener) this );
+        //    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, (com.google.android.gms.location.LocationListener) this );
         Log.i("createLocationRequest"," in createLocationRequest");
         // LocationServices.FusedLocationApi.requestLocationUpdates( mGoogleApiClient, mLocationRequest, (LocationListener) this );
     }
@@ -384,15 +389,25 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-    public void callFreg1() {
+    public void callFreg1() throws InterruptedException {
+
         FragmentManager fm =getFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
-
-            fregment2 f2=new fregment2();
-            ft.replace( R.id.fragment_container,f2 );
-            ft.commit();
-            btn_f.setText( "load f1" );
-            st=false;
+        Bundle bundle = new Bundle();
+        bundle.putString("edttext", "From Activity");
+// set Fragmentclass Arguments
+        Bundle bundle2 = new Bundle();
+        bundle2.putString("message", dish_result );
+        Log.i("i, sending to freg2 :",dish_result);
+        fregment2 f2=new fregment2();
+        f2.setArguments( bundle2 );
+        ft.replace( R.id.fragment_container,f2,"fregment2 tag" );
+        ft.commit();
+        fregment2 tp = (fregment2) getFragmentManager().findFragmentByTag("fregment2 tag");
+        sleep(1000);
+//        tp.changeText();
+//        btn_f.setText( "load f1" );
+        st=false;
 
 
     }
@@ -421,6 +436,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             Log.i("in do ","in do");
             String returnResult = getDishList(url);
             search_finshed=true;
+
             return returnResult;
         }
         protected void onPostExecute(String result)
@@ -433,9 +449,13 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             }
             pd.dismiss();
             Log.i("caling:","freg1");
-            callFreg1();
+            try {
+                callFreg1();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        @SuppressLint("MissingPermission")
+        @SuppressLint({"MissingPermission", "LongLogTag"})
         public String getDishList(String url) {
             Dish tempDish = new Dish();
             String matchFound = "N";
@@ -460,26 +480,19 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
                     sb.append( line + "\n" );
                 }
                 text = sb.toString();
-                Log.i("MainActivity ",text);
-                Log.i("onPostExecute"," in onPostExecute");
-                Intent i2 = new Intent( MainActivity.this, basic_results.class );
+
+                Log.i("onPostExecute"," in onPostExecute  my json from server is :" + text);
 
 //                lastLocation = LocationServices.FusedLocationApi.getLastLocation( mGoogleApiClient );
 //                jsonObject.put( "latitude", lastLocation.getLatitude() );
 //                jsonObject.put( "longitude", lastLocation.getLongitude() );
 //                jsonObject.put( "dish",text.toString() );
 
-                jsonArray.put( jsonObject );
-
-
-              //  i2.putExtra("JSON_OBJECT", jsonArray.toString());
-                Log.i("my new json object lat ",jsonArray.toString());
-                //intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-               // startActivityForResult( i2, CODE_REQ );
-                // get json string from url
                 json=new JSONObject( text );
-                text= (String) json.get("one");
                 Log.i("jsontext:",text);
+                dish_result= (String) json.get("one");
+                Log.i("jsontext2:",dish_result);
+
                 // get the array of users
                 dataJsonArr = (JSONArray) json.get( "Dishes" );
                 // loop through all users
