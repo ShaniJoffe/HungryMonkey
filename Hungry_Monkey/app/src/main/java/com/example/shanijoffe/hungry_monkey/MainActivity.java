@@ -1,6 +1,7 @@
 package com.example.shanijoffe.hungry_monkey;
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
@@ -10,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationListener;
@@ -99,11 +101,13 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
     MyPhoneStateListener myPhoneStateListener;
     boolean show=false;
     Button btn_f;
+    public static Activity _mainActivity;
     protected void onCreate(Bundle savedInstanceState)
     {
 
         String[] teams={"Man Utd","Man City","Chelsea","Arsenal","Liverpool","Totenham"};
         super.onCreate( savedInstanceState );
+        _mainActivity=this;
         if (Build.VERSION.SDK_INT < 16)
         {
             getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN ,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView( R.layout.activity_main );
-      ///  btn_f=findViewById( R.id.btn_f1 );
+        ///  btn_f=findViewById( R.id.btn_f1 );
         Log.i( TAG, "in main activity" );
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder( this )
@@ -151,13 +155,12 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         loginButton = (Button) findViewById( R.id.btn_login );
         search=(SearchView)findViewById( R.id.DishSearch );
         search.setQueryHint("הכנס שם מנה ");
-//        searchResults =(ListView)findViewById( R.id.listview_search );
-//        adapter2=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,teams);
-//        searchResults.setAdapter( adapter2 );
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             public boolean onQueryTextSubmit(String text)
             {
+                Log.i("MainActivity","in onQueryTextSubmit");
+
                 // searchResults.setVisibility(myFragmentView.VISIBLE);
                 myAsyncTask m= (myAsyncTask) new myAsyncTask().execute(text);
                 return false;
@@ -216,7 +219,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             fregment_BasicRes f1=new fregment_BasicRes();
             ft.replace( R.id.fragment_container,f1 );
             ft.commit();
-           // btn_f.setText( "load f2" );
+            // btn_f.setText( "load f2" );
             st=true;
         }
         else
@@ -224,7 +227,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             fregment2 fr2=new fregment2();
             ft.replace( R.id.fragment_container,fr2 );
             ft.commit();
-          //  btn_f.setText( "load f1" );
+            //  btn_f.setText( "load f1" );
             st=false;
 
         }
@@ -393,25 +396,18 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
 
         FragmentManager fm =getFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
-        Bundle bundle = new Bundle();
-        bundle.putString("edttext", "From Activity");
+        FirstFragment first = new FirstFragment() ;
 // set Fragmentclass Arguments
+
         Bundle bundle2 = new Bundle();
-        bundle2.putString("message", dish_result );
-        Log.i("i, sending to freg2 :",dish_result);
-        fregment2 f2=new fregment2();
-        f2.setArguments( bundle2 );
-        ft.replace( R.id.fragment_container,f2,"fregment2 tag" );
-        ft.commit();
-        fregment2 tp = (fregment2) getFragmentManager().findFragmentByTag("fregment2 tag");
         sleep(1000);
-//        tp.changeText();
-//        btn_f.setText( "load f1" );
+        bundle2.putString("name_res", dish_result );
+        Log.i("sending to freg1 :",dish_result);
+        first.setArguments( bundle2 );
+        ft.replace( R.id.fragment_container,first,"fregment2 tag" );
+        ft.commit();
         st=false;
-
-
     }
-
     class myAsyncTask extends AsyncTask<String, Void, String>
     {
         JSONParser jParser;
@@ -436,12 +432,11 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             Log.i("in do ","in do");
             String returnResult = getDishList(url);
             search_finshed=true;
-
             return returnResult;
         }
         protected void onPostExecute(String result)
         {
-            super.onPostExecute(result);
+            // super.onPostExecute(result);
             try {
                 sleep(50);
             } catch (InterruptedException e) {
@@ -487,22 +482,17 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
 //                jsonObject.put( "latitude", lastLocation.getLatitude() );
 //                jsonObject.put( "longitude", lastLocation.getLongitude() );
 //                jsonObject.put( "dish",text.toString() );
-
                 json=new JSONObject( text );
                 Log.i("jsontext:",text);
                 dish_result= (String) json.get("one");
                 Log.i("jsontext2:",dish_result);
-
                 // get the array of users
                 dataJsonArr = (JSONArray) json.get( "Dishes" );
                 // loop through all users
                 for (int i = 0; i < dataJsonArr.length(); i++) {
-
                     JSONObject c = (JSONObject) dataJsonArr.get( i );
-
                     // Storing each json item in variable
                     nameDish = (String) c.get( "nameDish" );
-
                     // show the values in our logcat
                     Log.e( TAG, "nameDish: " + nameDish );
                 }
@@ -585,5 +575,13 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         }
 
     }
-
+    public static boolean isTablet()
+    {
+        int display_mode = _mainActivity.getResources().getConfiguration().orientation;
+        if(display_mode  == Configuration.ORIENTATION_PORTRAIT)
+        {
+            return false;
+        }
+        return true;
+    }
 }

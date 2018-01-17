@@ -48,13 +48,23 @@
                 android:background="#CC999999"
                 android:hint="הכנס/י שם מנה "
                 android:paddingTop="10dp"></SearchView>
-            <RelativeLayout
+
+
+            <FrameLayout
                 android:id="@+id/fragment_container"
+                android:layout_width="500dp"
+                android:layout_height="500dp"
+                android:layout_weight="2">
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/right_frame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-            </RelativeLayout>
+            </FrameLayout>
         </LinearLayout>
 
     </LinearLayout>

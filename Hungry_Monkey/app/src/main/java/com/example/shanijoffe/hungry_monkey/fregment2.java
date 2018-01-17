@@ -59,16 +59,13 @@ public class fregment2 extends Fragment {
         view= inflater.inflate( R.layout.fragment_fregment2, container, false );
         return view;
     }
-
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
 
         nres = (TextView) getActivity().findViewById(R.id.res_name22);
         Bundle bundle = this.getArguments();
-
-        String myValue = bundle.getString("message");
-        Log.i("freg2 ","i got :"+myValue);
+        String myValue = bundle.getString("name_res");
+        Log.i("freg2 ","i got :"+ myValue);
         // Displaying the user details on the screen
         nres.setText(myValue);
         det=getView().findViewById( R.id.choose_Dish );
@@ -77,14 +74,6 @@ public class fregment2 extends Fragment {
             public void onClick(View view) {
                 Intent i = new Intent( getActivity(),basic_results.class );
                 startActivity( i );
-//                FragmentManager fm =getFragmentManager();
-//                FragmentTransaction ft=fm.beginTransaction();
-//
-//
-//                ItemFragment f1 = new ItemFragment();
-//                ft.replace( R.id.fragment_container, f1 );
-//                ft.commit();
-
             }
         } );
 
