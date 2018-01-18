@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:background="@drawable/bg_hm"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_hm"
 
     tools:contex=".MainActivity">
 
@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@drawable/bg_hm"
 
-        tools:context="comv.example.shanijoffe.a1.MainActivity">
+       >
 
         <TextView
             android:id="@+id/monospace"
             android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:layout_weight="1"
+            android:layout_height="61dp"
             android:autoSizeTextType="none"
             android:background="@drawable/edittextstyle"
             android:backgroundTintMode="src_atop"
@@ -33,39 +33,41 @@
             android:textSize="18sp"
             android:textStyle="bold"
             tools:text="Welcome to Hungry Monkey app " />
-        <LinearLayout
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="467dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <SearchView
+
+            android:id="@+id/DishSearch"
+            android:layout_width="match_parent"
+            android:layout_height="77dp"
+            android:layout_marginTop="20dp"
+            android:background="#CC999999"
+            android:hint="הכנס/י שם מנה "
+            android:paddingTop="10dp"></SearchView>
+
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_margin="10dp"
+            android:layout_weight="0.3">
 
-            <SearchView
+        </FrameLayout>
 
-                android:id="@+id/DishSearch"
-                android:layout_width="match_parent"
-                android:layout_height="77dp"
-                android:layout_marginTop="20dp"
-                android:background="#CC999999"
-                android:hint="הכנס/י שם מנה "
-                android:paddingTop="10dp"></SearchView>
+        <FrameLayout
+            android:id="@+id/right_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-
-            <FrameLayout
-                android:id="@+id/fragment_container"
-                android:layout_width="500dp"
-                android:layout_height="500dp"
-                android:layout_weight="2">
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/right_frame"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-            </FrameLayout>
-        </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
 
     </LinearLayout>
 

@@ -34,12 +34,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.os.AsyncTask;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -101,7 +104,10 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
     MyPhoneStateListener myPhoneStateListener;
     boolean show=false;
     Button btn_f;
+    TextView tv;
+    private ImageView iv;
     public static Activity _mainActivity;
+
     protected void onCreate(Bundle savedInstanceState)
     {
 
@@ -153,6 +159,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
 //            }
 //        } );
         loginButton = (Button) findViewById( R.id.btn_login );
+
         search=(SearchView)findViewById( R.id.DishSearch );
         search.setQueryHint("הכנס שם מנה ");
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -183,6 +190,8 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
 //            btn_f.setText( "load f2" );
             st = true;
         }
+
+
     }
     protected void onStart() {
         mGoogleApiClient.connect();

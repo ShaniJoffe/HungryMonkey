@@ -3,5 +3,6 @@
     <color name="colorPrimary">#2e047c</color>
     <color name="light_gray">#CC999999</color>
     <color name="colorPrimaryDark">#2e047c</color>
-    <color name="colorAccent">#b6ff40</color>
+    <color name="oil">#3B3131</color>
+
 </resources>

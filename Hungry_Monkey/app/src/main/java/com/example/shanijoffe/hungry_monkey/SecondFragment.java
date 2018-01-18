@@ -41,6 +41,4 @@ public class SecondFragment extends Fragment {
         txtview.setText("Name: " + this._name + " Number: " + this._phone);
         return view;
     }
-
-
 }
