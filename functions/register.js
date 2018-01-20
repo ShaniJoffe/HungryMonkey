@@ -7,35 +7,53 @@ const esClient = new elasticsearch.Client({
 	});
 const bcrypt = require('bcryptjs');
 
-exports.registerUser = (name,password) => 
+exports.registerUser = (name,password,id) => 
 		
 	new Promise((resolve,reject) => {
 	
 	    const salt = bcrypt.genSaltSync(10);
 		const hash = bcrypt.hashSync(password, salt);
 		console.log(name);
+		console.log(id);
 		console.log(hash);
-		esClient.index({
-			  index: 'hungrymonkey',
+		
+		esClient.exists({
+			  index: 'hungrymonkeyusers',
 			  type: 'users',
-			  id: '1',
+			  id: id,
 			  body: {
-				'name': name,
+				'username': name,
 				'hashed_password':hash,
 				'password': password
 			  }
-		}).then(response => {
-				console.log("balls");
-			let errorCount = 0;
-			response.items.forEach(item => {
-				if (item.index && item.index.error) {
-					console.log(++errorCount, item.index.error);
-					reject({ status: 409, message: 'User Already Registered !' });
-				}
-			});
-		console.log(`Successfully indexed ${data.length - errorCount} out of ${data.length} items`);
-		resolve({ status: 201, message: 'User Registered Sucessfully !' });
-    })
-    .catch(console.err);
+		}).then(temp => {
+
+			if(temp==true)
+			{
+				console.log("balls exists");
+				reject({ status: 409, message: 'User Already Registered !' });				
+			}
+			else
+			{
+			esClient.index({
+					index: 'hungrymonkeyusers',
+					type: 'users',
+					id: id,
+					body:{
+						'username': name,
+						'hashed_password':hash,
+						'password': password
+						}
+					})
+				.then(temp2=>{
+						resolve({ status: 201, message: 'User Registered Sucessfully !' })})
+							.catch(error=>{reject({ status: 500, message: 'Internal Server Error !' });})
+			}
+		});
+	});			
+			
+		
+ 
+    
 	
-	});
+	

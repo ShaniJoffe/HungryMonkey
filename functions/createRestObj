@@ -1,0 +1,26 @@
+const elasticsearch = require('elasticsearch');
+const esClient = new elasticsearch.Client({
+	host: 'https://search-hungrymonkey-3eiz5dewb4yoyjt6ykeufmsjn4.eu-central-1.es.amazonaws.com',
+	log: 'error'
+});
+
+	
+	
+exports.counter = (nameOfIndex,type) =>
+
+esClient.count({
+  index: nameOfIndex,
+  type:type,
+  body: {
+    query: {
+		 match_all: {}
+    }
+  }
+}).then( function (response) {
+	var counter=response.count;
+	console.log("balls");
+	console.log("counter= "+response.count);
+	res.send(counter); 
+});
+
+	

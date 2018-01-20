@@ -12,10 +12,11 @@ const search = function search(index, body){
 	return esClient.search({index: index, body: body});
 	};
 
-exports.loginUser = (name, pass) =>
+exports.loginUser = (name, password) =>
 	new Promise((resolve,reject) => {	
+		var hashed_password=0;
 		var counter=0;
-		var tempString= '(name:'+name+')  AND (password:'+pass+')';
+		var tempString= '(username:'+name+')  AND (password:'+password+')';
 		console.log(tempString);
 		let body = {
 		  size: 1,
@@ -32,34 +33,19 @@ exports.loginUser = (name, pass) =>
 			}
 		  }
 		};
-		search('hungrymonkey', body)
+		search('hungrymonkeyusers', body)
 		.then(results => {
 			console.log(`found ${results.hits.total} items in ${results.took}ms`);
 			if (results.hits.total > 0)
-			{	
-				counter=results.hits.total;
-				console.log(`returned user:`);
-				results.hits.hits.forEach((hit, index) => console.log(`\t${body.from + ++index} - ${hit._source.name} (score: ${hit._score})`));	
-				console.log(`in search counter=`+counter);
-				resolve({ status: 200, message: name });	
+			{				
+				hashed_password =results.hits.hits[0]._source.hashed_password;
+				if (bcrypt.compareSync(password, hashed_password))
+					resolve({ status: 200, message: name });	
+				else
+					reject({ status: 401, message: 'Invalid Credentials !' });
 			}
 			else
 				reject({ status: 404, message: 'User Not Found !' });
 		}).catch(console.error);
 	});
 	
-	/*
-	.then(counter => {
-		console.log(`counter=`+counter);
-		if(counter==1){
-			console.log(`in then,counter=`+counter);
-			
-		}
-		else{
-				//console.log(`in then,counter=`+counter);
-			//reject({ status: 401, message: 'Invalid Credentials !' });
-			}
-	}).catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
-		//
-
-	*/
