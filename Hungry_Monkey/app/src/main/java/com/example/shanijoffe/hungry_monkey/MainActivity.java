@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.app.SearchManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,9 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
+
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -141,23 +137,6 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         }
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}
                 , MY_PERMISSIONS_REQUEST_LOCATION);
-        //
-//        spinner=(Spinner) findViewById( R.id.sp_kosher );
-//        adapter=ArrayAdapter.createFromResource( this,R.array.planets_array ,android.R.layout.simple_spinner_item);
-//        adapter.setDropDownViewResource( android.R.layout.simple_spinner_item );
-//        spinner.setAdapter( adapter );
-//        spinner.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                Log.e("MainActivity"," MainActivity ");
-//                Toast.makeText( getBaseContext(),adapterView.getItemAtPosition(i)+"isSalected",Toast.LENGTH_SHORT ).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        } );
         loginButton = (Button) findViewById( R.id.btn_login );
 
         search=(SearchView)findViewById( R.id.DishSearch );
@@ -212,7 +191,6 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
                 int signalStrengthPercent = signalStrength.getGsmSignalStrength();
                 // System.out.println(signalStrength);
 
-
                 gsm=signalStrength.getGsmSignalStrength();
                 //Log.i( "gsm comes here","in gsm changed");
             }
@@ -228,7 +206,6 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             fregment_BasicRes f1=new fregment_BasicRes();
             ft.replace( R.id.fragment_container,f1 );
             ft.commit();
-            // btn_f.setText( "load f2" );
             st=true;
         }
         else
@@ -236,7 +213,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             fregment2 fr2=new fregment2();
             ft.replace( R.id.fragment_container,fr2 );
             ft.commit();
-            //  btn_f.setText( "load f1" );
+
             st=false;
 
         }
@@ -365,7 +342,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
     protected void createLocationRequest() {
 
         Log.i("createLocationRequest"," in createLocationRequest");
-        System.out.printf("gggg");
+
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval( 60000 );
         //  mLocationRequest.setFastestInterval(5000);
@@ -430,7 +407,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             jParser = new JSONParser();
             pd = new ProgressDialog(MainActivity.this);
             pd.setCancelable(false);
-            pd.setMessage("Searching...");
+            pd.setMessage("Searching ...");
             pd.getWindow().setGravity( Gravity.CENTER);
             pd.show();
         }
@@ -445,7 +422,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         }
         protected void onPostExecute(String result)
         {
-            // super.onPostExecute(result);
+
             try {
                 sleep(50);
             } catch (InterruptedException e) {
@@ -470,14 +447,15 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             nameDish = null;
             try {
                 Log.i("123","1");
-                URL url2 = new URL( "http://echo.jsontest.com/key/value/one/two " );
+                URL url2 = new URL( "http://echo.jsontest.com/key/value/one/two " );//temp url
+
                 // Send POST data request
                 URLConnection conn = url2.openConnection();
                 conn.setDoOutput( true );
                 reader = new BufferedReader( new InputStreamReader( conn.getInputStream() ) );
                 StringBuilder sb = new StringBuilder();
                 String line = null;
-                Log.i("123","2");
+
                 // Read Server Response
                 while ((line = reader.readLine()) != null) {
                     // Append server response in string
@@ -570,11 +548,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             {
                 holder = (ViewHolder) convertView.getTag();
             }
-
-
             holder.Dish_name.setText("hhh");
-
-
             return convertView;
         }
 

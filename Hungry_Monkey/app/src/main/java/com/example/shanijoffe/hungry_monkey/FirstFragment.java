@@ -122,8 +122,6 @@ public class FirstFragment extends Fragment {
 
         Bundle bundle = this.getArguments();
     }
-
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -143,8 +141,8 @@ public class FirstFragment extends Fragment {
             e.printStackTrace();
         }
 
+        //temp data to test my list view
         Log.i("my fake name_res  is:",name_res);
-
         Vector<HashMap<String,String>> vector = new Vector<>();
         HashMap<String,String> hashMap = new HashMap<>();
         hashMap.put("name_res",myValue);
