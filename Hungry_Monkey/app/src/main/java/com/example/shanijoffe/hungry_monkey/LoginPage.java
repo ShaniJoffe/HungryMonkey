@@ -10,15 +10,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Iterator;
 
@@ -35,6 +40,7 @@ public class LoginPage extends AppCompatActivity {
     String user_pass="";
     static final int CODE_REQ=1;
     String line="";
+    String userName_res="",token="";
     private static final String TAG = "MyActivity";
     String user2;
 
@@ -50,17 +56,32 @@ public class LoginPage extends AppCompatActivity {
         Log.i(TAG,"before connection");
     }
 
-    public void OnClick(View view)
-    {
-        view.setEnabled( false );
+    public void OnClick(View view) throws JSONException, ParseException, UnsupportedEncodingException {
 
+        view.setEnabled( false );
+        JSONParser parser_obj = new JSONParser();
         log.i( "hi", "in OnClick" );
         user = user_name_edit.getText().toString();
         user_pass = password_edit.getText().toString();
         new SendPostRequest().execute();
+
         Toast.makeText( getBaseContext(),"Welcome " +line,Toast.LENGTH_SHORT ).show();
-        Log.i( "response from server :", line );
+        Log.i( "response from server :", String.valueOf( line ) );
+
+        JSONObject res = new JSONObject(  );
+        res.put("name_name","shani");
+        try {
+            userName_res= (String) res.get("message");
+            token= (String) res.get("token");
+            Log.i( "response from server :", "name is "+userName_res+"token is "+token );
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Bundle user_det = new Bundle();
+
+        user_det.putString("user_name","shani");//here i shpuld insert user_name
         Intent i = new Intent( this, MainActivity.class );
+        i.putExtras(user_det);
         startActivityForResult( i, CODE_REQ );
 
 //        String s = "משתשמש קיים  ";

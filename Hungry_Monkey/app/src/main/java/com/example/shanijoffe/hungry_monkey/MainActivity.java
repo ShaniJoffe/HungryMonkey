@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
     TextView tv;
     private ImageView iv;
     public static Activity _mainActivity;
-
+    TextView mono;
     protected void onCreate(Bundle savedInstanceState)
     {
 
@@ -121,6 +121,8 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN ,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView( R.layout.activity_main );
+        mono=(TextView) findViewById( R.id.welcome_txt );
+
         ///  btn_f=findViewById( R.id.btn_f1 );
         Log.i( TAG, "in main activity" );
         if (mGoogleApiClient == null) {
@@ -168,6 +170,21 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             ft.commit();
 //            btn_f.setText( "load f2" );
             st = true;
+        }
+
+        Bundle user_det = getIntent().getExtras();
+        if (user_det != null)
+        {
+
+
+            String name_res = user_det.getString("user_name");
+            Log.i("the name i got:",name_res);
+            mono.setText( "welcome "+name_res );
+
+        }
+        else if (user_det == null)
+        {
+            Toast.makeText(this, "Bundle is null", Toast.LENGTH_SHORT).show();
         }
 
 
