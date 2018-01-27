@@ -13,6 +13,7 @@
     "express-session": "^1.15.6",
     "express-validator": "^4.3.0",
     "jsonwebtoken": "^7.1.9",
+    "merge-json": "0.1.0-b.3",
     "mongoose": "^4.6.0",
     "morgan": "^1.7.0",
     "node-geocoder": "^3.21.1",

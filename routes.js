@@ -10,7 +10,10 @@ const password = require('./functions/password');
 const config = require('./config/config.json');
 const setRestDetails= require('./functions/setRestDetails');
 const setRestMenu= require('./functions/setRestMenu');
+const getRestDetails= require('./functions/getRestDetails');
 const basicSearch= require('./functions/basicSearch');
+const mergeJSON = require("merge-json") ;	
+
 module.exports = router => {
 	var options = {
 		provider: 'google',
@@ -67,22 +70,43 @@ module.exports = router => {
 	});
 		router.post('/set_menu/:restid', (req, res) => {
 			var dish_id_inRest=parseFloat(req.params.restid);
-			req.body.menu.forEach(function(dish,index) { dish.dish_id_inRest = dish_id_inRest+index*0.1});
-			//console.log(req.body);
-			//res.render('set_menu');
-			setRestMenu.setMenu(req.body,req.params.restid)
+			var tempObj={};
+			getRestDetails.getRestD(req.params.restid)
 			.then(result=>{
-				console.log("balls");
+				//console.log(result.message[0]._source);
+				req.body.menu.forEach(function(dish,index) { dish.dish_id_inRest = dish_id_inRest+index*0.1});
+				setRestMenu.setMenu(result.message[0]._source,req.body,req.params.restid)
+				.then(result=>{
+					res.json(tempObj);
 				});
+			});
 				//res.render('set_menu');			 	
 				//}).catch(err => res.status(err.status).json({ message: err.message }));	
 		//console.log(req.body);
 	});
 		router.post('/basicSearch', (req, res) => {
+		var tempObj={};
+		var size;
 		basicSearch.basicS(req.body.dishName)
 		.then(result=>{
-			console.log(result);
-			res.json(result);
+			size=result.message.length;
+			console.log(size);
+			for(var i=0;i<size;i++)
+			{
+				delete result.message[i]._index;
+				delete result.message[i]._type;
+				delete result.message[i]._id;
+				delete result.message[i]._score;
+				delete result.message[i].inner_hits.menu.hits.total;
+				delete result.message[i].inner_hits.menu.hits.max_score;
+				for(var j=0;j<2;j++)
+				{
+					delete result.message[i].inner_hits.menu.hits.hits[j]._nested;
+					delete result.message[i].inner_hits.menu.hits.hits[j]._score;
+					//console.log(mergeJSON.isJSON(result.message[0].inner_hits.menu.hits));			
+				}
+			}
+			res.json(result.message);
 			});
 		});	
 	

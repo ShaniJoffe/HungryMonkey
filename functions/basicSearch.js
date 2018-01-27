@@ -7,45 +7,55 @@ const search = function search(index, body){
 	return esClient.search({index: index, body: body});
 	};
 	
-	
+const mergeJSON = require("merge-json") ;		
 	exports.basicS = (dish_name) => 
 		new Promise((resolve,reject) => {
 			//console.log(dish_name);
-			let body = {
-				size: 1000,
-			    from: 0,
-			    query: {
-					nested : {
-						path : 'title.menu',
-						query: {
-							bool:{
-								should : [{
-									query_string: {
-										query: '(title.menu.*dish_name:ציפס)'	
-								    }
-									//'title.menu.*dish_name', 'title.menu.*dish_description'],
-									//minimum_should_match: 0,
-									//fuzziness: 2
-								}]			
-							}
-						}
+	esClient.search({//check if exists 
+			index: 'hungrymonkeyrests',
+			type: 'restaurants',
+			_source: ['rest_name','rest_description','rest_location','Kosher','rest_address'],
+			
+			body :{
+				query: {     
+					nested: {
+						path: 'menu',
+							"inner_hits": { 
+								//explain:true,
+								_source: ['menu.dish_name','menu.dish_description','menu.dish_price']
+							
+							},
+							 "query": {
+								 "bool" : {
+									"must" : [
+									{
+										"match": {
+											"menu.dish_name": "טבעות בצל"
+										}
+									}
+									],
+									
+								 }
+								
+							 }
 					}
-				}					
-			};
-			search('hungrymonkeyrests', body)
-			.then(results => {
+				}				
+			}		
+	}).then(results => {
 				console.log(results);
 			console.log(`found ${results.hits.total} items in ${results.took}ms`);
 			if (results.hits.total > 0)
 			{				
-					results.hits.hits.forEach((hit, index) => 
-						console.log(`\t${body.from + ++index} - ${hit._source} (score: ${hit._score})`)
-					);
+					//results.hits.hits.forEach((hit, index) => 
+						//console.log(`\t${body.from + ++index} - ${hit._source} (score: ${hit._score})`)
+					//);
 					resolve({ status: 200, message: results.hits.hits});	
+					//resolve({ status: 200, message: results.hits.hits._source, message2:results.hits.hits.inner_hits.menu.hits.hits[0]._source});	
 
 			}
 			else
 				reject({ status: 404, message: 'User Not Found !' });
 		}).catch(console.error);
 		});
+		
 		
