@@ -3,30 +3,15 @@ package com.example.shanijoffe.hungry_monkey; /**
  */
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CursorAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.shanijoffe.hungry_monkey.MainActivity;
-import com.example.shanijoffe.hungry_monkey.R;
-import com.example.shanijoffe.hungry_monkey.SecondFragment;
 
 import java.util.HashMap;
 import java.util.Vector;

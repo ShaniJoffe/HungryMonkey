@@ -13,9 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/bg_hm"
-
        >
-
         <TextView
             android:id="@+id/welcome_txt"
             android:layout_width="match_parent"
@@ -41,7 +39,6 @@
         android:orientation="vertical">
 
         <SearchView
-
             android:id="@+id/DishSearch"
             android:layout_width="match_parent"
             android:layout_height="77dp"
@@ -50,16 +47,11 @@
             android:hint="הכנס/י שם מנה "
             android:paddingTop="10dp"></SearchView>
 
-
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="0.3">
-
-        </FrameLayout>
-
+            android:layout_margin="10dp"></FrameLayout>
         <FrameLayout
             android:id="@+id/right_frame"
             android:layout_width="match_parent"

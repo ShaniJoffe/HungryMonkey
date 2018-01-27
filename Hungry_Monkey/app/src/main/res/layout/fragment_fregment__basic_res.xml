@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="400dp"
+    android:layout_height="700dp"
     android:background="#4DFFFFCC"
     tools:context="com.example.shanijoffe.hungry_monkey.fregment_BasicRes">
 
@@ -14,13 +14,10 @@
         android:orientation="vertical">
 
 
-
-
-
         <LinearLayout
             android:id="@+id/freg1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
             android:paddingTop="10dp"
@@ -43,7 +40,7 @@
             <LinearLayout
                 android:id="@+id/adv_leyout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 android:paddingTop="25dp"
@@ -51,7 +48,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="45dp"
                     android:orientation="horizontal">
 
                     <SeekBar
@@ -61,12 +58,12 @@
                         android:layout_weight="1" />
 
                     <TextView
-                        android:background="@drawable/edittextstyle"
-
                         android:id="@+id/txtv_dis"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/edittextstyle"
                         android:paddingLeft="10dp"
                         android:text="מרחק" />
                 </LinearLayout>
@@ -75,14 +72,14 @@
             <LinearLayout
                 android:id="@+id/adv_leyout2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="85dp"
                 android:orientation="vertical"
                 android:paddingTop="25dp"
                 android:visibility="invisible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="32dp"
                     android:orientation="horizontal">
 
                     <SeekBar
@@ -92,11 +89,11 @@
                         android:layout_weight="1" />
 
                     <TextView
-                        android:background="@drawable/edittextstyle"
                         android:id="@+id/txtv_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/edittextstyle"
                         android:paddingLeft="10dp"
                         android:text="מחיר" />
                 </LinearLayout>
@@ -105,65 +102,69 @@
             <LinearLayout
                 android:id="@+id/adv_leyout3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="98dp"
                 android:orientation="vertical"
                 android:paddingTop="25dp"
                 android:visibility="invisible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="46dp"
                     android:orientation="horizontal">
 
 
                     <Spinner
                         android:id="@+id/sp_kosher"
                         android:layout_width="140dp"
-                        android:layout_height="34dp" />
+                        android:layout_height="wrap_content" />
 
                     <TextView
-                        android:background="@drawable/edittextstyle"
-
                         android:id="@+id/txtv_kosher"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/edittextstyle"
                         android:paddingLeft="10dp"
                         android:text="כשרות" />
+
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:paddingTop="50dp">
+
+                <Button
+                    android:id="@+id/btn_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/darker_gray"
+                    android:hint="התחבר"
+                    android:onClick="OnClick"
+                    android:text="התחבר"
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_reg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/darker_gray"
+                    android:onClick="OnClickSign"
+                    android:paddingTop="25dp"
+                    android:text="הרשם"
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingTop="50dp">
-
-            <Button
-                android:id="@+id/btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
-                android:hint="התחבר"
-                android:onClick="OnClick"
-                android:text="התחבר"
-                android:textColor="#FFF"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_reg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/darker_gray"
-                android:onClick="OnClickSign"
-                android:paddingTop="25dp"
-                android:text="הרשם"
-                android:textColor="#FFF"
-                android:textStyle="bold" />
-        </LinearLayout>
-
     </LinearLayout>
+
 </FrameLayout>

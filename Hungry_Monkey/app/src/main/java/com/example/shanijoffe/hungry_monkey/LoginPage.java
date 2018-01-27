@@ -1,6 +1,7 @@
 package com.example.shanijoffe.hungry_monkey;
 
 import android.content.Intent;
+
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,30 +64,19 @@ public class LoginPage extends AppCompatActivity {
         log.i( "hi", "in OnClick" );
         user = user_name_edit.getText().toString();
         user_pass = password_edit.getText().toString();
-        new SendPostRequest().execute();
+          new SendPostRequest().execute();
+        Log.i( "response from server :", "name is "+userName_res+"token is "+token );
+          if (line!=" " && userName_res !="" && token !="" )
+          {
 
-        Toast.makeText( getBaseContext(),"Welcome " +line,Toast.LENGTH_SHORT ).show();
-        Log.i( "response from server :", String.valueOf( line ) );
-
-        JSONObject res = new JSONObject(  );
-        res.put("name_name","shani");
-        try {
-            userName_res= (String) res.get("message");
-            token= (String) res.get("token");
             Log.i( "response from server :", "name is "+userName_res+"token is "+token );
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Bundle user_det = new Bundle();
+            Bundle user_det = new Bundle();
+            user_det.putString("user_name",userName_res);//here i shpuld insert user_name
+            Intent i = new Intent( this, MainActivity.class );
+            i.putExtras(user_det);
+            startActivityForResult( i, CODE_REQ );
 
-        user_det.putString("user_name","shani");//here i shpuld insert user_name
-        Intent i = new Intent( this, MainActivity.class );
-        i.putExtras(user_det);
-        startActivityForResult( i, CODE_REQ );
-
-//        String s = "משתשמש קיים  ";
-//        i.putExtra( "myString", line );
-
+          }
 
     }
 
@@ -129,7 +119,6 @@ public class LoginPage extends AppCompatActivity {
                             new InputStreamReader(
                                     conn.getInputStream()));
                     StringBuffer sb = new StringBuffer("");
-
                     Log.i("hey dan","hey shan");
                     while((line = in.readLine()) != null)
                     {
@@ -137,10 +126,8 @@ public class LoginPage extends AppCompatActivity {
                         sb.append(line);
                         break;
                     }
-
                     in.close();
                     return sb.toString();
-
                 }
                 else
                 {
@@ -153,7 +140,24 @@ public class LoginPage extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(getApplicationContext(), result,
+            Log.i("usrn",result);
+            try {
+                JSONObject jObj = new JSONObject(result);
+                userName_res = jObj.getString("message");
+                token=jObj.getString("token");
+                Log.i("userName_res)",userName_res);
+
+                Log.i( "response from server :", "name is "+userName_res+"token is "+token );
+                Bundle user_det = new Bundle();
+                user_det.putString("user_name",userName_res);//here i shpuld insert user_name
+                Intent i = new Intent( getApplicationContext(), MainActivity.class );
+                i.putExtras(user_det);
+                startActivityForResult( i, CODE_REQ );
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(getApplicationContext(), "userName_res :" + userName_res,
                     Toast.LENGTH_LONG).show();
         }
     }

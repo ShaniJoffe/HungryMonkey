@@ -71,57 +71,56 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
     LocationRequest mLocationRequest;
     private RecyclerView.Adapter mAdapter;
     private final int MY_PERMISSIONS_REQUEST_LOCATION = 1;
-    String url=new String();
+    String url = new String();
     Spinner spinner;
     ArrayAdapter<String> adapter2;
     ArrayAdapter<CharSequence> adapter;
     EditText user_name_edit;
     EditText password_edit;
     Button loginButton;
-    String user="";
-    String   dish_result="";
-    boolean st=false;
-    String user_pass="";
-    final int CODE_REQ=1;
-    String line="";
+    String user = "";
+    String dish_result = "";
+    boolean st = false;
+    String user_pass = "";
+    final int CODE_REQ = 1;
+    String line = "";
     final String TAG = "MyActivity";
     String user2;
-    ArrayList<Dish> DishResults =new ArrayList<Dish>();
-    ArrayList<Dish> filteredDishResults =new ArrayList<Dish>();
+    ArrayList<Dish> DishResults = new ArrayList<Dish>();
+    ArrayList<Dish> filteredDishResults = new ArrayList<Dish>();
     SearchView search;
     ListView searchResults;
     View myFragmentView;
     int gsm;
-    Location  lastLocation;
+    Location lastLocation;
     JSONArray jsonArray = new JSONArray();
     JSONObject jsonObject = new JSONObject();
     TelephonyManager tManager;
-    boolean search_finshed =false;
+    boolean search_finshed = false;
     MyPhoneStateListener myPhoneStateListener;
-    boolean show=false;
+    boolean show = false;
     Button btn_f;
     TextView tv;
     private ImageView iv;
     public static Activity _mainActivity;
     TextView mono;
-    protected void onCreate(Bundle savedInstanceState)
-    {
 
-        String[] teams={"Man Utd","Man City","Chelsea","Arsenal","Liverpool","Totenham"};
+    protected void onCreate(Bundle savedInstanceState) {
+
+        String[] teams = {"Man Utd", "Man City", "Chelsea", "Arsenal", "Liverpool", "Totenham"};
         super.onCreate( savedInstanceState );
-        _mainActivity=this;
-        if (Build.VERSION.SDK_INT < 16)
-        {
+        _mainActivity = this;
+        if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN );
 
         }
 
         requestWindowFeature( Window.FEATURE_NO_TITLE );
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN ,
+        getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView( R.layout.activity_main );
-        mono=(TextView) findViewById( R.id.welcome_txt );
+        mono = (TextView) findViewById( R.id.welcome_txt );
 
         ///  btn_f=findViewById( R.id.btn_f1 );
         Log.i( TAG, "in main activity" );
@@ -133,38 +132,37 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
                     .build();
             ///location
             myPhoneStateListener = new MyPhoneStateListener();
-            tManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-            tManager.listen(myPhoneStateListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+            tManager = (TelephonyManager) getSystemService( Context.TELEPHONY_SERVICE );
+            tManager.listen( myPhoneStateListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS );
 
         }
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}
-                , MY_PERMISSIONS_REQUEST_LOCATION);
+        ActivityCompat.requestPermissions( this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}
+                , MY_PERMISSIONS_REQUEST_LOCATION );
         loginButton = (Button) findViewById( R.id.btn_login );
 
-        search=(SearchView)findViewById( R.id.DishSearch );
-        search.setQueryHint("הכנס שם מנה ");
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        search = (SearchView) findViewById( R.id.DishSearch );
+        search.setQueryHint( "הכנס שם מנה " );
+        search.setOnQueryTextListener( new SearchView.OnQueryTextListener() {
 
-            public boolean onQueryTextSubmit(String text)
-            {
-                Log.i("MainActivity","in onQueryTextSubmit");
+            public boolean onQueryTextSubmit(String text) {
+                Log.i( "MainActivity", "in onQueryTextSubmit" );
 
                 // searchResults.setVisibility(myFragmentView.VISIBLE);
-                myAsyncTask m= (myAsyncTask) new myAsyncTask().execute(text);
+                myAsyncTask m = (myAsyncTask) new myAsyncTask().execute( text );
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String text) {
 //                adapter2.getFilter().filter(text);
-                Log.i(TAG,"HAYOOO");
+                Log.i( TAG, "HAYOOO" );
                 return false;
             }
-        });
-        Log.i("sup","sup");
-        FragmentManager fm =getFragmentManager();
-        FragmentTransaction ft=fm.beginTransaction();
-        if(!st)
-        {
+        } );
+        Log.i( "sup", "sup" );
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        if (!st) {
             fregment_BasicRes f1 = new fregment_BasicRes();
             ft.replace( R.id.fragment_container, f1 );
             ft.commit();
@@ -173,22 +171,17 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         }
 
         Bundle user_det = getIntent().getExtras();
-        if (user_det != null)
-        {
-
-
-            String name_res = user_det.getString("user_name");
-            Log.i("the name i got:",name_res);
-            mono.setText( "welcome "+name_res );
-
-        }
-        else if (user_det == null)
-        {
-            Toast.makeText(this, "Bundle is null", Toast.LENGTH_SHORT).show();
+        if (user_det != null) {
+            String name_res = user_det.getString( "user_name" );
+            Log.i( "the name i got:", name_res );
+            mono.setText( "welcome " + name_res );
+        } else if (user_det == null) {
+            Toast.makeText( this, "Bundle is null", Toast.LENGTH_SHORT ).show();
         }
 
 
     }
+
     protected void onStart() {
         mGoogleApiClient.connect();
         super.onStart();
@@ -198,50 +191,45 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         mGoogleApiClient.disconnect();
         super.onStop();
     }
+
     private class MyPhoneStateListener extends PhoneStateListener {
         /* Get the Signal strength from the provider, each time there is an update */
         @Override
-        public void onSignalStrengthsChanged(SignalStrength signalStrength)
-        {
-            super.onSignalStrengthsChanged(signalStrength);
+        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+            super.onSignalStrengthsChanged( signalStrength );
             if (null != signalStrength && signalStrength.getGsmSignalStrength() != UNKNOW_CODE) {
                 int signalStrengthPercent = signalStrength.getGsmSignalStrength();
                 // System.out.println(signalStrength);
 
-                gsm=signalStrength.getGsmSignalStrength();
+                gsm = signalStrength.getGsmSignalStrength();
                 //Log.i( "gsm comes here","in gsm changed");
             }
         }
     }
 
-    public void onClickFreg1(View view)
-    {
-        FragmentManager fm =getFragmentManager();
-        FragmentTransaction ft=fm.beginTransaction();
-        if(!st)
-        {
-            fregment_BasicRes f1=new fregment_BasicRes();
-            ft.replace( R.id.fragment_container,f1 );
+    public void onClickFreg1(View view) {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        if (!st) {
+            fregment_BasicRes f1 = new fregment_BasicRes();
+            ft.replace( R.id.fragment_container, f1 );
             ft.commit();
-            st=true;
-        }
-        else
-        {
-            fregment2 fr2=new fregment2();
-            ft.replace( R.id.fragment_container,fr2 );
+            st = true;
+        } else {
+            fregment2 fr2 = new fregment2();
+            ft.replace( R.id.fragment_container, fr2 );
             ft.commit();
 
-            st=false;
+            st = false;
 
         }
     }
-    public void OnClickSign(View view)
-    {
+
+    public void OnClickSign(View view) {
         log.i( "hi", "sup" );
-        Log.e("MainActivity","fuka u ");
-        Log.i("line is:",line);
-        if (line == line)
-        {
+        Log.e( "MainActivity", "fuka u " );
+        Log.i( "line is:", line );
+        if (line == line) {
             Intent i = new Intent( this, SignUpActivity.class );
             String s = "משתשמש חדש  ";
             i.putExtra( "myString", s );
@@ -249,74 +237,65 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         }
     }
 
-    public void OnClickShowAdvancedSearch(View view)
-    {
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.adv_leyout);
-        LinearLayout linearLayout2 = (LinearLayout) findViewById(R.id.adv_leyout2);
-        LinearLayout linearLayout3 = (LinearLayout) findViewById(R.id.adv_leyout3);
-        if (show==false)
-        {
+    public void OnClickShowAdvancedSearch(View view) {
+        LinearLayout linearLayout = (LinearLayout) findViewById( R.id.adv_leyout );
+        LinearLayout linearLayout2 = (LinearLayout) findViewById( R.id.adv_leyout2 );
+        LinearLayout linearLayout3 = (LinearLayout) findViewById( R.id.adv_leyout3 );
+        if (show == false) {
 
-            linearLayout.setVisibility(View.VISIBLE);
-            linearLayout2.setVisibility(View.VISIBLE);
-            linearLayout3.setVisibility(View.VISIBLE);
-            show=true;
+            linearLayout.setVisibility( View.VISIBLE );
+            linearLayout2.setVisibility( View.VISIBLE );
+            linearLayout3.setVisibility( View.VISIBLE );
+            show = true;
 
-        }
-        else
-        {
-            linearLayout.setVisibility(View.INVISIBLE);
-            linearLayout2.setVisibility(View.INVISIBLE);
-            linearLayout3.setVisibility(View.INVISIBLE);
-            show=false;
+        } else {
+            linearLayout.setVisibility( View.INVISIBLE );
+            linearLayout2.setVisibility( View.INVISIBLE );
+            linearLayout3.setVisibility( View.INVISIBLE );
+            show = false;
 
         }
     }
+
     public void OnClick(View view)//login button
     {
         log.i( "hi", "sup" );
         //new SendPostRequest().execute();
-        Log.i("line is:",line);
-        if (line == line)
-        {
+        Log.i( "line is:", line );
+        if (line == line) {
             Intent i = new Intent( this, LoginPage.class );
-            String s = line ;
+            String s = line;
             i.putExtra( "myString", s );
             startActivityForResult( i, CODE_REQ );
         }
     }
 
     @Override
-    public void onLocationChanged(Location location)
-    {
-        Log.i("onLocationChanged","onLocationChanged");
-        double lat  =location.getLatitude();
-        double lon =location.getLongitude();
+    public void onLocationChanged(Location location) {
+        Log.i( "onLocationChanged", "onLocationChanged" );
+        double lat = location.getLatitude();
+        double lon = location.getLongitude();
         JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
-        Log.e("latitude", location.getLatitude() + "");
-        Log.e("longitude", location.getLongitude() + "");
-        String MNO="";
+        Log.e( "latitude", location.getLatitude() + "" );
+        Log.e( "longitude", location.getLongitude() + "" );
+        String MNO = "";
 
-        SharedPreferences settings0 = getSharedPreferences("MNO",Context.MODE_PRIVATE);
-        MNO = settings0.getString("MNO", "");
+        SharedPreferences settings0 = getSharedPreferences( "MNO", Context.MODE_PRIVATE );
+        MNO = settings0.getString( "MNO", "" );
 
 
-        try
-        {
+        try {
             jsonObject.put( "MNO", MNO );
             jsonObject.put( "latitude", location.getLatitude() );
             jsonObject.put( "longitude", location.getLongitude() );
             jsonArray.put( jsonObject );
-        }
-
-
-        catch (Exception e) {
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        Log.e("request", jsonArray.toString());
+        Log.e( "request", jsonArray.toString() );
     }
 
     @Override
@@ -341,9 +320,8 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
 
 
     @Override
-    public void onConnected(@Nullable Bundle bundle)
-    {
-        Log.i("onConnected"," in onConnected");
+    public void onConnected(@Nullable Bundle bundle) {
+        Log.i( "onConnected", " in onConnected" );
         if (ContextCompat.checkSelfPermission( this, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED) {
             lastLocation = LocationServices.FusedLocationApi.getLastLocation( mGoogleApiClient );
             createLocationRequest();
@@ -358,7 +336,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
     @SuppressWarnings({"ResourceType"})
     protected void createLocationRequest() {
 
-        Log.i("createLocationRequest"," in createLocationRequest");
+        Log.i( "createLocationRequest", " in createLocationRequest" );
 
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval( 60000 );
@@ -367,25 +345,26 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         mLocationRequest.setSmallestDisplacement( (float) 50.00 );
 
         //    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, (com.google.android.gms.location.LocationListener) this );
-        Log.i("createLocationRequest"," in createLocationRequest");
+        Log.i( "createLocationRequest", " in createLocationRequest" );
         // LocationServices.FusedLocationApi.requestLocationUpdates( mGoogleApiClient, mLocationRequest, (LocationListener) this );
     }
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
-    {
+
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
 
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.w("MainActivity", "Permissions was granteed");
+                    Log.w( "MainActivity", "Permissions was granteed" );
 
                 } else {
-                    Log.e("MainActivity", "Permissions was denied");
+                    Log.e( "MainActivity", "Permissions was denied" );
 
                 }
             }
         }
     }
+
     @Override
     public void onConnectionSuspended(int i) {
 
@@ -395,64 +374,67 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
     public void callFreg1() throws InterruptedException {
 
-        FragmentManager fm =getFragmentManager();
-        FragmentTransaction ft=fm.beginTransaction();
-        FirstFragment first = new FirstFragment() ;
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        FirstFragment first = new FirstFragment();
 // set Fragmentclass Arguments
 
         Bundle bundle2 = new Bundle();
-        sleep(1000);
-        bundle2.putString("name_res", dish_result );
-        Log.i("sending to freg1 :",dish_result);
+        sleep( 1000 );
+        bundle2.putString( "name_res", dish_result );
+        Log.i( "sending to freg1 :", dish_result );
         first.setArguments( bundle2 );
-        ft.replace( R.id.fragment_container,first,"fregment2 tag" );
+        ft.replace( R.id.fragment_container, first, "fregment2 tag" );
         ft.commit();
-        st=false;
+        st = false;
     }
-    class myAsyncTask extends AsyncTask<String, Void, String>
-    {
+
+    class myAsyncTask extends AsyncTask<String, Void, String> {
         JSONParser jParser;
         JSONArray productList;
         JSONArray dataJsonArr = null;
-        ProgressDialog pd ;
+        ProgressDialog pd;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            productList=new JSONArray();
+            productList = new JSONArray();
             jParser = new JSONParser();
-            pd = new ProgressDialog(MainActivity.this);
-            pd.setCancelable(false);
-            pd.setMessage("Searching ...");
-            pd.getWindow().setGravity( Gravity.CENTER);
+            pd = new ProgressDialog( MainActivity.this );
+            pd.setCancelable( false );
+            pd.setMessage( "Searching ..." );
+            pd.getWindow().setGravity( Gravity.CENTER );
             pd.show();
         }
-        @Override
-        protected String doInBackground(String... strings)
-        {
 
-            Log.i("in do ","in do");
-            String returnResult = getDishList(url);
-            search_finshed=true;
+        @Override
+        protected String doInBackground(String... strings) {
+
+            Log.i( "in do ", "in do" );
+            String returnResult = getDishList( url );
+            search_finshed = true;
             return returnResult;
         }
-        protected void onPostExecute(String result)
-        {
+
+        protected void onPostExecute(String result) {
 
             try {
-                sleep(50);
+                sleep( 50 );
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             pd.dismiss();
-            Log.i("caling:","freg1");
+            Log.i( "caling:", "freg1" );
             try {
                 callFreg1();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
         @SuppressLint({"MissingPermission", "LongLogTag"})
         public String getDishList(String url) {
             Dish tempDish = new Dish();
@@ -460,11 +442,11 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             BufferedReader reader = null;
             String text = "";
             String nameDish;
-            JSONObject json ;
+            JSONObject json;
             nameDish = null;
             try {
-                Log.i("123","1");
-                URL url2 = new URL( "http://echo.jsontest.com/key/value/one/two " );//temp url
+                Log.i( "123", "1" );
+                URL url2 = new URL( "http://hungrymonkey-env.vivacrpttt.eu-central-1.elasticbeanstalk.com/api/v1/basicSearch" );//temp url
 
                 // Send POST data request
                 URLConnection conn = url2.openConnection();
@@ -472,116 +454,110 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
                 reader = new BufferedReader( new InputStreamReader( conn.getInputStream() ) );
                 StringBuilder sb = new StringBuilder();
                 String line = null;
+                JSONObject res = new JSONObject();
 
                 // Read Server Response
                 while ((line = reader.readLine()) != null) {
                     // Append server response in string
                     sb.append( line + "\n" );
+                    res.put( "name", line.toString() );
                 }
+                Log.i( "res is :", res.toString() );
                 text = sb.toString();
 
-                Log.i("onPostExecute"," in onPostExecute  my json from server is :" + text);
+                Log.i( "onPostExecute", " in onPostExecute  my json from server is :" + text );
 
 //                lastLocation = LocationServices.FusedLocationApi.getLastLocation( mGoogleApiClient );
 //                jsonObject.put( "latitude", lastLocation.getLatitude() );
 //                jsonObject.put( "longitude", lastLocation.getLongitude() );
 //                jsonObject.put( "dish",text.toString() );
-                json=new JSONObject( text );
-                Log.i("jsontext:",text);
-                dish_result= (String) json.get("one");
-                Log.i("jsontext2:",dish_result);
-                // get the array of users
-                dataJsonArr = (JSONArray) json.get( "Dishes" );
-                // loop through all users
-                for (int i = 0; i < dataJsonArr.length(); i++) {
-                    JSONObject c = (JSONObject) dataJsonArr.get( i );
-                    // Storing each json item in variable
-                    nameDish = (String) c.get( "nameDish" );
-                    // show the values in our logcat
-                    Log.e( TAG, "nameDish: " + nameDish );
+                json = new JSONObject( text );
+                Log.i( "jsontext:", text );
+//                dish_result= (String) json.get("one");
+//                Log.i("jsontext2:",dish_result);
+//                // get the array of users
+//                dataJsonArr = (JSONArray) json.get( "Dishes" );
+//                // loop through all users
+//                for (int i = 0; i < dataJsonArr.length(); i++) {
+//                    JSONObject c = (JSONObject) dataJsonArr.get( i );
+//                    // Storing each json item in variable
+//                    nameDish = (String) c.get( "nameDish" );
+//                    // show the values in our logcat
+//                    Log.e( TAG, "nameDish: " + nameDish );
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+
+            return text;
+        }
+
+        class SearchResultsAdapter extends BaseAdapter {
+            private LayoutInflater layoutInflater;
+
+            private ArrayList<Dish> productDetails = new ArrayList<Dish>();
+            int count;
+            Typeface type;
+            Context context;
+
+            //constructor method
+            public SearchResultsAdapter(Context context, ArrayList<Dish> product_details) {
+
+                layoutInflater = LayoutInflater.from( context );
+
+                this.productDetails = product_details;
+                this.count = product_details.size();
+                this.context = context;
+                type = Typeface.createFromAsset( context.getAssets(), "fonts/book.TTF" );
+
+            }
+
+            @Override
+            public int getCount() {
+                return count;
+            }
+
+            @Override
+            public Object getItem(int arg0) {
+                return productDetails.get( arg0 );
+            }
+
+            @Override
+            public long getItemId(int arg0) {
+                return arg0;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+
+                ViewHolder holder;
+                Dish tempProduct = productDetails.get( position );
+
+                if (convertView == null) {
+                    convertView = layoutInflater.inflate( R.layout.single_dish_item, null );
+                    holder = new ViewHolder();
+                    holder.Dish_name = (TextView) convertView.findViewById( R.id.Dish_name );
+                    convertView.setTag( holder );
+                } else {
+                    holder = (ViewHolder) convertView.getTag();
                 }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                holder.Dish_name.setText( "hhh" );
+                return convertView;
             }
-            return nameDish;
-        }
-    }
-    class SearchResultsAdapter extends BaseAdapter
-    {
-        private LayoutInflater layoutInflater;
 
-        private ArrayList<Dish> productDetails=new ArrayList<Dish>();
-        int count;
-        Typeface type;
-        Context context;
-
-        //constructor method
-        public SearchResultsAdapter(Context context, ArrayList<Dish> product_details) {
-
-            layoutInflater = LayoutInflater.from(context);
-
-            this.productDetails=product_details;
-            this.count= product_details.size();
-            this.context = context;
-            type= Typeface.createFromAsset(context.getAssets(),"fonts/book.TTF");
-
-        }
-
-        @Override
-        public int getCount() {
-            return count;
-        }
-
-        @Override
-        public Object getItem(int arg0) {
-            return productDetails.get(arg0);
-        }
-
-        @Override
-        public long getItemId(int arg0) {
-            return arg0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
-
-            ViewHolder holder;
-            Dish tempProduct = productDetails.get(position);
-
-            if (convertView == null)
-            {
-                convertView = layoutInflater.inflate(R.layout.single_dish_item, null);
-                holder = new ViewHolder();
-                holder.Dish_name = (TextView) convertView.findViewById(R.id.Dish_name);
-                convertView.setTag(holder);
+            class ViewHolder {
+                TextView Dish_name;
             }
-            else
-            {
-                holder = (ViewHolder) convertView.getTag();
+
+        }
+
+        public boolean isTablet() {
+            int display_mode = _mainActivity.getResources().getConfiguration().orientation;
+            if (display_mode == Configuration.ORIENTATION_PORTRAIT) {
+                return false;
             }
-            holder.Dish_name.setText("hhh");
-            return convertView;
+            return true;
         }
-
-        class ViewHolder
-        {
-            TextView Dish_name;
-        }
-
-    }
-    public static boolean isTablet()
-    {
-        int display_mode = _mainActivity.getResources().getConfiguration().orientation;
-        if(display_mode  == Configuration.ORIENTATION_PORTRAIT)
-        {
-            return false;
-        }
-        return true;
     }
 }
