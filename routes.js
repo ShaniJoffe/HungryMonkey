@@ -87,10 +87,14 @@ module.exports = router => {
 		router.post('/basicSearch', (req, res) => {
 		var tempObj={};
 		var size;
+		var size2;
 		basicSearch.basicS(req.body.dishName)
 		.then(result=>{
+			console.log("balls");
 			size=result.message.length;
-			console.log(size);
+			
+
+			console.log(result.message);
 			for(var i=0;i<size;i++)
 			{
 				delete result.message[i]._index;
@@ -99,7 +103,9 @@ module.exports = router => {
 				delete result.message[i]._score;
 				delete result.message[i].inner_hits.menu.hits.total;
 				delete result.message[i].inner_hits.menu.hits.max_score;
-				for(var j=0;j<2;j++)
+				size2=result.message[i].inner_hits.menu.hits.hits.length;
+				console.log(size2);
+				for(var j=0;j<size2;j++)
 				{
 					delete result.message[i].inner_hits.menu.hits.hits[j]._nested;
 					delete result.message[i].inner_hits.menu.hits.hits[j]._score;

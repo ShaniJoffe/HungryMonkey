@@ -10,7 +10,7 @@ const search = function search(index, body){
 const mergeJSON = require("merge-json") ;		
 	exports.basicS = (dish_name) => 
 		new Promise((resolve,reject) => {
-			//console.log(dish_name);
+			console.log(dish_name);
 	esClient.search({//check if exists 
 			index: 'hungrymonkeyrests',
 			type: 'restaurants',
@@ -27,16 +27,21 @@ const mergeJSON = require("merge-json") ;
 							},
 							 "query": {
 								 "bool" : {
-									"must" : [
-									{
-										"match": {
-											"menu.dish_name": "טבעות בצל"
+									"should":   { 
+										"query": {
+											"match": {
+												"menu.dish_description":{
+													"query": dish_name ,
+													"operator": "and"
+												}
+											}
 										}
-									}
-									],
-									
-								 }
-								
+									},
+									"should" : [
+										{"term": {"menu.dish_name": dish_name}}
+									]
+									//"minimum_should_match": 1
+								 }	
 							 }
 					}
 				}				
