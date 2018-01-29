@@ -8,38 +8,16 @@
         
 <h1>הזנת פרטי התפריט:</h1>
     <form id="set-menu" method="POST" action="/api/v1/set_menu/<%=restid %>">
-        <label for='menu[0][dish_name]'>מנה1</label>
-        <input type="text" name='menu[0][dish_name]'><br>
-        <label for='menu[0][dish_description]'>תיאור:</label>
-        <input type="text" name='menu[0][dish_description]'><br>
-        <label for='menu[0][dish_price]'>מחיר:</label>
-        <input type="text" name='menu[0][dish_price]'><br>
-            <label for='menu[1][dish_name]'>מנה1</label>
-        <input type="text" name='menu[1][dish_name]'><br>
-        <label for='menu[1][dish_description]'>תיאור:</label>
-        <input type="text" name='menu[1][dish_description]'><br>
-        <label for='menu[1][dish_price]'>מחיר:</label>
-        <input type="text" name='menu[1][dish_price]'><br>
-        <!--
-            <label for='menu[2][dish_name]'>מנה1</label>
-        <input type="text" name='menu[2][dish_name]'><br>
-        <label for='menu[2][dish_description]'>תיאור:</label>
-        <input type="text" name='menu[2][dish_description]'><br>
-        <label for='menu[2][dish_price]'>מחיר:</label>
-        <input type="text" name='menu[2][dish_price]'><br>
-            <label for='menu[3][dish_name]'>מנה1</label>
-        <input type="text" name='menu[3][dish_name]'><br>
-        <label for='menu[3][dish_description]'>תיאור:</label>
-        <input type="text" name='menu[3][dish_description]'><br>
-        <label for='menu[3][dish_price]'>מחיר:</label>
-        <input type="text" name='menu[3][dish_price]'><br>
-            <label for='menu[4][dish_name]'>מנה1</label>
-        <input type="text" name='menu[4][dish_name]'><br>
-        <label for='menu[4][dish_description]'>תיאור:</label>
-        <input type="text" name='menu[4][dish_description]'><br>
-        <label for='menu[4][dish_price]'>מחיר:</label>
-        <input type="text" name='menu[4][dish_price]'><br>
-            -->
+        <% for(let i = 0; i < numOfDishes; i++) { %>
+            <% console.log(i) %>
+            <label for='menu[<%=i%>][dish_name]'>>:מנה</label>
+            <input type="text" name='menu[<%=i%>][dish_name]'><br>    
+            <label for='menu[<%=i%>][dish_description]'>תיאור:</label>
+            <input type="text" name='menu[<%=i%>][dish_description]'><br>
+            <label for='menu[<%=i%>][dish_price]'>מחיר:</label>
+            <input type="text" name='menu[<%=i%>][dish_price]'><br>
+            <br>
+          <% } %>
         <input type="submit" value="Submit">
     </form>
 

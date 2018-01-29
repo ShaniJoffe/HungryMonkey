@@ -10,8 +10,8 @@ const search = function search(index, body){
 const mergeJSON = require("merge-json") ;		
 	exports.basicS = (dish_name) => 
 		new Promise((resolve,reject) => {
-			console.log(dish_name);
-	esClient.search({//check if exists 
+			//console.log(dish_name);
+		esClient.search({//check if exists 
 			index: 'hungrymonkeyrests',
 			type: 'restaurants',
 			_source: ['rest_name','rest_description','rest_location','Kosher','rest_address'],
@@ -20,29 +20,30 @@ const mergeJSON = require("merge-json") ;
 				query: {     
 					nested: {
 						path: 'menu',
-							"inner_hits": { 
-								//explain:true,
-								_source: ['menu.dish_name','menu.dish_description','menu.dish_price']
-							
-							},
-							 "query": {
-								 "bool" : {
-									"should":   { 
-										"query": {
-											"match": {
-												"menu.dish_description":{
-													"query": dish_name ,
-													"operator": "and"
+						"inner_hits": { 
+						//explain:true,
+							_source: ['menu.dish_name','menu.dish_description','menu.dish_price']
+						},
+						"query": {
+							 "bool" : {
+								"should" : [
+									{"term": {"menu.dish_name": dish_name}},
+									{"bool": {
+										"should" : [
+											{"match": {
+													"menu.dish_description":{
+														"query": dish_name,
+														"operator": "and",
+														//"minimum_should_match": "75%"
+													}
 												}
 											}
-										}
-									},
-									"should" : [
-										{"term": {"menu.dish_name": dish_name}}
-									]
-									//"minimum_should_match": 1
-								 }	
+										]
+									}
+									}
+								]
 							 }
+						}	 
 					}
 				}				
 			}		

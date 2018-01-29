@@ -8,7 +8,10 @@ const mergeJSON = require("merge-json") ;
 exports.setMenu = (restDetails,menu,id) => 
 	new Promise((resolve,reject) => {	
 		let bulkBody = [];
+		console.log(restDetails);
+		console.log(menu);
 		var temp=mergeJSON.merge(restDetails,menu);
+		console.log(temp);
 		bulkBody.push({
 			index: {
 				_index: 'hungrymonkeyrests',
@@ -20,6 +23,7 @@ exports.setMenu = (restDetails,menu,id) =>
 			bulkBody.push(temp);	
 			 esClient.bulk({body: bulkBody})
 			.then(response=>{
+					console.log("Tep"+temp);
 					resolve({ status: 201, message: "fuck yeah"})})
 						.catch(console.error);
 	});	

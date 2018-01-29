@@ -49,20 +49,20 @@ module.exports = router => {
 		}
 		geocoder.geocode(req.body.rest_address)
 		.then(result=>{
-			console.log(result[0].latitude);
+			//console.log(result[0].latitude);
 			tempGeoLoc={'lat':result[0].latitude, 'lon':result[0].longitude};
-			console.log(tempGeoLoc);
+			console.log("balls"+req.body.rest_numOfdishes);
 			var RestDetails={	'rest_name'	: req.body.rest_name,
 					'rest_zip'	:req.body.rest_zip,
 					'Kosher'	:	tempbol,
 					'rest_location':tempGeoLoc,
 					'rest_address'	:req.body.rest_address,
 					'rest_desc'	:req.body.rest_desc
-				};	
+				};			
 			setRestDetails.setRestD(RestDetails)
 			.then(result=>{	
 				console.log(result);
-				res.render('set_menu',{restid : result.message});		
+				res.render('set_menu',{restid : result.message, numOfDishes:req.body.rest_numOfdishes});			
 				}).catch(err => res.status(err.status).json({ message: err.message }));		
 		}).catch(function(err) {
 			console.log(err);
@@ -73,7 +73,7 @@ module.exports = router => {
 			var tempObj={};
 			getRestDetails.getRestD(req.params.restid)
 			.then(result=>{
-				//console.log(result.message[0]._source);
+				console.log(result.message[0]._source);
 				req.body.menu.forEach(function(dish,index) { dish.dish_id_inRest = dish_id_inRest+index*0.1});
 				setRestMenu.setMenu(result.message[0]._source,req.body,req.params.restid)
 				.then(result=>{
