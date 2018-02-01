@@ -25,9 +25,9 @@ import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -55,12 +55,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import javax.net.ssl.HttpsURLConnection;
+
 import static com.loopj.android.http.AsyncHttpClient.log;
 import static java.lang.Thread.sleep;
 
@@ -116,11 +127,14 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
 
         }
 
+
+
         requestWindowFeature( Window.FEATURE_NO_TITLE );
         getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView( R.layout.activity_main );
         mono = (TextView) findViewById( R.id.welcome_txt );
+
 
         ///  btn_f=findViewById( R.id.btn_f1 );
         Log.i( TAG, "in main activity" );
@@ -176,7 +190,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             Log.i( "the name i got:", name_res );
             mono.setText( "welcome " + name_res );
         } else if (user_det == null) {
-            Toast.makeText( this, "Bundle is null", Toast.LENGTH_SHORT ).show();
+           // Toast.makeText( this, "Bundle is null", Toast.LENGTH_SHORT ).show();
         }
 
 
@@ -384,7 +398,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
 
         Bundle bundle2 = new Bundle();
         sleep( 1000 );
-        bundle2.putString( "name_res", dish_result );
+        bundle2.putString( "dish_list", dish_result );
         Log.i( "sending to freg1 :", dish_result );
         first.setArguments( bundle2 );
         ft.replace( R.id.fragment_container, first, "fregment2 tag" );
@@ -412,7 +426,6 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
 
         @Override
         protected String doInBackground(String... strings) {
-
             Log.i( "in do ", "in do" );
             String returnResult = getDishList( url );
             search_finshed = true;
@@ -420,7 +433,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
         }
 
         protected void onPostExecute(String result) {
-
+            dish_result=result;
             try {
                 sleep( 50 );
             } catch (InterruptedException e) {
@@ -442,115 +455,125 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             BufferedReader reader = null;
             String text = "";
             String nameDish;
-            JSONObject json;
+            HttpURLConnection conn = null;
+
             nameDish = null;
+
+            ////
             try {
-                Log.i( "123", "1" );
-                URL url2 = new URL( "http://hungrymonkey-env.vivacrpttt.eu-central-1.elasticbeanstalk.com/api/v1/basicSearch" );//temp url
+                log.i( "in doInBackground ", "1" );
+                URL url2 = new URL( "http://hungrymonkey-env.vivacrpttt.eu-central-1.elasticbeanstalk.com/api/v1/basicSearch" ); // here is your URL path
+                JSONObject dish_inp = new JSONObject();
+                dish_inp.put( "dishName", search.getQuery() );
 
-                // Send POST data request
-                URLConnection conn = url2.openConnection();
+                Log.e( "params", dish_inp.toString() );
+
+                //POST
+                conn = (HttpURLConnection) url2.openConnection();
+                conn.setReadTimeout( 50000 /* milliseconds */ );
+                conn.setConnectTimeout( 50000 /* milliseconds */ );
+                conn.setRequestMethod( "POST" );
+                conn.setDoInput( true );
                 conn.setDoOutput( true );
-                reader = new BufferedReader( new InputStreamReader( conn.getInputStream() ) );
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-                JSONObject res = new JSONObject();
 
-                // Read Server Response
-                while ((line = reader.readLine()) != null) {
-                    // Append server response in string
-                    sb.append( line + "\n" );
-                    res.put( "name", line.toString() );
-                }
-                Log.i( "res is :", res.toString() );
-                text = sb.toString();
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter( os, "UTF-8" ) );
+                writer.write( getPostDataString( dish_inp ) );
+                writer.flush();
+                writer.close();
+                os.close();
+                int responseCode = conn.getResponseCode();
+                Log.i( "responseCode@:", String.valueOf( responseCode ) );
 
-                Log.i( "onPostExecute", " in onPostExecute  my json from server is :" + text );
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
 
-//                lastLocation = LocationServices.FusedLocationApi.getLastLocation( mGoogleApiClient );
-//                jsonObject.put( "latitude", lastLocation.getLatitude() );
-//                jsonObject.put( "longitude", lastLocation.getLongitude() );
-//                jsonObject.put( "dish",text.toString() );
-                json = new JSONObject( text );
-                Log.i( "jsontext:", text );
-//                dish_result= (String) json.get("one");
-//                Log.i("jsontext2:",dish_result);
-//                // get the array of users
-//                dataJsonArr = (JSONArray) json.get( "Dishes" );
-//                // loop through all users
-//                for (int i = 0; i < dataJsonArr.length(); i++) {
-//                    JSONObject c = (JSONObject) dataJsonArr.get( i );
-//                    // Storing each json item in variable
-//                    nameDish = (String) c.get( "nameDish" );
-//                    // show the values in our logcat
-//                    Log.e( TAG, "nameDish: " + nameDish );
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (JSONException e1) {
-                e1.printStackTrace();
-            }
+                    BufferedReader in = new BufferedReader(
+                            new InputStreamReader(
+                                    conn.getInputStream() ) );
+                    StringBuffer sb = new StringBuffer( "" );
 
-            return text;
-        }
-
-        class SearchResultsAdapter extends BaseAdapter {
-            private LayoutInflater layoutInflater;
-
-            private ArrayList<Dish> productDetails = new ArrayList<Dish>();
-            int count;
-            Typeface type;
-            Context context;
-
-            //constructor method
-            public SearchResultsAdapter(Context context, ArrayList<Dish> product_details) {
-
-                layoutInflater = LayoutInflater.from( context );
-
-                this.productDetails = product_details;
-                this.count = product_details.size();
-                this.context = context;
-                type = Typeface.createFromAsset( context.getAssets(), "fonts/book.TTF" );
-
-            }
-
-            @Override
-            public int getCount() {
-                return count;
-            }
-
-            @Override
-            public Object getItem(int arg0) {
-                return productDetails.get( arg0 );
-            }
-
-            @Override
-            public long getItemId(int arg0) {
-                return arg0;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-                ViewHolder holder;
-                Dish tempProduct = productDetails.get( position );
-
-                if (convertView == null) {
-                    convertView = layoutInflater.inflate( R.layout.single_dish_item, null );
-                    holder = new ViewHolder();
-                    holder.Dish_name = (TextView) convertView.findViewById( R.id.Dish_name );
-                    convertView.setTag( holder );
+                    while ((line = in.readLine()) != null) {
+//                        Log.i( "line:", line );
+                        sb.append( line );
+                        break;
+                    }
+                    in.close();
+                    return sb.toString();
                 } else {
-                    holder = (ViewHolder) convertView.getTag();
+                    return new String( "false : " + responseCode );
                 }
-                holder.Dish_name.setText( "hhh" );
-                return convertView;
+            } catch (Exception e) {
+                return new String( "Exception: " + e.getMessage() );
             }
-
-            class ViewHolder {
-                TextView Dish_name;
-            }
-
         }
+            /////
+//            try {
+//                Log.i( "123", "1" );
+//                URL url2 = new URL(" https://www.facebook.com/" );//temp url
+//
+//                // Send POST data request
+//                conn = (HttpURLConnection) url2.openConnection();
+//                conn.setReadTimeout(50000 /* milliseconds */);
+//                conn.setConnectTimeout(50000 /* milliseconds */);
+//                conn.setRequestMethod("POST");
+//                conn.setDoOutput( true );
+//                reader = new BufferedReader( new InputStreamReader( conn.getInputStream() ) );
+//                StringBuilder sb = new StringBuilder();
+//                String line = null;
+//                Log.i( "123", "2" );
+//                JSONObject res = new JSONObject();
+//                OutputStream os = conn.getOutputStream();
+//                BufferedWriter writer = new BufferedWriter(
+//                        new OutputStreamWriter(os, "UTF-8"));
+//                JSONObject json=new JSONObject( );
+//                json.put( "dishName","שקשוקה" );
+//                writer.write(json.toString());
+//                writer.flush();
+//                writer.close();
+//                os.close();
+//
+//                // Read Server Response
+//                while ((line = reader.readLine()) != null) {
+//                    // Append server response in string
+//                    sb.append( line + "\n" );
+//                    res.put( "name", line.toString() );
+//                }
+//                Log.i( "res is :", res.toString() );
+//                text = sb.toString();
+//
+//                Log.i( "onPostExecute", " in onPostExecute  my json from server is :" + text );
+//                Log.i( "jsontext:", text );
+//
+//            } catch (IOException e1) {
+//                e1.printStackTrace();
+//            } catch (JSONException e1) {
+//                e1.printStackTrace();
+//            }
+//
+//            return text;
+        public String getPostDataString(JSONObject params) throws Exception {
+            StringBuilder result = new StringBuilder();
+            boolean first = true;
+            Iterator<String> itr = params.keys();
+            while(itr.hasNext()){
+                String key= itr.next();
+                Object value = params.get(key);
+                if (first)
+                    first = false;
+                else
+                    result.append("&");
+                result.append( URLEncoder.encode(key, "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(value.toString(), "UTF-8"));
+            }
+            return result.toString();
+        }
+    }
+
+
+
+
 
         public boolean isTablet() {
             int display_mode = _mainActivity.getResources().getConfiguration().orientation;
@@ -560,4 +583,3 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             return true;
         }
     }
-}

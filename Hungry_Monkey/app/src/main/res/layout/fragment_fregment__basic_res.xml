@@ -1,170 +1,177 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="700dp"
+    android:layout_height="match_parent"
     android:background="#4DFFFFCC"
     tools:context="com.example.shanijoffe.hungry_monkey.fregment_BasicRes">
 
     <!-- TODO: Update blank fragment layout -->
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
 
         <LinearLayout
-            android:id="@+id/freg1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingTop="10dp"
-            android:visibility="visible">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/Advnced_btn"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:background="@android:color/darker_gray"
-                android:elevation="6dp"
-                android:onClick="OnClickShowAdvancedSearch"
-                android:text="הצג חיפוש מתקדם "
-                android:textColor="#FFF"
-                android:textStyle="bold"
-                android:visibility="visible" />
 
             <LinearLayout
-                android:id="@+id/adv_leyout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                android:paddingTop="25dp"
-                android:visibility="invisible">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:orientation="horizontal">
-
-                    <SeekBar
-                        android:id="@+id/sk_dis"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/txtv_dis"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/edittextstyle"
-                        android:paddingLeft="10dp"
-                        android:text="מרחק" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/adv_leyout2"
-                android:layout_width="match_parent"
-                android:layout_height="85dp"
-                android:orientation="vertical"
-                android:paddingTop="25dp"
-                android:visibility="invisible">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:orientation="horizontal">
-
-                    <SeekBar
-                        android:id="@+id/sk_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/txtv_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/edittextstyle"
-                        android:paddingLeft="10dp"
-                        android:text="מחיר" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/adv_leyout3"
-                android:layout_width="match_parent"
-                android:layout_height="98dp"
-                android:orientation="vertical"
-                android:paddingTop="25dp"
-                android:visibility="invisible">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:orientation="horizontal">
-
-
-                    <Spinner
-                        android:id="@+id/sp_kosher"
-                        android:layout_width="140dp"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/txtv_kosher"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/edittextstyle"
-                        android:paddingLeft="10dp"
-                        android:text="כשרות" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
+                android:id="@+id/freg1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:padding="20dp"
-                android:paddingTop="50dp">
+                android:paddingTop="10dp"
+                android:visibility="visible">
 
                 <Button
-                    android:id="@+id/btn_login"
+                    android:id="@+id/Advnced_btn"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="right"
                     android:background="@android:color/darker_gray"
-                    android:hint="התחבר"
-                    android:onClick="OnClick"
-                    android:text="התחבר"
+                    android:elevation="6dp"
+                    android:onClick="OnClickShowAdvancedSearch"
+                    android:text="הצג חיפוש מתקדם "
                     android:textColor="#FFF"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="visible" />
 
-                <Button
-                    android:id="@+id/btn_reg"
+                <LinearLayout
+                    android:id="@+id/adv_leyout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@android:color/darker_gray"
-                    android:onClick="OnClickSign"
+                    android:orientation="vertical"
                     android:paddingTop="25dp"
-                    android:text="הרשם"
-                    android:textColor="#FFF"
-                    android:textStyle="bold" />
+                    android:visibility="invisible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:orientation="horizontal">
+
+                        <SeekBar
+                            android:id="@+id/sk_dis"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/txtv_dis"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/edittextstyle"
+                            android:paddingLeft="10dp"
+                            android:text="מרחק" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/adv_leyout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="85dp"
+                    android:orientation="vertical"
+                    android:paddingTop="25dp"
+                    android:visibility="invisible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:orientation="horizontal">
+
+                        <SeekBar
+                            android:id="@+id/sk_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/txtv_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/edittextstyle"
+                            android:paddingLeft="10dp"
+                            android:text="מחיר" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/adv_leyout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="98dp"
+                    android:orientation="vertical"
+                    android:paddingTop="25dp"
+                    android:visibility="invisible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:orientation="horizontal">
+
+
+                        <Spinner
+                            android:id="@+id/sp_kosher"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/txtv_kosher"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/edittextstyle"
+                            android:paddingLeft="10dp"
+                            android:text="כשרות" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:paddingTop="50dp">
+
+                    <Button
+                        android:id="@+id/btn_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/darker_gray"
+                        android:hint="התחבר"
+                        android:onClick="OnClick"
+                        android:text="התחבר"
+                        android:textColor="#FFF"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btn_reg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="10dp"
+                        android:background="@android:color/darker_gray"
+                        android:onClick="OnClick"
+                        android:text="לחץ כאן להרשם"
+                        android:textColor="#FFF"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
             </LinearLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
 
 </FrameLayout>
+

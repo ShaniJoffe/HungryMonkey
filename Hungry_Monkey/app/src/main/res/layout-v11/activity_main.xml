@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_hm"
+    android:background="@drawable/bg_new"
 
     tools:contex=".MainActivity">
 
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/bg_hm"
+
        >
         <TextView
             android:id="@+id/welcome_txt"
@@ -30,38 +30,42 @@
             android:textColorHighlight="@color/colorPrimaryDark"
             android:textSize="18sp"
             android:textStyle="bold"
-            tools:text="Welcome to Hungry Monkey app " />
+            tools:text="ברוכים הבאים לHUNGREY MONKEY  " />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="467dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <SearchView
-            android:id="@+id/DishSearch"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="77dp"
-            android:layout_marginTop="20dp"
-            android:background="#CC999999"
-            android:hint="הכנס/י שם מנה "
-            android:paddingTop="10dp"></SearchView>
+            android:layout_height="700dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"></FrameLayout>
-        <FrameLayout
-            android:id="@+id/right_frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            <SearchView
+                android:id="@+id/DishSearch"
+                android:layout_width="match_parent"
+                android:layout_height="77dp"
+                android:layout_marginTop="20dp"
+                android:background="#CC999999"
+                android:hint="הכנס/י שם מנה "
+                android:paddingTop="10dp"></SearchView>
 
-        </FrameLayout>
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"></FrameLayout>
+
+            <!--<FrameLayout-->
+            <!--android:id="@+id/right_frame"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1">-->
+
+            <!--</FrameLayout>-->
+
+        </LinearLayout>
+
     </LinearLayout>
 
-    </LinearLayout>
+
 
 </ScrollView>
 

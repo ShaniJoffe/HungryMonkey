@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +53,21 @@ public class LoginPage extends AppCompatActivity {
         user_name_edit=(EditText)findViewById(R.id.txt_usrname);
         password_edit=(EditText)findViewById(R.id.txt_password);
         loginButton=(Button)findViewById(R.id.btn_login);
+        user_name_edit.setOnClickListener( new View.OnClickListener() {
+                                               @Override
+                                               public void onClick(View view) {
+                                                   user_name_edit.setHint( "" );
+                                               }
+                                           });
+        password_edit.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                password_edit.setHint( "" );
+
+            }
+        } );
+
 
         log.i("params:",user + user_pass);
         Log.i(TAG,"before connection");
@@ -59,24 +75,42 @@ public class LoginPage extends AppCompatActivity {
 
     public void OnClick(View view) throws JSONException, ParseException, UnsupportedEncodingException {
 
-        view.setEnabled( false );
+//        view.setEnabled( false );
         JSONParser parser_obj = new JSONParser();
-        log.i( "hi", "in OnClick" );
-        user = user_name_edit.getText().toString();
-        user_pass = password_edit.getText().toString();
-          new SendPostRequest().execute();
-        Log.i( "response from server :", "name is "+userName_res+"token is "+token );
-          if (line!=" " && userName_res !="" && token !="" )
-          {
+        log.i( "hi", String.valueOf( user_name_edit.getText().toString().trim().length() ) );
+        log.i( "hi", String.valueOf(password_edit.getText().toString().trim().length()) );
+        if(( user_name_edit.getText().toString().trim().length() >0)&&(password_edit.getText().toString().trim().length() >0))
+        {
 
+            user = user_name_edit.getText().toString();
+            Log.i("user",user);
+            user_pass = password_edit.getText().toString();
+            String empty_string =" ";
+            Log.i("user",user);
+            Log.i("user_pass",user_pass);
+
+            new SendPostRequest().execute();
             Log.i( "response from server :", "name is "+userName_res+"token is "+token );
-            Bundle user_det = new Bundle();
-            user_det.putString("user_name",userName_res);//here i shpuld insert user_name
-            Intent i = new Intent( this, MainActivity.class );
-            i.putExtras(user_det);
-            startActivityForResult( i, CODE_REQ );
+            if (line!=" " && userName_res !="" && token !="" )
+            {
 
-          }
+                Log.i( "response from server :", "name is "+userName_res+"token is "+token );
+                Bundle user_det = new Bundle();
+                user_det.putString("user_name",userName_res);//here i shpuld insert user_name
+                Intent i = new Intent( this, MainActivity.class );
+                i.putExtras(user_det);
+                startActivityForResult( i, CODE_REQ );
+            }
+        }
+       else
+        {
+            Log.i("dghbchd","sote");
+            Toast.makeText(getApplicationContext(), "please fill All fileds   :" ,
+                    Toast.LENGTH_LONG).show();
+
+        }
+
+
 
     }
 
