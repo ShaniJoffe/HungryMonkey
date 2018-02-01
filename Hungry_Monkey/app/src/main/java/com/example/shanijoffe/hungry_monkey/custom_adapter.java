@@ -53,7 +53,9 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>
         //Button open_Contact_Button = (Button)view.findViewById(R.id.choose_Dish);
 
 
-
+        //
+        //
+        Log.i("position", String.valueOf( position ) );
         rest_address[0] = _vec.get(position).get("rest_address");
         rest_location[0] = _vec.get(position).get("rest_location");
         rest_name[0] = _vec.get(position).get("rest_name");
@@ -69,6 +71,9 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>
         final String dish_description2 = dish_description[0];
         final String dish_name2 = dish_name[0];
         final String dish_price2 = dish_price[0];
+
+        Log.i("rest_name2",rest_name2);
+
 
         name_res_txtv.setText(rest_name[0]);
         name_dish_txtv.setText(dish_name[0]);
@@ -91,37 +96,11 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>
             }
         } );
 
-
-//        open_Contact_Button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view)
-//            {
-//                if(MainActivity.isTablet())
-//                {
-//                    FragmentManager fm = _activity.getFragmentManager();
-//                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
-//                    Fragment fragment = new SecondFragment();
-//                    Bundle b = new Bundle();
-//                    b.putString("name_res",cname2);
-//                    b.putString("phone",cnum2);
-//                    fragment.setArguments(b);
-//                    fragmentTransaction.replace(R.id.fragment_container, fragment );
-//                    fragmentTransaction.commit();
-//                }
-//                else
-//                {
-//                    FragmentManager fm = _activity.getFragmentManager();
-//                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
-//                    Fragment fragment = new SecondFragment();
-//                    Bundle b = new Bundle();
-//                    b.putString("name_res",cname2);
-//                    b.putString("phone",cnum2);
-//                    fragment.setArguments(b);
-//                    fragmentTransaction.replace(R.id.right_frame, fragment );
-//                    fragmentTransaction.commit();
-//                }
-//            }
-//        });
         return view;
     }
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+
 }

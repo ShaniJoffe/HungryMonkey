@@ -57,12 +57,12 @@ public class basic_results extends AppCompatActivity {
             String dish_name2 = i.getStringExtra("dish_name2");
             String dish_price2 = i.getStringExtra("dish_price2");
             String dish_description2 = i.getStringExtra("dish_description2");
-            System.out.println("rest_address2 "+rest_address2+"\n" );
-            System.out.println("rest_location2 "+rest_location2+"\n" );
-            System.out.println("Kosher2 "+Kosher2+"\n" );
-            System.out.println("dish_name2 "+dish_name2+"\n" );
-            System.out.println("dish_price2 "+dish_price2+"\n" );
-            System.out.println("dish_description2 "+dish_description2+"\n" );
+            System.out.println("in basic res rest name "+rest_name2+"\n" );
+          //  System.out.println("rest_location2 "+rest_location2+"\n" );
+          //  System.out.println("Kosher2 "+Kosher2+"\n" );
+          //  System.out.println("dish_name2 "+dish_name2+"\n" );
+            //System.out.println("dish_price2 "+dish_price2+"\n" );
+          //  System.out.println("dish_description2 "+dish_description2+"\n" );
 
 
       //  }

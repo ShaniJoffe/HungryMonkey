@@ -55,6 +55,7 @@ public class FirstFragment extends Fragment {
     Button det;
     String myValue;
     Button show_det_for_dish;
+    Vector<HashMap<String,String>> vector=null;
     JSONArray menu_hits_jsonArray=null, jsonarray;
 
     @Override
@@ -77,8 +78,8 @@ public class FirstFragment extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.list_view);
 
         location_res_jsn=null;
-
-        Vector<HashMap<String,String>> vector = new Vector<>();
+        HashMap<String,String> hashMap_=null;
+         vector = new Vector<>();
 
         try {
 
@@ -91,6 +92,7 @@ public class FirstFragment extends Fragment {
 
 
             }
+            int count=-1;
             Log.i("dish_list in if", String.valueOf( jsonarray ) );
             Log.i("f"," \n\n");
             List<Map<String , String>> myMap  = new ArrayList<Map<String,String>>();
@@ -98,7 +100,7 @@ public class FirstFragment extends Fragment {
             for(int i=0; i<jsonarray.length(); i++)
             {
                 Log.i("index", String.valueOf( i ) );
-                HashMap<String,String> hashMap_ = new HashMap<>();
+                //HashMap<String,String> hashMap_ = new HashMap<>();
                 JSONObject obj = jsonarray.getJSONObject(i);
                 _source= new JSONObject( );
                 _source=obj.getJSONObject( "_source" );
@@ -107,21 +109,21 @@ public class FirstFragment extends Fragment {
                 //rest_address
                 rest_address = _source.getString("rest_address");
                 System.out.println("rest_address"+ rest_address);
-                hashMap_.put("rest_address",rest_address);
+               // hashMap_.put("rest_address",rest_address);
                 ///name_res
                 name_res = _source.getString("rest_name");
                 System.out.println("name_res"+name_res);
-                hashMap_.put("rest_name",name_res);
+              //  hashMap_.put("rest_name",name_res);
                 //location res
                 location_res_str=_source.getString( "rest_location");
                 location_res_jsn= new JSONObject( location_res_str );
                 System.out.println("location_res_jsn"+ location_res_jsn.toString());
-                hashMap_.put("rest_location", String.valueOf( location_res_jsn ) );
+               // hashMap_.put("rest_location", String.valueOf( location_res_jsn ) );
 
                 ///kosher
                 kosher=_source.getString("Kosher");
                 System.out.println("kosher" + kosher);
-                hashMap_.put("Kosher", kosher );
+              //  hashMap_.put("Kosher", kosher );
                 //
                 inner_hits=new JSONObject( );
                 inner_hits=obj.getJSONObject( "inner_hits" );
@@ -139,6 +141,16 @@ public class FirstFragment extends Fragment {
                 Log.i("name restuartant:",name_res);
                 for(int j=0; j<menu_hits_jsonArray.length(); j++)
                 {
+                    count++;
+                    hashMap_ = new HashMap<>();
+                    //getting res detailes
+                    hashMap_.put("index", String.valueOf( count ) );
+                    hashMap_.put("rest_address",rest_address);
+                    hashMap_.put("rest_name",name_res);
+                    hashMap_.put("rest_location", String.valueOf( location_res_jsn ) );
+                    hashMap_.put("Kosher", kosher );
+                    hashMap_.put("Kosher", kosher );
+                    //getting dish detailes
                     JSONObject obj2 = menu_hits_jsonArray.getJSONObject(j);
                     JSONObject _source2= new JSONObject();
                     _source2=obj2.getJSONObject( "_source" );
@@ -152,23 +164,12 @@ public class FirstFragment extends Fragment {
                     System.out.println("name_dish" + name_dish);
                     System.out.println("price_dish" + price_dish);
 
+                    vector.add(hashMap_);
 
                 }
-                vector.add(hashMap_);
             }
-            log.i("inner_hits", String.valueOf( inner_hits ));
-            for (Map<String, String> map : myMap)
-            {
-                System.out.println(map.get("rest_address"));
-                System.out.println(map.get("rest_location"));
-                System.out.println(map.get("rest_name"));
-                System.out.println(map.get("Kosher"));
-                System.out.println(map.get("dish_description"));
-                System.out.println(map.get("dish_name"));
-                System.out.println(map.get("dish_price"));
-            }
+
             System.out.println("The vector is: " + vector);
-            System.out.println("The myMap is: " + myMap);
 
         }
         catch (JSONException e) {
@@ -177,7 +178,8 @@ public class FirstFragment extends Fragment {
 
         custom_adapter aa=new custom_adapter(getContext(),R.layout.single_dish_item,vector);
         listView.setAdapter(aa);
-        aa.notifyDataSetChanged();
+       // aa.notifyDataSetChanged();
+
 
 
     }

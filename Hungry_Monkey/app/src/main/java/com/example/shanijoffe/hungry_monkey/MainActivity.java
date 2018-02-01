@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity  implements GoogleApiClient.
             @Override
             public boolean onQueryTextChange(String text) {
 //                adapter2.getFilter().filter(text);
-                Log.i( TAG, "HAYOOO" );
+
                 return false;
             }
         } );
