@@ -11,6 +11,7 @@ const config = require('./config/config.json');
 const setRestDetails= require('./functions/setRestDetails');
 const setRestMenu= require('./functions/setRestMenu');
 const getRestDetails= require('./functions/getRestDetails');
+const advancedSearch= require('./functions/advancedSearch');
 const basicSearch= require('./functions/basicSearch');
 const mergeJSON = require("merge-json") ;	
 
@@ -25,7 +26,6 @@ module.exports = router => {
 	
 	router.get('/set_restDetails',(req,res)=> {
 		console.log('user accessing set_restDetails page');
-		
 		res.render('set_restDetails')});
 		
 	router.get('/set_menu',(req,res)=> {
@@ -68,53 +68,106 @@ module.exports = router => {
 			console.log(err);
 		});	
 	});
-		router.post('/set_menu/:restid', (req, res) => {
-			var dish_id_inRest=parseFloat(req.params.restid);
-			var tempObj={};
-			getRestDetails.getRestD(req.params.restid)
+	router.post('/set_menu/:restid', (req, res) => {
+		var dish_id_inRest=parseFloat(req.params.restid);
+		var tempObj={};
+		getRestDetails.getRestD(req.params.restid)
+		.then(result=>{
+			console.log(result.message[0]._source);
+			req.body.menu.forEach(function(dish,index) { dish.dish_id_inRest = dish_id_inRest+index*0.1});
+			setRestMenu.setMenu(result.message[0]._source,req.body,req.params.restid)
 			.then(result=>{
-				console.log(result.message[0]._source);
-				req.body.menu.forEach(function(dish,index) { dish.dish_id_inRest = dish_id_inRest+index*0.1});
-				setRestMenu.setMenu(result.message[0]._source,req.body,req.params.restid)
-				.then(result=>{
-					res.json(tempObj);
-				});
+				res.json(tempObj);
 			});
+		});
 				//res.render('set_menu');			 	
 				//}).catch(err => res.status(err.status).json({ message: err.message }));	
 		//console.log(req.body);
 	});
-		router.post('/basicSearch', (req, res) => {
+	router.post('/basicSearch', (req, res) => {
 		var tempObj={};
 		var size;
 		var size2;
 		basicSearch.basicS(req.body.dishName)
 		.then(result=>{
-			console.log("balls");
+			//console.log("balls");
+			size=result.message.length;
+			console.log("result");
+			if(result.message=='No dishes !')
+				res.json(result.message);
+			else
+			{
+				for(var i=0;i<size;i++)
+				{
+					delete result.message[i]._index;
+					delete result.message[i]._type;
+					delete result.message[i]._id;
+					delete result.message[i]._score;
+					delete result.message[i].inner_hits.menu.hits.total;
+					delete result.message[i].inner_hits.menu.hits.max_score;
+					size2=result.message[i].inner_hits.menu.hits.hits.length;
+					for(var j=0;j<size2;j++)
+					{
+						delete result.message[i].inner_hits.menu.hits.hits[j]._nested;
+						delete result.message[i].inner_hits.menu.hits.hits[j]._score;
+						//console.log(mergeJSON.isJSON(result.message[0].inner_hits.menu.hits));			
+					}
+				}
+				//console.log("balls");
+				res.json(result.message);
+			}
+		}).catch(err => res.status(err.status).json({ message: err.message }));
+
+	});	
+	router.post('/advancedSearch', (req, res) => {
+		var tempObj={};
+		var size;
+		var size2;
+		var kosher='כשר';
+		var tempbool=false;//if rest kosher tempbool is true
+		var distance;
+		if(kosher.localeCompare(req.body.rest_Kosher)==0)
+		{
+			tempbool=true;
+		}
+		console.log(req.body.minPrice);
+		console.log(req.body.maxPrice);
+		console.log(req.body.distance);
+		distance=req.body.distance.toString();
+		distance+=" km";
+		console.log(distance);
+		advancedSearch.advancedS(req.body.dishName,tempbool,req.body.minPrice,req.body.maxPrice,distance)
+		.then(result=>{
+			
 			size=result.message.length;
 			
-
 			console.log(result.message);
-			for(var i=0;i<size;i++)
+			if(result.message=='No dishes !')
+				res.json(result.message);
+			else
 			{
-				delete result.message[i]._index;
-				delete result.message[i]._type;
-				delete result.message[i]._id;
-				delete result.message[i]._score;
-				delete result.message[i].inner_hits.menu.hits.total;
-				delete result.message[i].inner_hits.menu.hits.max_score;
-				size2=result.message[i].inner_hits.menu.hits.hits.length;
-				console.log(size2);
-				for(var j=0;j<size2;j++)
+				for(var i=0;i<size;i++)
 				{
-					delete result.message[i].inner_hits.menu.hits.hits[j]._nested;
-					delete result.message[i].inner_hits.menu.hits.hits[j]._score;
-					//console.log(mergeJSON.isJSON(result.message[0].inner_hits.menu.hits));			
+					delete result.message[i]._index;
+					delete result.message[i]._type;
+					delete result.message[i]._id;
+					delete result.message[i]._score;
+					delete result.message[i].inner_hits.menu.hits.total;
+					delete result.message[i].inner_hits.menu.hits.max_score;
+					size2=result.message[i].inner_hits.menu.hits.hits.length;
+					for(var j=0;j<size2;j++)
+					{
+						delete result.message[i].inner_hits.menu.hits.hits[j]._nested;
+						delete result.message[i].inner_hits.menu.hits.hits[j]._score;
+						//console.log(mergeJSON.isJSON(result.message[0].inner_hits.menu.hits));			
+					}
 				}
+				//console.log("balls");
+				res.json(result.message);
 			}
-			res.json(result.message);
-			});
-		});	
+		}).catch(err => res.status(err.status).json({ message: err.message }));
+
+	});	
 	
 	router.get('/', (req, res) =>{
 		res.end('Welcome to Learn2Crack !')});

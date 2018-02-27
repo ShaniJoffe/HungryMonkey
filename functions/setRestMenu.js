@@ -25,5 +25,5 @@ exports.setMenu = (restDetails,menu,id) =>
 			.then(response=>{
 					console.log("Tep"+temp);
 					resolve({ status: 201, message: "fuck yeah"})})
-						.catch(console.error);
+			.catch(console.error);
 	});	

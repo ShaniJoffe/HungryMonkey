@@ -1,24 +1,42 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="he">
 	<head>
-	</head>
-	<body >
-	<h1>:הזנת פרטי המסעדה</h1>
-    <form id="set-rest" method="POST" action="/api/v1/set_RestDetails">
-         <label for="rest_name">שם מסעדה:</label>
-        <input type="text" name="rest_name"><br>
-         <label for="rest_desc">תיאור:</label>
-        <input type="text" name="rest_desc"><br>
-         <label for="rest_address">כתובת:</label>
-        <input type="text" name="rest_address"><br>
-        <label for="rest_zip">מיקוד:</label>
-        <input type="text" name="rest_zip"><br>
-         <label for="rest_Kosher">כשרות:</label>
-        <input type="text" name="rest_Kosher"><br>
-          <label for="rest_numOfdishes">כמה מנות בתפריט:</label>
-        <input type="text" name="rest_numOfdishes"><br>
-     <input type="submit" value="Submit">
-        </form>  
+        
+<link href ="/assets/styles.css" rel="stylesheet" type="text/css" href="style.css">
+</head>
+    <body>
+        <div class="header">
+            
+        </div>
+        
+        <nav class="mynav">
+             הזנת פרטי המסעדה:
+        </nav>
+        <br>
+    <div class ="mybody">
+        <br>
+        <form id="set-rest" method="POST" action="/api/v1/set_RestDetails">
+             <label for="rest_name">שם מסעדה:</label>
+            <input type="text" name="rest_name"><br>
+             <label for="rest_desc">תיאור:</label>
+            <input type="text" name="rest_desc"><br>
+             <label for="rest_address">כתובת:</label>
+            <input type="text" name="rest_address"><br>
+            <label for="rest_zip">מיקוד:</label>
+            <input type="text" name="rest_zip"><br>
+             <label for="rest_Kosher">כשרות:</label>
+            <input type="text" name="rest_Kosher"><br>
+              <label for="rest_numOfdishes">כמה מנות בתפריט:</label>
+            <input type="text" name="rest_numOfdishes"><br>
+         <input type="submit" value="Submit">
+            </form>  
+        </div>
+        <footer class="myfooter">
+            <h3>
+                Enjoy!
+            </h3>
+        </footer>
+	
 
         
 	</body>
