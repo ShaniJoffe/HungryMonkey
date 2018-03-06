@@ -8,7 +8,7 @@ const search = function search(index, body){
 	};
 	
 const mergeJSON = require("merge-json") ;		
-	exports.basicS = (dish_name) => 
+	exports.basicS = (dish_name,lat,lon) => 
 		new Promise((resolve,reject) => {
 			//console.log(dish_name);
 		esClient.search({//check if exists 
@@ -52,8 +52,8 @@ const mergeJSON = require("merge-json") ;
 									"distance" : "150km",
 									"validation_method":"IGNORE_MALFORMED",
 									"rest_location" : {
-										"lat" : 31.783007299,
-										"lon" : 35.3103762
+										"lat" : lat,
+										"lon" : lon
 									}
 								}
 							}

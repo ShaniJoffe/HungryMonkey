@@ -49,9 +49,7 @@ module.exports = router => {
 		}
 		geocoder.geocode(req.body.rest_address)
 		.then(result=>{
-			//console.log(result[0].latitude);
 			tempGeoLoc={'lat':result[0].latitude, 'lon':result[0].longitude};
-			console.log("balls"+req.body.rest_numOfdishes);
 			var RestDetails={	'rest_name'	: req.body.rest_name,
 					'rest_zip'	:req.body.rest_zip,
 					'Kosher'	:	tempbol,
@@ -59,10 +57,10 @@ module.exports = router => {
 					'rest_address'	:req.body.rest_address,
 					'rest_desc'	:req.body.rest_desc
 				};			
-			setRestDetails.setRestD(RestDetails)
+			setRestDetails.setRestD(RestDetails) 
 			.then(result=>{	
 				console.log(result);
-				res.render('set_menu',{restid : result.message, numOfDishes:req.body.rest_numOfdishes});			
+				res.render('set_menu',{restid : result.message});// result.message=rest id			
 				}).catch(err => res.status(err.status).json({ message: err.message }));		
 		}).catch(function(err) {
 			console.log(err);
@@ -71,24 +69,25 @@ module.exports = router => {
 	router.post('/set_menu/:restid', (req, res) => {
 		var dish_id_inRest=parseFloat(req.params.restid);
 		var tempObj={};
-		getRestDetails.getRestD(req.params.restid)
-		.then(result=>{
-			console.log(result.message[0]._source);
+		//getRestDetails.getRestD(req.params.restid)
+		//.then(result=>{
+			//console.log(req.body);
 			req.body.menu.forEach(function(dish,index) { dish.dish_id_inRest = dish_id_inRest+index*0.1});
-			setRestMenu.setMenu(result.message[0]._source,req.body,req.params.restid)
-			.then(result=>{
-				res.json(tempObj);
+			console.log(req.body);
+			//setRestMenu.setMenu(result.message[0]._source,req.body,req.params.restid)
+			//.then(result=>{
+				//res.json(tempObj);
 			});
-		});
+		//});
 				//res.render('set_menu');			 	
 				//}).catch(err => res.status(err.status).json({ message: err.message }));	
 		//console.log(req.body);
-	});
+	//});
 	router.post('/basicSearch', (req, res) => {
 		var tempObj={};
 		var size;
 		var size2;
-		basicSearch.basicS(req.body.dishName)
+		basicSearch.basicS(req.body.dishName,req.body.lat,req.body.lon)
 		.then(result=>{
 			//console.log("balls");
 			size=result.message.length;
@@ -136,7 +135,7 @@ module.exports = router => {
 		distance=req.body.distance.toString();
 		distance+=" km";
 		console.log(distance);
-		advancedSearch.advancedS(req.body.dishName,tempbool,req.body.minPrice,req.body.maxPrice,distance)
+		advancedSearch.advancedS(req.body.dishName,tempbool,req.body.minPrice,req.body.maxPrice,distance,req.body.lat,req.body.lon)
 		.then(result=>{
 			
 			size=result.message.length;

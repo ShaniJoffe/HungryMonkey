@@ -9,7 +9,11 @@ const port 	   	 = process.env.PORT || 3000;
 
 app.set('views', __dirname + '/views');
 app.set('view engine','ejs');
+
+app.use('/client',express.static('client'));
 app.use('/assets',express.static('assets'));
+
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
