@@ -1,18 +1,13 @@
 <resources>
     <string name="app_name">Hungry_Monkey</string>
-    <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-    </string-array>
+
+    <string name="locPrompt">Please make sure your location is on </string>
+    <string name="welcome">Welcome</string>
     <string name="title_activity_results_activity">results_activity</string>
     <string name="title_activity_searchable">SearchableActivity</string>
     <string name="title_activity_search_result">SearchResult</string>
+    <string name="locMsgTitle">Location </string>
+    <string name="locMsg">Please turn on location services</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

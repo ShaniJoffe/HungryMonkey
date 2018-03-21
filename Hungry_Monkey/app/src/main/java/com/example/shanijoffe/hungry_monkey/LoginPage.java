@@ -1,11 +1,9 @@
 package com.example.shanijoffe.hungry_monkey;
 
 import android.content.Intent;
-
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +23,6 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Iterator;
 
@@ -40,7 +37,7 @@ public class LoginPage extends AppCompatActivity {
     Button loginButton;
     String user="";
     String user_pass="";
-    static final int CODE_REQ=1;
+    static final int CODE_REQ=1;// for intent
     String line="";
     String userName_res="",token="";
     private static final String TAG = "MyActivity";
@@ -53,6 +50,9 @@ public class LoginPage extends AppCompatActivity {
         user_name_edit=(EditText)findViewById(R.id.txt_usrname);
         password_edit=(EditText)findViewById(R.id.txt_password);
         loginButton=(Button)findViewById(R.id.btn_login);
+
+
+
         user_name_edit.setOnClickListener( new View.OnClickListener() {
                                                @Override
                                                public void onClick(View view) {
@@ -77,8 +77,7 @@ public class LoginPage extends AppCompatActivity {
 
 //        view.setEnabled( false );
         JSONParser parser_obj = new JSONParser();
-        log.i( "hi", String.valueOf( user_name_edit.getText().toString().trim().length() ) );
-        log.i( "hi", String.valueOf(password_edit.getText().toString().trim().length()) );
+
         if(( user_name_edit.getText().toString().trim().length() >0)&&(password_edit.getText().toString().trim().length() >0))
         {
 
@@ -89,7 +88,8 @@ public class LoginPage extends AppCompatActivity {
             Log.i("user",user);
             Log.i("user_pass",user_pass);
 
-            new SendPostRequest().execute();
+            new SendPostRequest().execute();//authentication to server .
+
             Log.i( "response from server :", "name is "+userName_res+"token is "+token );
             if (line!=" " && userName_res !="" && token !="" )
             {
@@ -122,12 +122,12 @@ public class LoginPage extends AppCompatActivity {
         {
             try
             {
-                log.i("in doInBackground ","1");
+
+
                 URL url = new URL("http://hungrymonkey-env.vivacrpttt.eu-central-1.elasticbeanstalk.com/api/v1/auth"); // here is your URL path
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("name",user);
                 postDataParams.put("password",user_pass);
-                Log.e("params",postDataParams.toString());
 
                 //POST
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -140,23 +140,21 @@ public class LoginPage extends AppCompatActivity {
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter(os, "UTF-8"));
-                writer.write(getPostDataString(postDataParams));
+                writer.write(getPostDataString(postDataParams));//sending the json object to server after encoding .
                 writer.flush();
                 writer.close();
                 os.close();
                  int responseCode=conn.getResponseCode();
-                Log.i("responseCode@:", String.valueOf( responseCode ) );
-
-                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                if (responseCode == HttpsURLConnection.HTTP_OK)
+                {
 
                     BufferedReader in=new BufferedReader(
                             new InputStreamReader(
                                     conn.getInputStream()));
                     StringBuffer sb = new StringBuffer("");
-                    Log.i("hey dan","hey shan");
+
                     while((line = in.readLine()) != null)
                     {
-                        Log.i("line:",line);
                         sb.append(line);
                         break;
                     }
@@ -179,9 +177,8 @@ public class LoginPage extends AppCompatActivity {
                 JSONObject jObj = new JSONObject(result);
                 userName_res = jObj.getString("message");
                 token=jObj.getString("token");
-                Log.i("userName_res)",userName_res);
-
                 Log.i( "response from server :", "name is "+userName_res+"token is "+token );
+
                 Bundle user_det = new Bundle();
                 user_det.putString("user_name",userName_res);//here i shpuld insert user_name
                 Intent i = new Intent( getApplicationContext(), MainActivity.class );

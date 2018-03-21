@@ -78,6 +78,7 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>
         name_res_txtv.setText(rest_name[0]);
         name_dish_txtv.setText(dish_name[0]);
         PriceDish_txtv.setText(dish_price[0] +"שח ");
+
         show_det_for_dish=(Button) view.findViewById( R.id.choose_Dish );
         show_det_for_dish.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -91,11 +92,9 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>
                 i.putExtra( "dish_name2", dish_name2 );
                 i.putExtra( "rest_name2", rest_name2 );
                 i.putExtra( "dish_price2", dish_price2 );
-
                 context.startActivity(i);
             }
         } );
-
         return view;
     }
     @Override

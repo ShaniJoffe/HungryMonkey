@@ -3,82 +3,240 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#4DFFFFCC"
     tools:context="com.example.shanijoffe.hungry_monkey.fregment_BasicRes">
 
     <!-- TODO: Update blank fragment layout -->
 
-
-
-
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
 
-            <LinearLayout
-                android:id="@+id/freg1"
+
+        <LinearLayout
+            android:id="@+id/freg1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:visibility="visible">
+
+            <Button
+                android:id="@+id/Advnced_btn"
+
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="36dp"
+                android:layout_gravity="right"
+                android:background="@drawable/buttonstylesselector"
+                android:elevation="6dp"
+                android:text="הצג חיפוש מתקדם "
+                android:textColor="#FFF"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/adv_leyout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="10dp"
+                android:paddingTop="25dp"
                 android:visibility="visible">
 
-                <Button
-                    android:id="@+id/Advnced_btn"
-
+                <TextView
+                    android:id="@+id/lbl_distance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:background="@android:color/darker_gray"
-                    android:elevation="6dp"
-                    android:onClick="OnClickShowAdvancedSearch"
-                    android:text="הצג חיפוש מתקדם "
-                    android:textColor="#FFF"
-                    android:textStyle="bold"
-                    android:visibility="visible" />
+                    android:gravity="right"
+                    android:text="בחר רדיוס:"
+                    android:visibility="invisible" />
 
                 <LinearLayout
-                    android:id="@+id/adv_leyout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical"
-                    android:paddingTop="25dp"
-                    android:visibility="invisible">
+                    android:layout_height="68dp"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/textMax5"
+                        android:layout_width="43dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:visibility="invisible" />
 
-                        <SeekBar
-                            android:id="@+id/sk_dis"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                    <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
+                        android:id="@+id/sk_dis"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="2"
+                        app:bar_color="#F7BB88"
+                        app:bar_highlight_color="#E07416"
+                        app:data_type="_integer"
+                        app:max_value="150"
+                        app:min_value="0"
+                        app:steps="5" />
 
-                        <TextView
-                            android:id="@+id/txtv_dis"
+                    <TextView
+                        android:id="@+id/textMin5"
+                        android:layout_width="59dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittextstyle"
-                            android:paddingLeft="10dp"
-                            android:text="מרחק" />
-                    </LinearLayout>
+                        android:gravity="left" />
+
                 </LinearLayout>
+                <!--<LinearLayout-->
+                <!--android:id="@+id/adv_leyout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:orientation="vertical"-->
+                <!--android:paddingTop="25dp"-->
+                <!--android:visibility="invisible">-->
+
+                <!--<LinearLayout-->
+                <!--android:id="@+id/dis_layout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="45dp"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:weightSum="4">-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/textMin5"-->
+                <!--android:layout_width="89dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+
+                <!--android:gravity="left" />-->
+
+                <!--<com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar-->
+                <!--android:id="@+id/sk_dis"-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_weight="2"-->
+                <!--app:bar_color="#F7BB88"-->
+                <!--app:bar_highlight_color="#E07416"-->
+                <!--app:data_type="_integer"-->
+
+
+                <!--app:max_value="200"-->
+                <!--app:min_value="100"-->
+                <!--app:steps="5" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/textMax5"-->
+                <!--android:layout_width="81dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:gravity="right" />-->
+                <!--&lt;!&ndash;<SeekBar&ndash;&gt;-->
+                <!--&lt;!&ndash;android:id="@+id/sk_dis"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_weight="1" />&ndash;&gt;-->
+
+
+                <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:id="@+id/dis_val"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:visibility="visible" />&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:id="@+id/txtv_dis"&ndash;&gt;-->
+
+                <!--&lt;!&ndash;android:layout_width="3dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:background="@drawable/edittextstyle"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:paddingLeft="10dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:text="מרחק" />&ndash;&gt;-->
+                <!--</LinearLayout>-->
+                <!--</LinearLayout>-->
 
                 <LinearLayout
                     android:id="@+id/adv_leyout2"
                     android:layout_width="match_parent"
-                    android:layout_height="85dp"
+                    android:layout_height="118dp"
                     android:orientation="vertical"
                     android:paddingTop="25dp"
-                    android:visibility="invisible">
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/lbl_price_range"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="בחר טווח מחיר :"
+                        android:visibility="invisible" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <TextView
+                            android:id="@+id/textMin1"
+                            android:layout_width="59dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="left" />
+
+                        <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                            android:id="@+id/rangeSeekbar1"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="2" />
+
+                        <TextView
+                            android:id="@+id/textMax1"
+                            android:layout_width="81dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right" />
+
+                    </LinearLayout>
+
+                    <!--   <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:orientation="horizontal">
+
+
+                        <SeekBar
+                            android:id="@+id/skMin_price"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+
+                        <TextView
+                            android:id="@+id/price_val"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/txtv_price"
+                            android:layout_width="3dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/edittextstyle"
+                            android:paddingLeft="10dp"
+                            android:text="מחיר מינמאלי " />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -86,29 +244,45 @@
                         android:orientation="horizontal">
 
                         <SeekBar
-                            android:id="@+id/sk_price"
+                            android:id="@+id/skMax_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
 
+
                         <TextView
-                            android:id="@+id/txtv_price"
+                            android:id="@+id/MaxPrice_val"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/txtvMax_price"
+                            android:layout_width="3dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/edittextstyle"
                             android:paddingLeft="10dp"
-                            android:text="מחיר" />
+                            android:text="מחיר מקסימלי" />
                     </LinearLayout>
+                    -->
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/adv_leyout3"
                     android:layout_width="match_parent"
-                    android:layout_height="98dp"
+                    android:layout_height="123dp"
                     android:orientation="vertical"
                     android:paddingTop="25dp"
                     android:visibility="invisible">
+
+                    <TextView
+                        android:id="@+id/lbl_kosher"
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:gravity="right"
+                        android:text="בחר סוג כשרות " />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -146,8 +320,8 @@
                     <Button
                         android:id="@+id/btn_login"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/darker_gray"
+                        android:layout_height="31dp"
+                        android:background="@drawable/buttonstylesselector"
                         android:hint="התחבר"
                         android:onClick="OnClick"
                         android:text="התחבר"
@@ -157,11 +331,11 @@
                     <Button
                         android:id="@+id/btn_reg"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="32dp"
 
                         android:layout_marginTop="10dp"
-                        android:background="@android:color/darker_gray"
-                        android:onClick="OnClick"
+                        android:background="@drawable/buttonstylesselector"
+                        android:onClick="OnClickSign"
                         android:text="לחץ כאן להרשם"
                         android:textColor="#FFF"
                         android:textStyle="bold" />
@@ -170,8 +344,14 @@
                 </LinearLayout>
             </LinearLayout>
 
-        </LinearLayout>
+    </LinearLayout>
 
+
+    </LinearLayout>
 
 </FrameLayout>
+
+
+
+
 

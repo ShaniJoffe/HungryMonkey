@@ -20,7 +20,7 @@
             android:layout_height="85dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:src="@drawable/tmp_logo" />
+            android:src="@drawable/blabla" />
 
         <TextView
             android:id="@+id/tv_splash"

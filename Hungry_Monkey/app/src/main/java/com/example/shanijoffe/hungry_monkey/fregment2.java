@@ -1,33 +1,25 @@
 package com.example.shanijoffe.hungry_monkey;
 
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.JsonObject;
-
 import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import static com.loopj.android.http.AsyncHttpClient.log;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class fregment2 extends Fragment {
+///restaurant fragment-shows the restaurant detail's.
 
     ListView lv;
     JSONObject job;
@@ -40,6 +32,8 @@ public class fregment2 extends Fragment {
     boolean show=false;
     View view;
     Button det;
+
+
     public fregment2() {
         // Required empty public constructor
     }
@@ -48,13 +42,8 @@ public class fregment2 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        String[] teams={"Man Utd","Man City","Chelsea","Arsenal","Liverpool","Totenham","Man Utd","Man City","Chelsea","Arsenal","Liverpool","Totenham"};
         View view = inflater.inflate(R.layout.fragment_fregment2, container, false);
-        Log.i("sup","in basic");
-        lv=(ListView)view.findViewById(R.id.listView1);
         //connecting  adapter
-        adapter=new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,teams);
-        lv.setAdapter(adapter);
         // Inflate the layout for this fragment
         view= inflater.inflate( R.layout.fragment_fregment2, container, false );
         return view;
@@ -65,7 +54,6 @@ public class fregment2 extends Fragment {
         nres = (TextView) getActivity().findViewById(R.id.res_name22);
         Bundle bundle = this.getArguments();
         String myValue = bundle.getString("name_res");
-        Log.i("freg2 ","i got :"+ myValue);
         // Displaying the user details on the screen
         nres.setText(myValue);
         det=getView().findViewById( R.id.choose_Dish );
