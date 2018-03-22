@@ -1,6 +1,7 @@
 package com.example.shanijoffe.hungry_monkey;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -85,8 +86,21 @@ public class fregment_BasicRes extends Fragment {
     }
     public interface OnHeadlineSelectedListener {
         /** Called by HeadlinesFragment when a list item is selected */
-
+        ;
         public Bundle getBundle();
+    }
+
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (OnHeadlineSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
     }
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

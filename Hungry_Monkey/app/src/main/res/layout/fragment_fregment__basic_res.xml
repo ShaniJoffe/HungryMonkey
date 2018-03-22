@@ -1,19 +1,18 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#4DFFFFCC"
+    android:background="#CCffffe6"
     tools:context="com.example.shanijoffe.hungry_monkey.fregment_BasicRes">
 
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
         <LinearLayout
@@ -52,11 +51,12 @@
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:text="בחר רדיוס:"
+                    android:textStyle="bold"
                     android:visibility="invisible" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="68dp"
+                    android:layout_height="47dp"
                     android:orientation="horizontal"
                     android:weightSum="4">
 
@@ -66,6 +66,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
+                        android:textStyle="bold"
                         android:visibility="invisible" />
 
                     <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
@@ -87,7 +88,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
 
-                        android:gravity="left" />
+                        android:gravity="left"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
                 <!--<LinearLayout-->
@@ -176,11 +178,12 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:text="בחר טווח מחיר :"
+                        android:textStyle="bold"
                         android:visibility="invisible" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="58dp"
+                        android:layout_height="41dp"
                         android:orientation="horizontal"
                         android:weightSum="4">
 
@@ -189,7 +192,8 @@
                             android:layout_width="59dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="left" />
+                            android:gravity="left"
+                            android:textStyle="bold" />
 
                         <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
                             android:id="@+id/rangeSeekbar1"
@@ -203,7 +207,8 @@
                             android:layout_width="81dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="right" />
+                            android:gravity="right"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -282,7 +287,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
                         android:gravity="right"
-                        android:text="בחר סוג כשרות " />
+                        android:text="בחר סוג כשרות "
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -303,7 +309,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/edittextstyle"
                             android:paddingLeft="10dp"
-                            android:text="כשרות" />
+                            android:text="כשרות"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -344,7 +351,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-    </LinearLayout>
+        </LinearLayout>
 
 
     </LinearLayout>

@@ -44,14 +44,9 @@ public class MainActivity extends AppCompatActivity   implements fregment_BasicR
     LocationRequest  mLocationRequest;;
     private RecyclerView.Adapter mAdapter;
     private final int MY_PERMISSIONS_REQUEST_LOCATION = 1;
-
     //Spinner spinner;
-
     Button loginButton;
-
     boolean st = false;//status for fregments
-
-
     boolean connectedFlag=false;//location
     final String TAG = "MyActivity";//for logs
     SearchView search;
@@ -362,8 +357,8 @@ public class MainActivity extends AppCompatActivity   implements fregment_BasicR
         if(lastLocation!=null)
         {
 
-            //Toast.makeText( this, "Last location " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude(), Toast.LENGTH_SHORT ).show();
-            //log.i("onConnected","search");
+            Toast.makeText( this, "Last location " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude(), Toast.LENGTH_SHORT ).show();
+            log.i("onConnected","search");
             connectedFlag=true;
 
             lon=lastLocation.getLongitude();
