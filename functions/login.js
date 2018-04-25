@@ -31,7 +31,7 @@ exports.loginUser = (name, password,id) =>
 				hashed_password =obj[1];
 				console.log(hashed_password);
 				if (bcrypt.compareSync(obj[0], hashed_password))
-					resolve({ status: 200, message: name });	
+					resolve({ status: 200, message: id });	
 				else
 					reject({ status: 401, message: 'Invalid Credentials !' });
 			}		

@@ -17,6 +17,7 @@ const mergeJSON = require("merge-json") ;
 const multer 	 = require('multer');
 const multerS3	 = require('multer-s3');
 const aws = require('aws-sdk');
+const passport = require('passport');
 
 module.exports = router => {
 	var s3;
@@ -233,7 +234,8 @@ module.exports = router => {
 		
 		login.loginUser(tempName, tempPass,req.body.id)
 		.then(result => {
-			const token = jwt.sign(result, config.secret, { expiresIn: 1440 });
+			var payload={id:result.message};
+			const token = jwt.sign(payload, config.secret, { expiresIn: 1440 });
 			res.status(result.status).json({ message: result.message, token: token });
 		})
 		.catch(err => res.status(err.status).json({ message: err.message }));
@@ -259,7 +261,7 @@ module.exports = router => {
 			.catch(err => res.status(err.status).json({ message: err.message }));
 		}
 	});
-
+	
 /*
 	router.get('/users/:id', (req,res) => {
 
