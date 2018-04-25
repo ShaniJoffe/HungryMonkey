@@ -35,5 +35,9 @@ nav{
 body {color: #444;}
 h1 {font-weight: bold;text-align: center;color: bisque}
 
+table, th, td {
+   border: 1px solid black;
+}
+
 
 </style>

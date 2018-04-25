@@ -1,51 +1,40 @@
+
 'use strict';
-
-//const user = require('../models/user');
-//const searchUsers= require('../functions/search_users');
+const redis = require('redis');
+const client = redis.createClient(6379, '18.196.119.82');
+const {promisify} = require('util');
 const bcrypt = require('bcryptjs');
-const elasticsearch = require('elasticsearch');
-const esClient = new elasticsearch.Client({
-		host: 'https://search-hungrymonkey-3eiz5dewb4yoyjt6ykeufmsjn4.eu-central-1.es.amazonaws.com',
-		log: 'error'
-	});
-const search = function search(index, body){
-	return esClient.search({index: index, body: body});
-	};
+const getAsync = promisify(client.get).bind(client);
 
-exports.loginUser = (name, password) =>
+client.on('connect', function() {
+    console.log('connected');
+});
+client.on('error', function(err){
+  console.log('Something went wrong ', err)
+});
+
+
+
+exports.loginUser = (name, password,id) =>
 	new Promise((resolve,reject) => {	
 		var hashed_password=0;
 		var counter=0;
-		var tempString= '(username:'+name+')  AND (password:'+password+')';
-		console.log(tempString);
-		let body = {
-		  size: 1,
-		  from: 0,
-		  query: {
-			bool: {
-			  must: [
-				{
-				  query_string: {
-					query:tempString
-				  }
-				}
-			  ]    
+		var key='user:'+id;
+		console.log(key);
+		client.hmget(key,["password","hashed_password"],function (err, obj) {
+			if(err){
+				console.log("error");
+				reject({ status: 500, message: 'Internal Server Error !' });
 			}
-		  }
-		};
-		search('hungrymonkeyusers', body)
-		.then(results => {
-			console.log(`found ${results.hits.total} items in ${results.took}ms`);
-			if (results.hits.total > 0)
-			{				
-				hashed_password =results.hits.hits[0]._source.hashed_password;
-				if (bcrypt.compareSync(password, hashed_password))
+			else{
+				console.log(obj);
+				hashed_password =obj[1];
+				console.log(hashed_password);
+				if (bcrypt.compareSync(obj[0], hashed_password))
 					resolve({ status: 200, message: name });	
 				else
 					reject({ status: 401, message: 'Invalid Credentials !' });
-			}
-			else
-				reject({ status: 404, message: 'User Not Found !' });
-		}).catch(console.error);
+			}		
+		});
 	});
 	

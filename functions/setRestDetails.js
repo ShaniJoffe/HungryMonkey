@@ -68,10 +68,8 @@ const esClient = new elasticsearch.Client({
 							}
 						});
 						bulkBody.push(rest);
-						console.log("bulkbody"+bulkBody);
 						esClient.bulk({body: bulkBody})
 						.then(response=>{
-							console.log("balls"+response);
 								resolve({ status: 201, message: temp.count})})
 									.catch(console.error);
 					}

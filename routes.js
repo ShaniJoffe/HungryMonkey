@@ -14,8 +14,12 @@ const getRestDetails= require('./functions/getRestDetails');
 const advancedSearch= require('./functions/advancedSearch');
 const basicSearch= require('./functions/basicSearch');
 const mergeJSON = require("merge-json") ;	
+const multer 	 = require('multer');
+const multerS3	 = require('multer-s3');
+const aws = require('aws-sdk');
 
 module.exports = router => {
+	var s3;
 	var options = {
 		provider: 'google',
 		httpAdapter: 'https', // Default
@@ -24,9 +28,37 @@ module.exports = router => {
 	};
 	var geocoder = NodeGeocoder(options);
 	
+	
+	//aws config
+	aws.config.update({
+    secretAccessKey: 'Xi4xCO/vCYwkBJDsh6b/j4qAllbKpS6OlwJBegoy',
+    accessKeyId: 'AKIAITDMQNPWWZS2QTQA',
+    region: 'eu-central-1'
+	});
+	s3 = new aws.S3();
+	var upload = multer({
+		storage: multerS3({
+			s3: s3,
+			bucket: 'hmfpbucket',
+			key: function (req, file, cb) {
+				console.log(file);
+				cb(null, file.originalname); //use Date.now() for unique file keys
+			}
+			
+		})
+	});
 	router.get('/set_restDetails',(req,res)=> {
 		console.log('user accessing set_restDetails page');
 		res.render('set_restDetails')});
+	
+	router.get('/viewMenu',(req,res)=> {
+		console.log('user accessing viewMenu page');
+		res.render('viewMenu')});
+	
+	router.get('/viewMenu/:restid',(req,res)=> {
+		console.log('user accessing viewMenu page');
+		console.log("restid: "+req.params.restid);	
+		res.render('viewMenu',{restid : req.params.restid})});
 		
 	router.get('/set_menu',(req,res)=> {
 		console.log('user accessing set_menu page');
@@ -66,23 +98,40 @@ module.exports = router => {
 			console.log(err);
 		});	
 	});
-	router.post('/set_menu/:restid', (req, res) => {
-		var dish_id_inRest=parseFloat(req.params.restid);
-		var tempObj={};
-		//getRestDetails.getRestD(req.params.restid)
-		//.then(result=>{
-			//console.log(req.body);
-			req.body.menu.forEach(function(dish,index) { dish.dish_id_inRest = dish_id_inRest+index*0.1});
-			console.log(req.body);
-			//setRestMenu.setMenu(result.message[0]._source,req.body,req.params.restid)
-			//.then(result=>{
-				//res.json(tempObj);
-			});
-		//});
-				//res.render('set_menu');			 	
-				//}).catch(err => res.status(err.status).json({ message: err.message }));	
-		//console.log(req.body);
-	//});
+	router.post('/set_menu/:restid',upload.array('imgUploader',1),(req, res,next) => {
+		
+		if(req.body.flag==1)// case its an image upload
+		{
+			var imgLocation=req.files[0].location;	
+			console.log("in image upload\n");
+			console.log("location: "+imgLocation);
+			res.json({location: imgLocation });			
+		}
+		else
+		{
+			console.log("in form upload\n");
+			if(req.body.menu!==undefined)
+			{	
+			//	console.log(req.body.menu);
+				var obj = JSON.parse(req.body.menu);
+				//obj
+				obj.menu = obj.menu.filter(Boolean);
+				var dish_id_inRest=parseFloat(req.params.restid);
+				obj.menu.forEach(function(dish,index) { dish.dish_id_inRest = dish_id_inRest+index*0.1});
+				console.log(obj.menu);
+				getRestDetails.getRestD(req.params.restid)
+				.then(result=>{
+					setRestMenu.setMenu(result.message[0]._source,obj,req.params.restid)
+					.then(result=>{
+						console.log(result.message);
+						res.end('!התפריט הוזן בהצלחה')
+					}).catch(err => res.status(err.status).json({ message: err.message }));
+				}).catch(err => res.status(err.status).json({ message: err.message }));
+			}
+		}			
+	});
+		
+	
 	router.post('/basicSearch', (req, res) => {
 		var tempObj={};
 		var size;
@@ -125,10 +174,12 @@ module.exports = router => {
 		var kosher='כשר';
 		var tempbool=false;//if rest kosher tempbool is true
 		var distance;
+		
 		if(kosher.localeCompare(req.body.rest_Kosher)==0)
 		{
 			tempbool=true;
 		}
+			console.log(req.body);
 		console.log(req.body.minPrice);
 		console.log(req.body.maxPrice);
 		console.log(req.body.distance);
@@ -169,12 +220,18 @@ module.exports = router => {
 	});	
 	
 	router.get('/', (req, res) =>{
-		res.end('Welcome to Learn2Crack !')});
+		client.on('connect', function(){
+			console.log('connected');
+		});
+		res.end('Welcome to Learn2Crack !')
+		
+		});
 
 	router.post('/auth', (req, res) => {
 		var tempName=req.body.name;
 		var tempPass=req.body.password;
-		login.loginUser(tempName, tempPass)
+		
+		login.loginUser(tempName, tempPass,req.body.id)
 		.then(result => {
 			const token = jwt.sign(result, config.secret, { expiresIn: 1440 });
 			res.status(result.status).json({ message: result.message, token: token });
