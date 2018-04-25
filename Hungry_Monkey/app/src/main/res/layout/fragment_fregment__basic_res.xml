@@ -1,0 +1,234 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CCffffe6"
+    tools:context="com.example.shanijoffe.hungry_monkey.fregment_BasicRes">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/freg1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:visibility="visible">
+
+            <Button
+                android:id="@+id/Advnced_btn"
+
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_gravity="right"
+                android:background="@drawable/buttonstylesselector"
+                android:elevation="6dp"
+                android:text="הצג חיפוש מתקדם "
+                android:textColor="#FFF"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/adv_leyout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="25dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/lbl_distance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="בחר רדיוס:"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:id="@+id/textMax5"
+                        android:layout_width="43dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
+
+                    <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
+                        android:id="@+id/sk_dis"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="2"
+                        app:bar_color="#F7BB88"
+                        app:bar_highlight_color="#E07416"
+                        app:data_type="_integer"
+                        app:max_value="150"
+                        app:min_value="0"
+                        app:steps="5" />
+
+                    <TextView
+                        android:id="@+id/textMin5"
+                        android:layout_width="59dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:gravity="left"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/adv_leyout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="118dp"
+                    android:orientation="vertical"
+                    android:paddingTop="25dp"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/lbl_price_range"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="בחר טווח מחיר :"
+                        android:textStyle="bold"
+                        android:visibility="invisible" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="41dp"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <TextView
+                            android:id="@+id/textMin1"
+                            android:layout_width="59dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:textStyle="bold" />
+
+                        <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                            android:id="@+id/rangeSeekbar1"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="2" />
+
+                        <TextView
+                            android:id="@+id/textMax1"
+                            android:layout_width="81dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/adv_leyout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="123dp"
+                    android:orientation="vertical"
+                    android:paddingTop="25dp"
+                    android:visibility="invisible">
+
+                    <TextView
+                        android:id="@+id/lbl_kosher"
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:gravity="right"
+                        android:text="בחר סוג כשרות "
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:orientation="horizontal">
+
+
+                        <Spinner
+                            android:id="@+id/sp_kosher"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/txtv_kosher"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/edittextstyle"
+                            android:paddingLeft="10dp"
+                            android:text="כשרות"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:paddingTop="50dp">
+
+                    <Button
+                        android:id="@+id/btn_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="31dp"
+                        android:background="@drawable/buttonstylesselector"
+                        android:hint="התחבר"
+                        android:onClick="OnClick"
+                        android:text="התחבר"
+                        android:textColor="#FFF"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btn_reg"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/buttonstylesselector"
+                        android:onClick="OnClickSign"
+                        android:text="לחץ כאן להרשם"
+                        android:textColor="#FFF"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>
+
+
+
+
+

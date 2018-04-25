@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_new"
+
+    tools:contex=".MainActivity">
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="#26999999"--><![CDATA[
+
+
+    tools:context="com.example.shanijoffe.hungry_monkey.basic_results">
+
+    ]]>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="317dp"
+        android:layout_height="187dp"
+        app:srcCompat="@drawable/kafit" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/myToggleButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="241dp"
+        android:layout_height="85dp"
+        android:layout_weight="1"
+        android:onClick="OnclickDirections"
+        android:src="@drawable/common_google_signin_btn_icon_dark"
+        android:text="הוסף "
+        app:backgroundTint="@color/creame"
+        app:fabSize="normal"
+        app:layout_anchor="@id/imageView"
+        app:layout_anchorGravity="bottom|right"
+        app:borderWidth="5dp"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+      />
+</RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/res_det"
+                android:layout_width="match_parent"
+                android:layout_height="232dp"
+                android:layout_margin="10dp"
+                android:background="#99FFFFCC"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/rest_name_txtv"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittextstyle"
+                    android:text="שם מסעדה : "
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/rest_address_txtv"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittextstyle"
+                    android:text="כתובת : "
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/Kosher_txtv"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittextstyle"
+                    android:text="כשרות : "
+                    android:textColor="#000000"
+                    android:textDirection="rtl"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+                <Button
+                    android:id="@+id/show_menu_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonstyles"
+                    android:text="להצגת תפריט המסעדה לחץ כאן "
+                    android:textStyle="bold|italic" />
+
+
+                <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/dish_det"
+                android:layout_width="match_parent"
+                android:layout_height="122dp"
+
+                android:layout_marginBottom="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:background="#99FFFFCC"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/lbl_txtv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+
+
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="פרטים על המנה :  "
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textDirection="rtl"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/layout_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/dish_price_txtv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+
+                        android:gravity="right"
+                        android:text="מחיר מנה: "
+                        android:textAllCaps="false"
+                        android:textColor="#000000"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/dish_name_txtv"
+
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="right"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/DishImage"
+                        android:layout_weight="1"
+
+                        android:text="שם מנה : "
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#000000"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/dish_description_txtv"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="51dp"
+                        android:layout_weight="1"
+                        android:inputType="textMultiLine"
+                        android:text="מנה מדהימה מאד ממולצת"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+    <!--</RelativeLayout>-->
+</ScrollView>

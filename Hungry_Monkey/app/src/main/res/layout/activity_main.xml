@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:contex=".MainActivity">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context="comv.example.shanijoffe.a1.MainActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <SearchView
+                android:id="@+id/DishSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:paddingTop="10dp">
+
+            </SearchView>
+
+            <ListView
+                android:id="@+id/listview_search"
+                android:layout_width="match_parent"
+                android:layout_height="243dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/searchView1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:divider="#E6E6E6"
+                android:dividerHeight="5dp"
+
+                tools:ignore="ObsoleteLayoutParam,RtlHardcoded" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+           >
+
+            <Button
+                android:id="@+id/Advnced_btn"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:elevation="6dp"
+                android:onClick="OnClickShowAdvancedSearch"
+                android:text="הצג חיפוש מתקדם " />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:paddingTop="25dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/sk_dis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/txtv_dis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="10dp"
+                        android:text="מרחק" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="25dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/sk_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/txtv_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="10dp"
+                        android:text="מחיר" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="25dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+
+                    <Spinner
+                        android:id="@+id/sp_kosher"
+                        android:layout_width="140dp"
+                        android:layout_height="34dp" />
+
+                    <TextView
+                        android:id="@+id/txtv_kosher"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="10dp"
+                        android:text="כשרות" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingTop="50dp">
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/buttonstylesselector"
+                android:hint="התחבר"
+                android:onClick="OnClick" />
+
+            <Button
+                android:id="@+id/btn_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingTop="25dp"
+                android:hint="הרשם"
+                android:onClick="OnClickSign"
+                android:background="@drawable/buttonstylesselector"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--================-->
+<!--&lt;!&ndash;<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;xmlns:android="http://schemas.android.com/apk/res/android"&ndash;&gt;-->
+    <!--&lt;!&ndash;xmlns:tools="http://schemas.android.com/tools"&ndash;&gt;-->
+    <!--&lt;!&ndash;tools:contex=".MainActivity">&ndash;&gt;-->
+
+    <!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--xmlns:tools="http://schemas.android.com/tools"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--tools:context="com.example.shanijoffe.hungry_monkey.MainActivity"-->
+        <!--tools:ignore="ExtraText">-->
+
+
+        <!--<SearchView-->
+            <!--android:id="@+id/DishSearch"-->
+            <!--android:layout_width="285dp"-->
+            <!--android:layout_height="44dp"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:layout_marginLeft="16dp"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="16dp"-->
+            <!--android:text="מה באלך לאכול "-->
+            <!--app:layout_constraintBottom_toTopOf="@+id/Advnced_btn"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintHorizontal_bias="0.526"-->
+            <!--app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent"></SearchView>-->
+
+
+    <!--<Button-->
+        <!--android:id="@+id/Advnced_btn"-->
+        <!--android:layout_width="134dp"-->
+        <!--android:layout_height="27dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="100dp"-->
+        <!--android:background="@drawable/buttonstylesselector"-->
+        <!--android:onClick="OnClickShowAdvancedSearch"-->
+        <!--android:text="הצג חיפוש מתקדם"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.952"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<SeekBar-->
+        <!--android:id="@+id/sk_dis"-->
+        <!--android:layout_width="155dp"-->
+        <!--android:layout_height="33dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginStart="32dp"-->
+        <!--android:layout_marginTop="192dp"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/sp_kosher"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.0"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/txtv_dis"-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="28dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="מרחק"-->
+
+        <!--app:layout_constraintBottom_toTopOf="@+id/txtv_kosher"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.51"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/sk_dis"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/txtv_price"-->
+        <!--app:layout_constraintVertical_bias="0.551" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/txtv_kosher"-->
+        <!--android:layout_width="84dp"-->
+        <!--android:layout_height="29dp"-->
+        <!--android:layout_marginBottom="76dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:layout_marginStart="180dp"-->
+
+        <!--android:text="כשרות"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/btn_login"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent" />-->
+
+    <!--<SeekBar-->
+        <!--android:id="@+id/sk_price"-->
+        <!--android:layout_width="140dp"-->
+        <!--android:layout_height="35dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginStart="36dp"-->
+
+        <!--android:layout_marginTop="8dp"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/sk_dis"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.0"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/DishSearch"-->
+        <!--app:layout_constraintVertical_bias="0.869" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/txtv_price"-->
+        <!--android:layout_width="81dp"-->
+        <!--android:layout_height="28dp"-->
+        <!--android:layout_marginEnd="32dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:layout_marginStart="8dp"-->
+
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:text="מחיר"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="1.0"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/sk_price"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/Advnced_btn" />-->
+
+    <!--<Spinner-->
+        <!--android:id="@+id/sp_kosher"-->
+        <!--android:layout_width="140dp"-->
+        <!--android:layout_height="34dp"-->
+
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginTop="236dp"-->
+        <!--android:textAlignment="center"-->
+        <!--app:layout_constraintEnd_toStartOf="@+id/txtv_kosher"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<Button-->
+        <!--android:id="@+id/btn_login"-->
+        <!--android:layout_width="228dp"-->
+        <!--android:layout_height="34dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:background="@drawable/buttonstylesselector"-->
+        <!--android:hint="התחבר"-->
+        <!--android:onClick="OnClick"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/btn_reg"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.368"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/sp_kosher"-->
+        <!--app:layout_constraintVertical_bias="0.652" />-->
+
+    <!--<Button-->
+        <!--android:id="@+id/btn_reg"-->
+        <!--android:layout_width="232dp"-->
+        <!--android:layout_height="34dp"-->
+        <!--android:layout_marginBottom="64dp"-->
+        <!--android:layout_marginEnd="24dp"-->
+        <!--android:layout_marginLeft="40dp"-->
+        <!--android:background="@drawable/buttonstylesselector"-->
+        <!--android:hint="הרשם"-->
+        <!--android:onClick="OnClickSign"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent" />-->
+
+
+    <!--<Button-->
+            <!--android:id="@+id/btn_reg"-->
+            <!--android:layout_width="251dp"-->
+            <!--android:layout_height="46dp"-->
+            <!--android:layout_marginRight="4dp"-->
+            <!--android:background="@drawable/buttonstylesselector"-->
+            <!--android:gravity="center"-->
+            <!--android:hint="הרשם"-->
+            <!--android:onClick="OnClickSign"-->
+            <!--android:textColorHint="#fff"-->
+            <!--app:layout_constraintBottom_toTopOf="@+id/btn_login"-->
+            <!--app:layout_constraintRight_toRightOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent" />-->
+    <!---->
+        <!--<Button-->
+            <!--android:id="@+id/btn_login"-->
+            <!--android:layout_width="251dp"-->
+            <!--android:layout_height="41dp"-->
+            <!--android:layout_marginBottom="160dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:background="@drawable/buttonstylesselector"-->
+            <!--android:gravity="center"-->
+            <!--android:hint="התחבר"-->
+            <!--android:onClick="OnClick"-->
+            <!--android:textColorHint="#fff"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintHorizontal_bias="0.768"-->
+            <!--app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--app:layout_constraintRight_toRightOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--app:layout_constraintVertical_bias="1.0" />-->
+
+
+<!--</ScrollView>-->
+
+
+
+
+
+
+
+
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/pnl1"-->
+    <!--android:layout_width="343dp"-->
+    <!--android:layout_height="148dp"-->
+    <!--android:orientation="vertical"-->
+    <!--android:visibility="visible"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.0"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+
+    <!--app:layout_constraintVertical_bias="0.327">-->
+
+    <!--<SeekBar-->
+    <!--android:layout_width="202dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1" />-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <!--<SeekBar-->
+    <!--android:id="@+id/seekBar4"-->
+    <!--android:layout_width="192dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="50dp" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="149dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="50dp"-->
+    <!--android:text="TextView" />-->
+
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+    <!--<LinearLayout-->
+    <!--android:id="@+id/pnl2"-->
+    <!--android:visibility="visible"-->
+    <!--android:layout_width="341dp"-->
+    <!--android:layout_height="157dp"-->
+    <!--android:orientation="vertical"-->
+
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.0"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--app:layout_constraintVertical_bias="0.6">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="97dp"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<SeekBar-->
+    <!--android:id="@+id/seekBar8"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/textView9"-->
+    <!--android:layout_width="8dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:text="TextView" />-->
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/pnl3"-->
+    <!--android:layout_width="329dp"-->
+    <!--android:layout_height="89dp"-->
+    <!--android:layout_marginTop="352dp"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:visibility="visible"-->
+    <!--app:layout_constraintHorizontal_bias="0.29"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/txtVSpinner"-->
+    <!--android:layout_width="118dp"-->
+    <!--android:layout_height="30dp"-->
+    <!--android:layout_marginLeft="200dp"-->
+    <!--android:text="כשרות:" />-->
+
+    <!--<Spinner-->
+    <!--android:id="@+id/spinner"-->
+    <!--android:layout_width="200dp"-->
+    <!--android:layout_height="wrap_content" />-->
+
+    <!--</LinearLayout>-->
+
+
+
+
+    <!--<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:stretchColumns="1">-->
+    <!--<TableRow>-->
+    <!--<TextView-->
+    <!--android:text="@string/table_layout_4_open"-->
+    <!--android:padding="3dip" />-->
+    <!--<TextView-->
+    <!--android:text="@string/table_layout_4_open_shortcut"-->
+    <!--android:gravity="right"-->
+    <!--android:padding="3dip" />-->
+    <!--</TableRow>-->
+
+    <!--<TableRow>-->
+    <!--<TextView-->
+    <!--android:text="@string/table_layout_4_save"-->
+    <!--android:padding="3dip" />-->
+    <!--<TextView-->
+    <!--android:text="@string/table_layout_4_save_shortcut"-->
+    <!--android:gravity="right"-->
+    <!--android:padding="3dip" />-->
+    <!--</TableRow>-->
+    <!--</TableLayout>-->
+
+    <!--<TextView-->
+
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--android:layout_marginStart="224dp"-->
+    <!--android:layout_marginTop="184dp"-->
+    <!--android:text="price"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.87"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--app:layout_constraintVertical_bias="0.0" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginStart="8dp"-->
+    <!--android:text="Distence"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.874"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<SeekBar-->
+    <!--android:id="@+id/PriceSb"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginEnd="148dp"-->
+
+    <!--android:layout_marginLeft="44dp"-->
+    <!--android:paddingTop="20dp"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--app:layout_constraintVertical_bias="0.499" />-->
+
+    <!--<SeekBar-->
+    <!--android:id="@+id/distenceSb"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="8dp"-->
+
+    <!--android:layout_marginEnd="140dp"-->
+    <!--android:layout_marginLeft="44dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:paddingTop="20dp"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--app:layout_constraintVertical_bias="0.344" />-->
+
+    <!--</LinearLayout>-->
