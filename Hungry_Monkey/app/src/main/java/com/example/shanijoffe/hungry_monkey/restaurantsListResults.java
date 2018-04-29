@@ -63,13 +63,12 @@ import static java.lang.Thread.sleep;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class fregment_BasicRes extends Fragment {
+public class restaurantsListResults extends Fragment {
 
     OnHeadlineSelectedListener mCallback;
     
     boolean show=false;
     boolean asked=false;
-    public MainActivity activity;
     String line=""; //for response server.
     Spinner sp_kosher;
     boolean st = false;
@@ -90,7 +89,7 @@ public class fregment_BasicRes extends Fragment {
     Button Advnced_btn;
     Bundle bundle;
    String[] str = {"כשר", "לא כשר"};
-    public fregment_BasicRes() {
+    public restaurantsListResults() {
         // Required empty public constructor
     }
     public interface OnHeadlineSelectedListener {
@@ -444,7 +443,7 @@ public class fregment_BasicRes extends Fragment {
 
         @SuppressLint({"MissingPermission", "LongLogTag"})
         public String getDishList_basic(String url) {
-            Dish tempDish = new Dish();
+
 //            String matchFound = "N";
             BufferedReader reader = null;
             String text = "";
@@ -658,8 +657,7 @@ public class fregment_BasicRes extends Fragment {
 
         @SuppressLint({"MissingPermission", "LongLogTag"})
         public String getDishList2(String url) throws JSONException {
-//            Dish tempDish = new Dish();
-//            String matchFound = "N";
+
             BufferedReader reader = null;
             String text = "";
             String nameDish;

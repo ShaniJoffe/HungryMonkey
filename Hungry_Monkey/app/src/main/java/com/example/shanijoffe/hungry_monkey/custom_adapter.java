@@ -46,7 +46,6 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>  implem
 
     public custom_adapter(Context context, int resource, Vector<HashMap<String, String>> vec,int flag_btn) {
         super( context, resource, vec );
-        this._activity = MainActivity._mainActivity;
         this._vec = vec;
         this.context = context;
         this.resource = resource;

@@ -6,6 +6,7 @@
 
 
     <TextView
+        android:fontFamily="@font/danafont"
         android:id="@+id/txtv_flag_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,6 +14,7 @@
         android:text="TextView" />
 
     <TextView
+        android:fontFamily="@font/danafont"
         android:id="@+id/txtv_flag_loc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,7 +59,7 @@
                             android:layout_weight="1"
                             android:padding="5dp"
                             android:text="הוסף "
-
+                            android:fontFamily="@font/danafont"
                             android:textOff=""
                             android:textOn=""
                             app:backgroundTint="@color/creame"
@@ -68,6 +70,7 @@
                             android:layout_height="match_parent"
                             android:elevation="6dp"
                             android:text="מחיר"
+                            android:fontFamily="@font/danafont"
                             android:textColor="?android:attr/colorForeground"
                             android:textSize="14sp"
                             app:layout_anchor="@id/filter_by_price"
@@ -94,7 +97,7 @@
                         android:layout_weight="1"
                         android:padding="5dp"
                         android:text="הוסף "
-
+                        android:fontFamily="@font/danafont"
                         android:textOff=""
                         android:textOn=""
                         app:backgroundTint="@color/creame"
@@ -105,6 +108,7 @@
                         android:layout_height="match_parent"
                         android:elevation="6dp"
                         android:text="מיקום "
+                        android:fontFamily="@font/danafont"
                         android:textColor="?android:attr/colorForeground"
                         android:textSize="14sp"
                         app:layout_anchor="@id/filter_by_loc"
@@ -138,6 +142,7 @@
                     android:layout_height="match_parent"
                     android:elevation="6dp"
                     android:text="דירוג"
+                    android:fontFamily="@font/danafont"
                     android:textColor="?android:attr/colorForeground"
                     android:textSize="14sp"
                     app:layout_anchor="@id/filter_by_rate"
@@ -153,87 +158,16 @@
                         android:layout_gravity="right"
                         android:background="@drawable/rounded_corner"
                         android:backgroundTint="@android:color/darker_gray"
-                        android:fontFamily="sans-serif-condensed"
+
                         android:fontFeatureSettings="@string/common_google_play_services_install_title"
                         android:gravity="center_horizontal|center"
                         android:padding="3dp"
+                        android:fontFamily="@font/danafont"
                         android:text="מיין לפי :"
                         android:textAllCaps="true"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
-
-        <!---->
-        <!---->
-                    <!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-                        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="45dp"-->
-                        <!--android:padding="5dp">-->
-
-                        <!--<android.support.design.widget.FloatingActionButton-->
-                            <!--android:id="@+id/filter_by_loc"-->
-                            <!--android:layout_width="29dp"-->
-                            <!--android:layout_height="32dp"-->
-                            <!--android:layout_centerHorizontal="true"-->
-                            <!--android:layout_centerVertical="true"-->
-                            <!--android:layout_gravity="center_vertical|center_horizontal"-->
-                            <!--android:layout_marginRight="20dp"-->
-                            <!--android:layout_weight="1"-->
-                            <!--android:padding="5dp"-->
-                            <!--android:text="הוסף "-->
-                            <!--android:textOff=""-->
-
-                            <!--android:textOn=""-->
-                            <!--app:backgroundTint="@color/creame"-->
-                            <!--app:fabSize="normal" />-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="40dp"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:elevation="6dp"-->
-                            <!--android:text="מיקום"-->
-                            <!--android:textColor="?android:attr/colorForeground"-->
-                            <!--android:textSize="14sp"-->
-                            <!--app:layout_anchor="@id/filter_by_loc"-->
-                            <!--app:layout_anchorGravity="center" />-->
-
-                    <!--</android.support.design.widget.CoordinatorLayout>-->
-
-                    <!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-                        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="45dp"-->
-                        <!--android:padding="5dp">-->
-
-                        <!--<android.support.design.widget.FloatingActionButton-->
-                            <!--android:id="@+id/filter_by_rate"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="45dp"-->
-                            <!--android:layout_centerHorizontal="true"-->
-                            <!--android:layout_centerVertical="true"-->
-                            <!--android:layout_gravity="center_vertical|center_horizontal"-->
-                            <!--android:layout_weight="1"-->
-                            <!--android:padding="5dp"-->
-                            <!--android:text="הוסף "-->
-                            <!--android:textOff=""-->
-                            <!--android:textOn=""-->
-                            <!--app:backgroundTint="@color/creame"-->
-                            <!--app:fabSize="normal" />-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="40dp"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:elevation="6dp"-->
-                            <!--android:text="דירוג"-->
-                            <!--android:textColor="?android:attr/colorForeground"-->
-                            <!--android:textSize="14sp"-->
-                            <!--app:layout_anchor="@id/filter_by_rate"-->
-                            <!--app:layout_anchorGravity="center" />-->
-
-                    <!--</android.support.design.widget.CoordinatorLayout>-->
-
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

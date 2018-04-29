@@ -20,6 +20,7 @@
         android:layout_marginStart="24dp" />
 
     <TextView
+        android:fontFamily="@font/danafont"
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,6 +35,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:fontFamily="@font/danafont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="user@host.com"

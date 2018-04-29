@@ -227,7 +227,7 @@ public class basic_results extends AppCompatActivity {
 
         @SuppressLint({"MissingPermission", "LongLogTag"})
         public String getDishList_basic(String url) {
-            Dish tempDish = new Dish();
+
 //            String matchFound = "N";
             BufferedReader reader = null;
             String text = "";

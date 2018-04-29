@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:background="#99FFFFCC"
-
+    android:fontFamily="@font/danafont"
     android:orientation="vertical"
     android:padding="20dp">
 
@@ -31,6 +31,25 @@
                 android:background="@color/cardview_light_background"
                 android:scaleType="centerCrop"
                 android:src="@drawable/shaksh" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/myToggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="bottom|right"
+                android:layout_weight="1"
+                android:onClick="OnclickDirections"
+                android:src="@drawable/common_google_signin_btn_icon_dark"
+                android:text="הוסף "
+                app:backgroundTint="@color/creame"
+                app:borderWidth="5dp"
+                app:elevation="6dp"
+                app:fabSize="normal"
+                app:layout_anchor="@id/roundedImageView"
+                app:layout_anchorGravity="bottom|right"
+                app:pressedTranslationZ="12dp" />
         </android.support.v7.widget.CardView>
 
         <LinearLayout
@@ -46,6 +65,7 @@
                 android:gravity="right"
                 android:padding="5dp"
                 android:text="מחיר מנה "
+                android:fontFamily="@font/danafont"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -61,6 +81,7 @@
                 android:gravity="right"
                 android:padding="5dp"
                 android:text="שם מנה "
+                android:fontFamily="@font/danafont"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#000000"
                 android:textSize="18dp"
@@ -77,6 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/danafont"
                 android:gravity="right"
                 android:text="שם של מסעדה "
                 android:textColor="#000000"
@@ -90,6 +112,7 @@
                 android:layout_margin="1dp"
                 android:layout_weight="1"
                 android:gravity="right"
+                android:fontFamily="@font/danafont"
                 android:text="שם מסעדה "
                 android:textColor="#000000"
                 android:textSize="18sp"
@@ -105,6 +128,7 @@
             android:background="@drawable/buttonstylesselector"
             android:onClick="onClickChoose"
             android:padding="10dp"
+            android:fontFamily="@font/danafont"
             android:text="צפייה במסעדה "
             android:textStyle="bold" />
 

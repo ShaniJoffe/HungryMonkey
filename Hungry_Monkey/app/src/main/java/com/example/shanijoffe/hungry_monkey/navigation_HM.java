@@ -59,7 +59,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import static com.loopj.android.http.AsyncHttpClient.log;
 
 public class navigation_HM extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener ,fregment_BasicRes.OnHeadlineSelectedListener,
+        implements NavigationView.OnNavigationItemSelectedListener ,restaurantsListResults.OnHeadlineSelectedListener,
          GoogleApiClient.ConnectionCallbacks, LocationListener,GoogleApiClient.OnConnectionFailedListener
 {
     private static final int UNKNOW_CODE = 99;//for intents
@@ -78,7 +78,7 @@ public class navigation_HM extends AppCompatActivity
     Location lastLocation;
     double lat,lon;
     DrawerLayout drawer;
-    fregment_BasicRes search_fragent;
+    restaurantsListResults search_fragent;
     private static final int REQUEST_RESOLVE_ERROR = 555;
     boolean show = false;//for the advanced search button flag
     public static Activity _mainActivity;
@@ -117,7 +117,7 @@ public class navigation_HM extends AppCompatActivity
 
 
        backToMain =(FloatingActionButton)findViewById(R.id.home_btn);
-        mono = (TextView) findViewById( R.id.welcome_txt );
+        //mono = (TextView) findViewById( R.id.welcome_txt );
         sss =(TextView)findViewById( R.id.sss );
         loginButton = (Button) findViewById( R.id.btn_login );
         search = (SearchView) findViewById( R.id.DishSearch );
@@ -176,7 +176,7 @@ public class navigation_HM extends AppCompatActivity
         FragmentTransaction ft = fm.beginTransaction();
         //calling basic search fragment
         if (!st) {
-            fregment_BasicRes f1 = new fregment_BasicRes();
+            restaurantsListResults f1 = new restaurantsListResults();
             ft.replace( R.id.fragment_container, f1 );
             ft.commit();
             st = true;
@@ -205,8 +205,6 @@ public class navigation_HM extends AppCompatActivity
         emailText.setText("newemail@email.com");
 
         navigationView.setNavigationItemSelectedListener(this);
-
-
 
     }
 
@@ -324,7 +322,7 @@ public class navigation_HM extends AppCompatActivity
         Log.i( "onLocationChanged", "onLocationChanged" );
         lat = location.getLatitude();
         lon = location.getLongitude();
-        fregment_BasicRes search_fragent = new fregment_BasicRes();
+        restaurantsListResults search_fragent = new restaurantsListResults();
         Bundle args = new Bundle();
         args.putString( "lon", String.valueOf( lon ) );
         args.putString( "lat", String.valueOf( lat ) );
@@ -358,7 +356,7 @@ public class navigation_HM extends AppCompatActivity
                 Toast.makeText( this, "Last location " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude(), Toast.LENGTH_SHORT ).show();
                 log.i("onConnected","search");
                 connectedFlag=true;
-                search_fragent = new fregment_BasicRes();
+                search_fragent = new restaurantsListResults();
                 lon=lastLocation.getLongitude();
                 lat=lastLocation.getLatitude();
                 Bundle args = new Bundle();
@@ -490,7 +488,7 @@ public class navigation_HM extends AppCompatActivity
                     if (search.getQuery().length()> 0) { //check that the user entered dish name.
 
                         //sending the data to search fragment
-                        fregment_BasicRes search_fragent = new fregment_BasicRes();
+                        restaurantsListResults search_fragent = new restaurantsListResults();
                         Bundle args = new Bundle();
 
                         args.putString( "lon", String.valueOf( lon ) );
@@ -587,7 +585,7 @@ public void callMain(){
 }
 
     public Bundle getBundle() {
-        fregment_BasicRes search_fragent = new fregment_BasicRes();
+        restaurantsListResults search_fragent = new restaurantsListResults();
         Bundle args = new Bundle();
         if(lastLocation!=null)
         {

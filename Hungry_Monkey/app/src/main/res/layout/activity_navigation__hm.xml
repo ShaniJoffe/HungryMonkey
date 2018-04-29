@@ -15,11 +15,11 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent">
         <LinearLayout
-        android:id="@+id/search_flag"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center|fill"
-        android:orientation="vertical">
+            android:id="@+id/search_flag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|fill"
+            android:orientation="vertical">
 
 
 
@@ -28,6 +28,7 @@
                 android:padding="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_width="149dp"
+                android:fontFamily="@font/danafont"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_height="wrap_content">
 
@@ -41,6 +42,7 @@
                     android:src="@drawable/tmp_logo"
                     android:text="חזרהv לעמוד ראשי "
                     android:textSize="24sp"
+                    android:fontFamily="@font/danafont"
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -53,6 +55,7 @@
                     android:textColor="?android:attr/colorForeground"
                     android:text="חזרה לעמוד ראשי "
                     android:textSize="14sp"
+                    android:fontFamily="@font/danafont"
                     android:textStyle="bold"
                     app:layout_anchor="@id/home_btn"
                     app:layout_anchorGravity="center"
@@ -60,44 +63,46 @@
 
             </android.support.design.widget.CoordinatorLayout>
 
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                >
 
-        <TextView
-        android:id="@+id/sss"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="false"
-        android:textColor="@android:color/white"
-        android:visibility="invisible" />
+                <TextView
+                    android:id="@+id/sss"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="false"
 
-        <SearchView
-        android:id="@+id/DishSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:background="#CCffffcc"
-        android:gravity="fill_vertical|center_horizontal|center"
-        android:hint="הכנס/י שם מנה "
-        android:padding="5dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp">
+                    android:textColor="@android:color/white"
+                    android:visibility="invisible" />
 
-        </SearchView>
+                <SearchView
+                    android:id="@+id/DishSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:background="#CCffffcc"
+                    android:gravity="fill_vertical|center_horizontal|center"
+                    android:hint="הכנס/י שם מנה "
+                    android:padding="5dp"
+                    android:fontFamily="@font/danafont"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
 
-        <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+                </SearchView>
 
-        </FrameLayout>
-        </LinearLayout>
+                <FrameLayout
+                    android:id="@+id/fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+
+                </FrameLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -112,105 +117,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:fontFamily="@font/danafont"
         app:headerLayout="@layout/nav_header_navigation__hm"
         app:menu="@menu/activity_navigation__hm_drawer" />
 
 
 </android.support.v4.widget.DrawerLayout>
-
-
-<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--xmlns:tools="http://schemas.android.com/tools"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="match_parent"-->
-<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--android:background="@drawable/bg_new"-->
-
-<!--tools:contex=".MainActivity">-->
-
-<!--<LinearLayout-->
-    <!--android:id="@+id/search_flag"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-
-    <!--android:gravity="center|fill"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/welcome_txt"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:autoSizeTextType="none"-->
-        <!--android:background="@drawable/edittextstyle"-->
-        <!--android:fontFamily="sans-serif"-->
-        <!--android:gravity="center_vertical|center"-->
-        <!--android:includeFontPadding="true"-->
-        <!--android:shadowColor="@android:color/black"-->
-        <!--android:textColor="#9c7f5f"-->
-        <!--android:textColorHighlight="@color/colorPrimaryDark"-->
-        <!--android:textSize="18sp"-->
-        <!--android:textStyle="bold" />-->
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/home_btn"-->
-        <!--android:layout_width="149dp"-->
-        <!--android:layout_height="100dp"-->
-        <!--android:layout_gravity="center_vertical|center_horizontal"-->
-        <!--android:layout_margin="16dp"-->
-        <!--android:src="@drawable/tmp_logo"-->
-        <!--android:text="חזרה לעמוד ראשי "-->
-        <!--app:backgroundTint="@color/creame"-->
-        <!--app:fabSize="normal" />-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:orientation="vertical"-->
-        <!--android:padding="10dp">-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/sss"-->
-            <!--android:layout_width="100dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="false"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--android:visibility="invisible" />-->
-
-        <!--&lt;!&ndash;<RatingBar&ndash;&gt;-->
-        <!--&lt;!&ndash;android:id="@+id/ratingBar"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="wrap_content" />&ndash;&gt;-->
-
-        <!--<SearchView-->
-            <!--android:id="@+id/DishSearch"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_alignParentStart="true"-->
-            <!--android:background="#CCffffcc"-->
-            <!--android:gravity="fill_vertical|center_horizontal|center"-->
-            <!--android:hint="הכנס/י שם מנה "-->
-            <!--android:padding="5dp"-->
-            <!--android:paddingLeft="5dp"-->
-            <!--android:paddingRight="5dp">-->
-
-        <!--</SearchView>-->
-
-
-        <!--<FrameLayout-->
-            <!--android:id="@+id/fragment_container"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="10dp">-->
-
-        <!--</FrameLayout>-->
-
-
-    <!--</LinearLayout>-->
-
-
-<!--</LinearLayout>-->
-
-
-<!--</ScrollView>-->

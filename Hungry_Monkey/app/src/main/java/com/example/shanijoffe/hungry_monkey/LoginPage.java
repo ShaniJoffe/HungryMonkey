@@ -97,7 +97,7 @@ public class LoginPage extends AppCompatActivity {
                 Log.i( "response from server :", "name is "+userName_res+"token is "+token );
                 Bundle user_det = new Bundle();
                 user_det.putString("user_name",userName_res);//here i shpuld insert user_name
-                Intent i = new Intent( this, MainActivity.class );
+                Intent i = new Intent( this, navigation_HM.class );
                 i.putExtras(user_det);
                 startActivityForResult( i, CODE_REQ );
             }
@@ -109,12 +109,7 @@ public class LoginPage extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
 
         }
-
-
-
     }
-
-
     public class SendPostRequest extends AsyncTask<String, Void, String>
     {
         protected void onPreExecute(){}
@@ -122,13 +117,11 @@ public class LoginPage extends AppCompatActivity {
         {
             try
             {
-
-
-                URL url = new URL("http://hungrymonkey-env.vivacrpttt.eu-central-1.elasticbeanstalk.com/api/v1/auth"); // here is your URL path
+                URL url = new URL("http://hmfproject-env.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/auth"); // here is your URL path
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("name",user);
                 postDataParams.put("password",user_pass);
-
+                postDataParams.put("id","1");
                 //POST
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(50000 /* milliseconds */);
@@ -145,6 +138,7 @@ public class LoginPage extends AppCompatActivity {
                 writer.close();
                 os.close();
                  int responseCode=conn.getResponseCode();
+                 Log.i("responseCode", String.valueOf( responseCode ) );
                 if (responseCode == HttpsURLConnection.HTTP_OK)
                 {
 
@@ -181,7 +175,7 @@ public class LoginPage extends AppCompatActivity {
 
                 Bundle user_det = new Bundle();
                 user_det.putString("user_name",userName_res);//here i shpuld insert user_name
-                Intent i = new Intent( getApplicationContext(), MainActivity.class );
+                Intent i = new Intent( getApplicationContext(), navigation_HM.class );
                 i.putExtras(user_det);
                 startActivityForResult( i, CODE_REQ );
 
