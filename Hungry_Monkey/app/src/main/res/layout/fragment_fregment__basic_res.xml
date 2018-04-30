@@ -26,12 +26,12 @@
 
             <Button
                 android:id="@+id/Advnced_btn"
-                android:fontFamily="@font/danafont"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:background="@drawable/buttonstylesselector"
                 android:elevation="6dp"
+                android:fontFamily="@font/danafont"
                 android:text="הצג חיפוש מתקדם "
                 android:textColor="#FFF"
                 android:textStyle="bold"
@@ -202,28 +202,15 @@
                     android:paddingTop="50dp">
 
                     <Button
-                        android:fontFamily="@font/danafont"
                         android:id="@+id/btn_login"
                         android:layout_width="match_parent"
-                        android:layout_height="31dp"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/buttonstylesselector"
+                        android:fontFamily="@font/danafont"
                         android:hint="התחבר"
 
                         android:onClick="OnClick"
-                        android:text="התחבר"
-                        android:textColor="#FFF"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:fontFamily="@font/danafont"
-                        android:id="@+id/btn_reg"
-                        android:layout_width="match_parent"
-                        android:layout_height="32dp"
-
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/buttonstylesselector"
-                        android:onClick="OnClickSign"
-                        android:text="לחץ כאן להרשם"
+                        android:text="חפש "
                         android:textColor="#FFF"
                         android:textStyle="bold" />
 

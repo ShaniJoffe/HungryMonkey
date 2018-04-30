@@ -69,10 +69,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:elevation="6dp"
-                            android:text="מחיר"
                             android:fontFamily="@font/danafont"
+                            android:text="מחיר"
                             android:textColor="?android:attr/colorForeground"
                             android:textSize="14sp"
+                            android:textStyle="bold"
                             app:layout_anchor="@id/filter_by_price"
                             app:layout_anchorGravity="center"
                             tools:layout_editor_absoluteX="10dp" />
@@ -103,17 +104,18 @@
                         app:backgroundTint="@color/creame"
                         app:fabSize="normal" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:elevation="6dp"
-                        android:text="מיקום "
-                        android:fontFamily="@font/danafont"
-                        android:textColor="?android:attr/colorForeground"
-                        android:textSize="14sp"
-                        app:layout_anchor="@id/filter_by_loc"
-                        app:layout_anchorGravity="center"
-                        tools:layout_editor_absoluteX="10dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:elevation="6dp"
+                            android:fontFamily="@font/danafont"
+                            android:text="מיקום "
+                            android:textColor="?android:attr/colorForeground"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_anchor="@id/filter_by_loc"
+                            app:layout_anchorGravity="center"
+                            tools:layout_editor_absoluteX="10dp" />
 
                     </android.support.design.widget.CoordinatorLayout>
 
@@ -137,17 +139,18 @@
                     app:backgroundTint="@color/creame"
                     app:fabSize="normal" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:elevation="6dp"
-                    android:text="דירוג"
-                    android:fontFamily="@font/danafont"
-                    android:textColor="?android:attr/colorForeground"
-                    android:textSize="14sp"
-                    app:layout_anchor="@id/filter_by_rate"
-                    app:layout_anchorGravity="center"
-                    tools:layout_editor_absoluteX="10dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:elevation="6dp"
+                            android:fontFamily="@font/danafont"
+                            android:text="דירוג"
+                            android:textColor="?android:attr/colorForeground"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_anchor="@id/filter_by_rate"
+                            app:layout_anchorGravity="center"
+                            tools:layout_editor_absoluteX="10dp" />
 
                     </android.support.design.widget.CoordinatorLayout>
 

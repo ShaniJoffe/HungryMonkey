@@ -56,7 +56,7 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>  implem
     public View getView(int position, View convertView, ViewGroup parent) {
         this.position = position;
         View view = LayoutInflater.from( context ).inflate( this.resource, parent, false );
-        ;
+
         final TextView name_res_txtv = (TextView) view.findViewById( R.id.nameRes );
         final TextView name_dish_txtv = (TextView) view.findViewById( R.id.Dish_name );
         final TextView PriceDish_txtv = (TextView) view.findViewById( R.id.PriceDish );

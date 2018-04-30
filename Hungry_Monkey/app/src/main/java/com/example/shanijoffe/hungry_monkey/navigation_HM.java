@@ -104,16 +104,6 @@ public class navigation_HM extends AppCompatActivity
          username=(TextView)findViewById( R.id.username );
 
 
-////        if (Build.VERSION.SDK_INT < 16) {
-////            getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
-////                    WindowManager.LayoutParams.FLAG_FULLSCREEN );
-////
-////        }
-//
-//        requestWindowFeature( Window.FEATURE_NO_TITLE );
-//        getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN );
-
 
 
        backToMain =(FloatingActionButton)findViewById(R.id.home_btn);
@@ -123,14 +113,7 @@ public class navigation_HM extends AppCompatActivity
         search = (SearchView) findViewById( R.id.DishSearch );
 
         /////////////////////////
-//        FloatingActionButton fab = (FloatingActionButton) findViewById( R.id.fab );
-//        fab.setOnClickListener( new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make( view, "Replace with your own action", Snackbar.LENGTH_LONG )
-//                        .setAction( "Action", null ).show();
-//            }
-//        } );
+
 
          drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
          toggle = new ActionBarDrawerToggle(

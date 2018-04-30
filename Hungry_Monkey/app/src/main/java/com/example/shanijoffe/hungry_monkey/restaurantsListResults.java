@@ -458,12 +458,8 @@ public class restaurantsListResults extends Fragment {
 
                 log.i( "in post basic  ", "1" );
                URL url2 = new URL( "http://hmfproject-env.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/basicSearch" ); // here is your URL path
-              //  URL url2 = new URL( "https://www.facebook.com/" ); // here is your URL path
-
-
                 //buidling our json object
                 dish_inp.put( "dishName", search_adv.getQuery() ); //dish name
-
                 dish_inp.put("lon",lon);//lon
                 dish_inp.put("lat",lat);//lat
 

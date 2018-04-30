@@ -5,15 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
-    android:background="@drawable/bg_new"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_new"
     android:fitsSystemWindows="true"
 
     tools:openDrawer="start">
-    <ScrollView android:layout_height="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:id="@+id/search_flag"
             android:layout_width="match_parent"
@@ -22,40 +24,39 @@
             android:orientation="vertical">
 
 
-
             <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:padding="10dp"
-                android:layout_marginTop="10dp"
                 android:layout_width="149dp"
-                android:fontFamily="@font/danafont"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
-                android:layout_height="wrap_content">
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/danafont"
+                android:padding="10dp">
 
                 <android.support.design.widget.FloatingActionButton
-                    android:layout_weight="1"
                     android:id="@+id/home_btn"
-                    android:layout_width="160dp"
+                    android:layout_width="100dp"
                     android:layout_height="120dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:src="@drawable/tmp_logo"
-                    android:text="חזרהv לעמוד ראשי "
-                    android:textSize="24sp"
-                    android:fontFamily="@font/danafont"
-                    android:textStyle="bold"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_marginTop="25dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/danafont"
+                    android:src="@drawable/tmp_logo"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
                     app:backgroundTint="@color/creame"
                     app:fabSize="normal" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:elevation="6dp"
-                    android:textColor="?android:attr/colorForeground"
-                    android:text="חזרה לעמוד ראשי "
-                    android:textSize="14sp"
                     android:fontFamily="@font/danafont"
+                    android:text="חזרה לעמוד ראשי "
+                    android:textColor="?android:attr/colorForeground"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_anchor="@id/home_btn"
                     app:layout_anchorGravity="center"
@@ -67,8 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/sss"
@@ -86,10 +86,10 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true"
                     android:background="#CCffffcc"
+                    android:fontFamily="@font/danafont"
                     android:gravity="fill_vertical|center_horizontal|center"
                     android:hint="הכנס/י שם מנה "
                     android:padding="5dp"
-                    android:fontFamily="@font/danafont"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp">
 
