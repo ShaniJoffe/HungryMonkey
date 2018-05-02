@@ -63,7 +63,7 @@ import static java.lang.Thread.sleep;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class restaurantsListResults extends Fragment {
+public class AdvancedSearchFragment extends Fragment {
 
     OnHeadlineSelectedListener mCallback;
     
@@ -89,7 +89,7 @@ public class restaurantsListResults extends Fragment {
     Button Advnced_btn;
     Bundle bundle;
    String[] str = {"כשר", "לא כשר"};
-    public restaurantsListResults() {
+    public AdvancedSearchFragment() {
         // Required empty public constructor
     }
     public interface OnHeadlineSelectedListener {
@@ -457,7 +457,7 @@ public class restaurantsListResults extends Fragment {
                 //eatblishing our connection to our basic search api
 
                 log.i( "in post basic  ", "1" );
-               URL url2 = new URL( "http://hmfproject-env.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/basicSearch" ); // here is your URL path
+               URL url2 = new URL( "http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/basicSearch" ); // here is your URL path
                 //buidling our json object
                 dish_inp.put( "dishName", search_adv.getQuery() ); //dish name
                 dish_inp.put("lon",lon);//lon
@@ -674,7 +674,7 @@ public class restaurantsListResults extends Fragment {
 //                dish_inp.put( "maxPrice", 100 );
 //                dish_inp.put( "lat", 31.783026 );
 //                dish_inp.put( "lon", 35.310381 );
-                URL url2 = new URL( "http://hmfproject-env.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/api/v1/advancedSearch" ); // here is your URL path
+                URL url2 = new URL( "http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/advancedSearch" ); // here is your URL path
 
                 Log.e( "sending to adv", postDataParams_adv.toString() ); //json object advanced
 

@@ -46,25 +46,19 @@ public class SignUpActivity extends AppCompatActivity {
         c_password=findViewById( R.id.user_name_et );
         email=findViewById( R.id.user_name_et );
         btn_signUp1=(Button)findViewById( R.id.btn_signUp );
-
-
     }
 
     public void onClickSignUp(View view) {
-
         if(!password.getText().toString().equals( c_password.getText().toString())){
 //do things if these 2 are correct.
-
             Toast.makeText(getApplicationContext(), "please confirm your password  :" ,
                     Toast.LENGTH_LONG).show();
         }
         else
         {
             new SendPostRequest().execute();//registering to server .
-
         }
     }
-
     public class SendPostRequest extends AsyncTask<String, Void, String>
     {
         protected void onPreExecute(){}
@@ -74,7 +68,7 @@ public class SignUpActivity extends AppCompatActivity {
             {
 
                 Log.i("in onClickSignUp","heyoo");
-                URL url = new URL("http://hmfproject-env.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/users"); // here is your URL path
+                URL url = new URL("http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/users"); // here is your URL path
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("name","shani");
                 postDataParams.put("password","123");

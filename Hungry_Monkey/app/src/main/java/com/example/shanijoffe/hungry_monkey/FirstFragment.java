@@ -60,6 +60,7 @@ public class FirstFragment extends Fragment implements Comparable  {
     Button det;
     String myValue;
     int flag_btn=0;
+    FloatingActionButton fav;
     Button show_det_for_dish;
     ListView listView;
     HashMap<String, String> hashMap_;
@@ -87,7 +88,8 @@ public class FirstFragment extends Fragment implements Comparable  {
         flag_loc=(TextView)view.findViewById( R.id.txtv_flag_loc );
         flag_price.setText( "false" );
         listView = (ListView) view.findViewById( R.id.list_view );
-        //PARSING
+         fav =(FloatingActionButton)view.findViewById( R.id.addToFav_btn ) ;
+
         myValue = bundle.getString( "dish_list" );
 
         location_res_jsn = null;
@@ -190,20 +192,20 @@ Log.i("vector is",vector.toString());
 
         // aa.notifyDataSetChanged()
         FloatingActionButton b = (FloatingActionButton) getActivity().findViewById( filter_by_price );
-        b.setOnClickListener( new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-                // TODO Auto-generated method stub
-                log.i( "firstFragment", "onOptionsItemSelected" );
-                flag_btn=1;
-                flag_price.setText( "true" );
-                Comparator<String> ALPHABETICAL_ORDER1 = new Comparator<String>() {
-                    public int compare(String object1, String object2) {
-                        int res = String.CASE_INSENSITIVE_ORDER.compare( object1.toString(), object2.toString() );
-                        return res;
-                    }
-                };
+                b.setOnClickListener( new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onClick(View view) {
+                        // TODO Auto-generated method stub
+                        log.i( "firstFragment", "onOptionsItemSelected" );
+                        flag_btn=1;
+                        flag_price.setText( "true" );
+                        Comparator<String> ALPHABETICAL_ORDER1 = new Comparator<String>() {
+                            public int compare(String object1, String object2) {
+                                int res = String.CASE_INSENSITIVE_ORDER.compare( object1.toString(), object2.toString() );
+                                return res;
+                            }
+                        };
 
                 //  Arrays.sort(vector.toArray(), (Comparator<? super Object>) vector.get( Integer.parseInt( "price_dish" ) ) );
 
@@ -258,7 +260,7 @@ Log.i("vector is",vector.toString());
                 Log.i( "123", "1" );
                 URL url2 = null;//temp url
                 try {
-                    url2 = new URL( "ec2-18-196-119-82.eu-central-1.compute.amazonaws.com/api/v1/basicSearch" );
+                    url2 = new URL( "http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/basicSearch" );
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }

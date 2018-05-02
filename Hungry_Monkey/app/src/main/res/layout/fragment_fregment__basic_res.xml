@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CCffffe6"
-    tools:context="com.example.shanijoffe.hungry_monkey.restaurantsListResults">
+    tools:context="com.example.shanijoffe.hungry_monkey.AdvancedSearchFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

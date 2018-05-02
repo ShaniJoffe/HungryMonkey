@@ -2,7 +2,6 @@ package com.example.shanijoffe.hungry_monkey;
 
 
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,23 +21,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
@@ -59,7 +47,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import static com.loopj.android.http.AsyncHttpClient.log;
 
 public class navigation_HM extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener ,restaurantsListResults.OnHeadlineSelectedListener,
+        implements NavigationView.OnNavigationItemSelectedListener ,AdvancedSearchFragment.OnHeadlineSelectedListener,
          GoogleApiClient.ConnectionCallbacks, LocationListener,GoogleApiClient.OnConnectionFailedListener
 {
     private static final int UNKNOW_CODE = 99;//for intents
@@ -78,7 +66,7 @@ public class navigation_HM extends AppCompatActivity
     Location lastLocation;
     double lat,lon;
     DrawerLayout drawer;
-    restaurantsListResults search_fragent;
+    AdvancedSearchFragment search_fragent;
     private static final int REQUEST_RESOLVE_ERROR = 555;
     boolean show = false;//for the advanced search button flag
     public static Activity _mainActivity;
@@ -159,7 +147,7 @@ public class navigation_HM extends AppCompatActivity
         FragmentTransaction ft = fm.beginTransaction();
         //calling basic search fragment
         if (!st) {
-            restaurantsListResults f1 = new restaurantsListResults();
+            AdvancedSearchFragment f1 = new AdvancedSearchFragment();
             ft.replace( R.id.fragment_container, f1 );
             ft.commit();
             st = true;
@@ -305,7 +293,7 @@ public class navigation_HM extends AppCompatActivity
         Log.i( "onLocationChanged", "onLocationChanged" );
         lat = location.getLatitude();
         lon = location.getLongitude();
-        restaurantsListResults search_fragent = new restaurantsListResults();
+        AdvancedSearchFragment search_fragent = new AdvancedSearchFragment();
         Bundle args = new Bundle();
         args.putString( "lon", String.valueOf( lon ) );
         args.putString( "lat", String.valueOf( lat ) );
@@ -339,7 +327,7 @@ public class navigation_HM extends AppCompatActivity
                 Toast.makeText( this, "Last location " + lastLocation.getLatitude() + ", " + lastLocation.getLongitude(), Toast.LENGTH_SHORT ).show();
                 log.i("onConnected","search");
                 connectedFlag=true;
-                search_fragent = new restaurantsListResults();
+                search_fragent = new AdvancedSearchFragment();
                 lon=lastLocation.getLongitude();
                 lat=lastLocation.getLatitude();
                 Bundle args = new Bundle();
@@ -471,7 +459,7 @@ public class navigation_HM extends AppCompatActivity
                     if (search.getQuery().length()> 0) { //check that the user entered dish name.
 
                         //sending the data to search fragment
-                        restaurantsListResults search_fragent = new restaurantsListResults();
+                        AdvancedSearchFragment search_fragent = new AdvancedSearchFragment();
                         Bundle args = new Bundle();
 
                         args.putString( "lon", String.valueOf( lon ) );
@@ -568,7 +556,7 @@ public void callMain(){
 }
 
     public Bundle getBundle() {
-        restaurantsListResults search_fragent = new restaurantsListResults();
+        AdvancedSearchFragment search_fragent = new AdvancedSearchFragment();
         Bundle args = new Bundle();
         if(lastLocation!=null)
         {

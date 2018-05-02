@@ -1,6 +1,7 @@
 package com.example.shanijoffe.hungry_monkey;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +40,7 @@ public class LoginPage extends AppCompatActivity {
     String user_pass="";
     static final int CODE_REQ=1;// for intent
     String line="";
+    SharedPreferences preferences;
     String userName_res="",token="";
     private static final String TAG = "MyActivity";
     String user2;
@@ -50,9 +52,6 @@ public class LoginPage extends AppCompatActivity {
         user_name_edit=(EditText)findViewById(R.id.txt_usrname);
         password_edit=(EditText)findViewById(R.id.txt_password);
         loginButton=(Button)findViewById(R.id.btn_login);
-
-
-
         user_name_edit.setOnClickListener( new View.OnClickListener() {
                                                @Override
                                                public void onClick(View view) {
@@ -71,6 +70,8 @@ public class LoginPage extends AppCompatActivity {
 
         log.i("params:",user + user_pass);
         Log.i(TAG,"before connection");
+
+
     }
 
     public void OnClick(View view) throws JSONException, ParseException, UnsupportedEncodingException {
@@ -98,6 +99,9 @@ public class LoginPage extends AppCompatActivity {
                 Bundle user_det = new Bundle();
                 user_det.putString("user_name",userName_res);//here i shpuld insert user_name
                 Intent i = new Intent( this, navigation_HM.class );
+                SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                preferences.edit().putString("token", token).commit();
+                preferences.edit().putString("id", userName_res).commit();
                 i.putExtras(user_det);
                 startActivityForResult( i, CODE_REQ );
             }
@@ -117,7 +121,7 @@ public class LoginPage extends AppCompatActivity {
         {
             try
             {
-                URL url = new URL("http://hmfproject-env.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/auth"); // here is your URL path
+                URL url = new URL("http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/auth"); // here is your URL path
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("name",user);
                 postDataParams.put("password",user_pass);

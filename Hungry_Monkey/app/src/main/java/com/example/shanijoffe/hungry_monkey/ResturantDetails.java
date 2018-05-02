@@ -7,23 +7,18 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.google.gson.JsonObject;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -42,7 +37,7 @@ import javax.net.ssl.HttpsURLConnection;
 import static com.loopj.android.http.AsyncHttpClient.log;
 import static java.lang.Thread.sleep;
 
-public class basic_results extends AppCompatActivity {
+public class ResturantDetails extends AppCompatActivity {
 
 //restaurant details activity .
 
@@ -196,7 +191,7 @@ public class basic_results extends AppCompatActivity {
 
             super.onPreExecute();
 
-            pd = new ProgressDialog( basic_results.this);
+            pd = new ProgressDialog( ResturantDetails.this);
             pd.setCancelable( false );
             pd.setMessage( "Searching ..." );
             pd.getWindow().setGravity( Gravity.CENTER );

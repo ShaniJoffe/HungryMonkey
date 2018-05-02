@@ -19,7 +19,7 @@
         <activity android:name=".AdvancedSearch" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginPage" />
-        <activity android:name=".basic_results" />
+        <activity android:name=".ResturantDetails" />
         <activity
             android:name=".SplashScreen1"
             android:label="@string/title_activity_splash_screen">
