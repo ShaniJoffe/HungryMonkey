@@ -112,6 +112,7 @@
             android:gravity="right"
             android:orientation="horizontal">
 
+
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/addToFav_btn"
                 android:layout_width="100dp"

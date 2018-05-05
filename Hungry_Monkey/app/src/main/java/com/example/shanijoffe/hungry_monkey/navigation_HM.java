@@ -229,8 +229,13 @@ public class navigation_HM extends AppCompatActivity
             startActivity(i);
 
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_showFav) {
 
+            //Set the fragment initially
+            Intent i = new Intent(this, FavioratesResults.class);
+            String keyId  = "1";
+            i.putExtra("id", keyId );
+            startActivity(i);
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {

@@ -124,14 +124,15 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>  implem
             }
         } );
 
-        fav_btn.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("add to fav ","clicked");
-                new SendPostRequest().execute();//authentication to server .
-                Log.i("add to fav ","333");
-            }
-        } );
+//        fav_btn.setOnClickListener( new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.i("add to fav ","clicked");
+//                new SendPostRequest().execute();//authentication to server .
+//                Log.i("add to fav ","333");
+//                fav_btn.setBackgroundColor(0);
+//            }
+//        } );
         return view;
     }
 

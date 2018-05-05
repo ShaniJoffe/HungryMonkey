@@ -13,9 +13,9 @@
             android:icon="@drawable/ic_account_box_black_24dp"
             android:title="הרשם" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_showFav"
+            android:icon="@drawable/ic_favorite_red_500_24dp"
+            android:title="מועדפים" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"

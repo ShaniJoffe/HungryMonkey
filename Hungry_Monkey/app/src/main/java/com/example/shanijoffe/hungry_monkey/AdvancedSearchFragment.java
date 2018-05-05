@@ -455,6 +455,7 @@ public class AdvancedSearchFragment extends Fragment {
             ////
             try {
                 //eatblishing our connection to our basic search api
+                //eatblishing our connection to our basic search api
 
                 log.i( "in post basic  ", "1" );
                URL url2 = new URL( "http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/basicSearch" ); // here is your URL path

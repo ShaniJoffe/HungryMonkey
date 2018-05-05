@@ -90,11 +90,14 @@ public class FirstFragment extends Fragment implements Comparable  {
         listView = (ListView) view.findViewById( R.id.list_view );
          fav =(FloatingActionButton)view.findViewById( R.id.addToFav_btn ) ;
 
+
+
         myValue = bundle.getString( "dish_list" );
 
         location_res_jsn = null;
          hashMap_ = null;
         vector = new Vector<>();
+
 
         try {
             if (myValue != null) {
