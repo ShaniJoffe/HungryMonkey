@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,12 +32,13 @@ import java.net.URLEncoder;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.net.ssl.HttpsURLConnection;
 
 
-public class custom_adapter extends ArrayAdapter<HashMap<String,String>>  implements Comparator<HashMap<String, String>>{
+public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implements Comparator<HashMap<String, String>> {
     Button show_det_for_dish;
     private LayoutInflater inflater;
     private Activity _activity;
@@ -47,27 +49,29 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>  implem
     private final String[] dish_description = new String[1];
     private final String[] dish_name = new String[1];
     private final String[] dish_price = new String[1];
+    private final boolean[] dish_like = new boolean[1];
     int position;
     TextView flag_price;
     TextView flag_loc;
     FloatingActionButton fav_btn;
+    CheckBox like_btn;
 
     private Vector<HashMap<String, String>> _vec;
     private Context context;
     private int resource;
     int flag_btn;
-    String line="";
+    String line = "";
 
-    public custom_adapter(Context context, int resource, Vector<HashMap<String, String>> vec,int flag_btn) {
+    public custom_adapter(Context context, int resource, Vector<HashMap<String, String>> vec, int flag_btn) {
         super( context, resource, vec );
         this._vec = vec;
         this.context = context;
         this.resource = resource;
-        this.flag_btn=flag_btn;
+        this.flag_btn = flag_btn;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         this.position = position;
         View view = LayoutInflater.from( context ).inflate( this.resource, parent, false );
 
@@ -76,7 +80,8 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>  implem
         final TextView PriceDish_txtv = (TextView) view.findViewById( R.id.PriceDish );
         flag_price = (TextView) view.findViewById( R.id.txtv_flag_price );
         flag_loc = (TextView) view.findViewById( R.id.txtv_flag_loc );
-        fav_btn=(FloatingActionButton)view.findViewById( R.id.addToFav_btn );
+        //fav_btn=(FloatingActionButton)view.findViewById( R.id.addToFav_btn );
+        like_btn = (CheckBox) view.findViewById( R.id.likeIcon );
 
         //Button open_Contact_Button = (Button)view.findViewById(R.id.choose_Dish);
 
@@ -91,6 +96,8 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>  implem
         dish_description[0] = _vec.get( position ).get( "dish_description" );
         dish_name[0] = _vec.get( position ).get( "dish_name" );
         dish_price[0] = _vec.get( position ).get( "dish_price" );
+       // dish_like[0] = Boolean.parseBoolean( _vec.get( position ).get( "dish_like" ) );//field from server
+       // dish_like[0] = Boolean.parseBoolean("false" );//field from server
         ///
         final String rest_address2 = rest_address[0];
         final String rest_location2 = rest_location[0];
@@ -99,6 +106,8 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>  implem
         final String dish_description2 = dish_description[0];
         final String dish_name2 = dish_name[0];
         final String dish_price2 = dish_price[0];
+     //  final boolean dish_like2 = dish_like[0];//dish_like2 will have true of is liked or false if not
+      // final boolean dish_like2 = dish_like[0];//dish_like2 will have true of is liked or false if not
 
         Log.i( "rest_name2", rest_name2 );
 
@@ -106,6 +115,8 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>  implem
         name_res_txtv.setText( rest_name[0] );
         name_dish_txtv.setText( dish_name[0] );
         PriceDish_txtv.setText( dish_price[0] + "שח " );
+
+    //    like_btn.setChecked( dish_like2 );
 
         show_det_for_dish = (Button) view.findViewById( R.id.choose_Dish );
         show_det_for_dish.setOnClickListener( new View.OnClickListener() {
@@ -124,13 +135,16 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>  implem
             }
         } );
 
-//        fav_btn.setOnClickListener( new View.OnClickListener() {
+//        like_btn.setOnClickListener( new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //                Log.i("add to fav ","clicked");
 //                new SendPostRequest().execute();//authentication to server .
 //                Log.i("add to fav ","333");
-//                fav_btn.setBackgroundColor(0);
+//                HashMap<String, String> rest = _vec.get( position );
+//                rest.put(  "dish_like", !dish_like2 + "");//you are a genius !!!!
+//                _vec.set( position, rest);
+//                notifyDataSetChanged();
 //            }
 //        } );
         return view;
@@ -152,150 +166,145 @@ public class custom_adapter extends ArrayAdapter<HashMap<String,String>>  implem
 
 
     @Override
-    public int compare(HashMap<String, String> lhs, HashMap<String, String> rhs)
-    {
+    public int compare(HashMap<String, String> lhs, HashMap<String, String> rhs) {
 
-            if (flag_btn==1){
-                Log.i( "button filer by price ", "in compare" );
-                if (Integer.parseInt( lhs.get( "dish_price" ) ) > Integer.parseInt( rhs.get( "dish_price" ) ))
-                {
+        if (flag_btn == 1) {
+            Log.i( "button filer by price ", "in compare" );
+            if (Integer.parseInt( lhs.get( "dish_price" ) ) > Integer.parseInt( rhs.get( "dish_price" ) )) {
 
-                    return 1;
-                }
+                return 1;
             }
-            else if(flag_btn==-1)
-            {
+        } else if (flag_btn == -1) {
 
-                Log.i( "button filer by price ", "in compare left is "+lhs.toString() +"right is"+ rhs.toString() );
-                JSONObject location_lhs=new JSONObject(  );
-                JSONObject location_rhs = new JSONObject(  );
-                double lon_lhs = 0,lat_lhs = 0,lat_rhs=0,lon_rhs=0;
+            Log.i( "button filer by price ", "in compare left is " + lhs.toString() + "right is" + rhs.toString() );
+            JSONObject location_lhs = new JSONObject();
+            JSONObject location_rhs = new JSONObject();
+            double lon_lhs = 0, lat_lhs = 0, lat_rhs = 0, lon_rhs = 0;
 
-                try {
+            try {
 
-                    location_lhs = new JSONObject( lhs.get( "rest_location" ));
-                     lon_lhs= Double.parseDouble( String.valueOf( location_lhs.get("lon") ) );
-                     lat_lhs= Double.parseDouble( String.valueOf( location_lhs.get("lat") ) );
-                    Log.i( "button filer by price ", "in compare left is "+location_lhs.toString() );
+                location_lhs = new JSONObject( lhs.get( "rest_location" ) );
+                lon_lhs = Double.parseDouble( String.valueOf( location_lhs.get( "lon" ) ) );
+                lat_lhs = Double.parseDouble( String.valueOf( location_lhs.get( "lat" ) ) );
+                Log.i( "button filer by price ", "in compare left is " + location_lhs.toString() );
 
-                    location_rhs = new JSONObject( lhs.get( "rest_location" ));
-                    Log.i( "button filer by price ", "right is"+ location_rhs.toString() );
+                location_rhs = new JSONObject( lhs.get( "rest_location" ) );
+                Log.i( "button filer by price ", "right is" + location_rhs.toString() );
 
-                    lon_rhs= Double.parseDouble(  String.valueOf( location_rhs.get("lon") ));
-                    lat_rhs= Double.parseDouble( String.valueOf(  location_rhs.get("lat")) );
+                lon_rhs = Double.parseDouble( String.valueOf( location_rhs.get( "lon" ) ) );
+                lat_rhs = Double.parseDouble( String.valueOf( location_rhs.get( "lat" ) ) );
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                Log.i( "in compare", "loaction LHS is 1"+ "lon1"+ lon_lhs +"lat1"+lat_lhs +"loaction2 RHS is" +"lon2"+lon_lhs +"lat2 "+lat_rhs );
-                if (distance(lon_lhs, lat_lhs, lat_rhs, lon_rhs) > 0)
-                { // if distance < 0.1 miles we take locations as equal
-                    //do what you want to do...
-                    Log.i( "loc 1 is bigger then2 ", "in compare" );
-                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-return -1;
+
+            Log.i( "in compare", "loaction LHS is 1" + "lon1" + lon_lhs + "lat1" + lat_lhs + "loaction2 RHS is" + "lon2" + lon_lhs + "lat2 " + lat_rhs );
+            if (distance( lon_lhs, lat_lhs, lat_rhs, lon_rhs ) > 0) { // if distance < 0.1 miles we take locations as equal
+                //do what you want to do...
+                Log.i( "loc 1 is bigger then2 ", "in compare" );
+            }
+        }
+        return -1;
     }
 
-    /** calculates the distance between two locations in MILES */
+    /**
+     * calculates the distance between two locations in MILES
+     */
     private double distance(double lat1, double lng1, double lat2, double lng2) {
 
         double earthRadius = 3958.75; // in miles, change to 6371 for kilometer output
 
-        double dLat = Math.toRadians(lat2-lat1);
-        double dLng = Math.toRadians(lng2-lng1);
+        double dLat = Math.toRadians( lat2 - lat1 );
+        double dLng = Math.toRadians( lng2 - lng1 );
 
-        double sindLat = Math.sin(dLat / 2);
-        double sindLng = Math.sin(dLng / 2);
+        double sindLat = Math.sin( dLat / 2 );
+        double sindLng = Math.sin( dLng / 2 );
 
-        double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
-                * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+        double a = Math.pow( sindLat, 2 ) + Math.pow( sindLng, 2 )
+                * Math.cos( Math.toRadians( lat1 ) ) * Math.cos( Math.toRadians( lat2 ) );
 
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double c = 2 * Math.atan2( Math.sqrt( a ), Math.sqrt( 1 - a ) );
 
         double dist = earthRadius * c;
 
         return dist; // output distance, in MILES
     }
-    public class SendPostRequest extends AsyncTask<String, Void, String>
-    {
-        protected void onPreExecute(){}
-        protected String doInBackground(String... arg0)
-        {
-            Log.i("in custom","SendPostRequest");
-            try
-            {
-                URL url = new URL("http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/setFavs"); // here is your URL path
+
+    public class SendPostRequest extends AsyncTask<String, Void, String> {
+        protected void onPreExecute() {
+        }
+
+        protected String doInBackground(String... arg0) {
+            Log.i( "in custom", "SendPostRequest" );
+            try {
+                URL url = new URL( "http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/setFavs" ); // here is your URL path
                 JSONObject postDataParams = new JSONObject();
 
-                postDataParams.put("favs","[ 1.2 , 2.3 ]");
-                postDataParams.put("id","1");
+                postDataParams.put( "favs", "[ 1.2 , 2.3 ]" );
+                postDataParams.put( "id", "1" );
                 //POST
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(50000 /* milliseconds */);
-                conn.setConnectTimeout(50000 /* milliseconds */);
-                conn.setRequestMethod("POST");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
+                conn.setReadTimeout( 50000 /* milliseconds */ );
+                conn.setConnectTimeout( 50000 /* milliseconds */ );
+                conn.setRequestMethod( "POST" );
+                conn.setDoInput( true );
+                conn.setDoOutput( true );
 
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-                writer.write(getPostDataString(postDataParams));//sending the json object to server after encoding .
+                        new OutputStreamWriter( os, "UTF-8" ) );
+                writer.write( getPostDataString( postDataParams ) );//sending the json object to server after encoding .
                 writer.flush();
                 writer.close();
                 os.close();
-                int responseCode=conn.getResponseCode();
-                Log.i("responseCode", String.valueOf( responseCode ) );
-                if (responseCode == HttpsURLConnection.HTTP_OK)
-                {
+                int responseCode = conn.getResponseCode();
+                Log.i( "responseCode", String.valueOf( responseCode ) );
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
 
-                    BufferedReader in=new BufferedReader(
+                    BufferedReader in = new BufferedReader(
                             new InputStreamReader(
-                                    conn.getInputStream()));
-                    StringBuffer sb = new StringBuffer("");
+                                    conn.getInputStream() ) );
+                    StringBuffer sb = new StringBuffer( "" );
 
-                    while((line = in.readLine()) != null)
-                    {
-                        sb.append(line);
-                        Log.i("line",line);
+                    while ((line = in.readLine()) != null) {
+                        sb.append( line );
+                        Log.i( "line", line );
                         break;
                     }
                     in.close();
-                    Log.i("sb",sb.toString());
+                    Log.i( "sb", sb.toString() );
                     return sb.toString();
+                } else {
+                    return new String( "false : " + responseCode );
                 }
-                else
-                {
-                    return new String("false : "+responseCode);
-                }
-            }
-            catch(Exception e){
-                return new String("Exception: " + e.getMessage());
+            } catch (Exception e) {
+                return new String( "Exception: " + e.getMessage() );
             }
         }
+
         @Override
         protected void onPostExecute(String result) {
-            Log.i("usrn",result);
+            Log.i( "usrn", result );
 
-    }
-    public String getPostDataString(JSONObject params) throws Exception {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-        Iterator<String> itr = params.keys();
-        while(itr.hasNext()){
-            String key= itr.next();
-            Object value = params.get(key);
-            if (first)
-                first = false;
-            else
-                result.append("&");
-            result.append( URLEncoder.encode(key, "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(value.toString(), "UTF-8"));
         }
-        return result.toString();
-    }
 
-}}
+        public String getPostDataString(JSONObject params) throws Exception {
+            StringBuilder result = new StringBuilder();
+            boolean first = true;
+            Iterator<String> itr = params.keys();
+            while (itr.hasNext()) {
+                String key = itr.next();
+                Object value = params.get( key );
+                if (first)
+                    first = false;
+                else
+                    result.append( "&" );
+                result.append( URLEncoder.encode( key, "UTF-8" ) );
+                result.append( "=" );
+                result.append( URLEncoder.encode( value.toString(), "UTF-8" ) );
+            }
+            return result.toString();
+        }
+
+    }
+}

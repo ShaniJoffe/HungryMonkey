@@ -84,56 +84,56 @@ public class FavioratesResults extends AppCompatActivity {
        // flag_price=(TextView)view.findViewById( R.id.txtv_flag_price );
       //  flag_loc=(TextView)view.findViewById( R.id.txtv_flag_loc );
       //  flag_price.setText( "false" );
-        list_fav = findViewById(R.id.list_fav);
-     // fav =(FloatingActionButton)view.findViewById( R.id.addToFav_btn ) ;
-
-        //jsons
-        postDataParams_adv = new JSONObject(); //  advanced  search json object.
-        jsonObject_id = new JSONObject();//basic search json object.
-        hashMap_ = null;
-       vector = new Vector<>();
-
-    ////getting the dish list from server
-
-
-        JSONObject rloc = new JSONObject();
-        try {
-            rloc.put("lon", "John");
-
-        rloc.put("lat", "Reese");
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-        hashMap_ = new HashMap<>();
-        //getting res detailes
-        hashMap_.put( "index", String.valueOf( "1" ) );
-        hashMap_.put( "rest_address", "ggg" );
-        hashMap_.put( "rest_name", "ggg" );
-        hashMap_.put( "rest_location", String.valueOf( rloc ) );
-        hashMap_.put( "Kosher",  "ggg"  );
-        hashMap_.put( "Kosher",  "ggg"  );
-        //getting dish detailes
-      //  JSONObject obj2 = menu_hits_jsonArray.getJSONObject(  "ggg"  );
-        JSONObject _source2 = new JSONObject();
-           // _source2 = obj2.getJSONObject( "_source" );
-
-      //  dish_desc = _source2.getString( "dish_description" );
-        hashMap_.put( "dish_description",  "ggg" );
-      //  name_dish = _source2.getString( "dish_name" );
-        hashMap_.put( "dish_name",  "ggg" );
-        //price_dish = _source2.getString( "dish_price" );
-        hashMap_.put( "dish_price",  "ggg" );
-
-        vector.add( hashMap_ );
-    //attach the adapter to list view
-
-Log.i("vector is",vector.toString());
-        ad = new custom_adapter( FavioratesResults.this, R.layout.single_dish_item, vector,0 );
-        Collections.sort(vector, new custom_adapter( FavioratesResults.this, R.layout.single_dish_item, vector,0));
-     list_fav.setAdapter( ad );
-
-        my_fav_list=getFavlist();
+//        list_fav = findViewById(R.id.list_fav);
+//     // fav =(FloatingActionButton)view.findViewById( R.id.addToFav_btn ) ;
+//
+//        //jsons
+//        postDataParams_adv = new JSONObject(); //  advanced  search json object.
+//        jsonObject_id = new JSONObject();//basic search json object.
+//        hashMap_ = null;
+//       vector = new Vector<>();
+//
+//    ////getting the dish list from server
+//
+//
+//        JSONObject rloc = new JSONObject();
+//        try {
+//            rloc.put("lon", "John");
+//
+//        rloc.put("lat", "Reese");
+//        }
+//        catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        hashMap_ = new HashMap<>();
+//        //getting res detailes
+//        hashMap_.put( "index", String.valueOf( "1" ) );
+//        hashMap_.put( "rest_address", "ggg" );
+//        hashMap_.put( "rest_name", "ggg" );
+//        hashMap_.put( "rest_location", String.valueOf( rloc ) );
+//        hashMap_.put( "Kosher",  "ggg"  );
+//        hashMap_.put( "Kosher",  "ggg"  );
+//        //getting dish detailes
+//      //  JSONObject obj2 = menu_hits_jsonArray.getJSONObject(  "ggg"  );
+//        JSONObject _source2 = new JSONObject();
+//           // _source2 = obj2.getJSONObject( "_source" );
+//
+//      //  dish_desc = _source2.getString( "dish_description" );
+//        hashMap_.put( "dish_description",  "ggg" );
+//      //  name_dish = _source2.getString( "dish_name" );
+//        hashMap_.put( "dish_name",  "ggg" );
+//        //price_dish = _source2.getString( "dish_price" );
+//        hashMap_.put( "dish_price",  "ggg" );
+//
+//        vector.add( hashMap_ );
+//    //attach the adapter to list view
+//
+//Log.i("vector is",vector.toString());
+//        ad = new custom_adapter( FavioratesResults.this, R.layout.single_dish_item, vector,0 );
+//        Collections.sort(vector, new custom_adapter( FavioratesResults.this, R.layout.single_dish_item, vector,0));
+//     list_fav.setAdapter( ad );
+//
+//        my_fav_list=getFavlist();
     }
 
 
