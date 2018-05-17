@@ -1,6 +1,7 @@
 package com.example.shanijoffe.hungry_monkey;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,16 +11,13 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Arrays;
 import java.util.Collections;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +49,7 @@ public class FirstFragment extends Fragment implements Comparable  {
 
     JSONObject location_res_jsn,_source,inner_hits,menuJ,hits_1;
     String[] teams={""};
-    String name_res="",name_dish="",kosher="",rest_address="",dish_desc="",location_res_str="",price_dish="";
+    String name_res="",name_dish="",kosher="",rest_address="",dish_desc="",location_res_str="",price_dish="",dish_id_inRest="";
     JSONObject rest_location = new JSONObject();
     JSONObject menu = new JSONObject();
     View view;
@@ -66,8 +64,12 @@ public class FirstFragment extends Fragment implements Comparable  {
     HashMap<String, String> hashMap_;
     custom_adapter aa;
     TextView  flag_price,flag_loc;
-    Vector<HashMap<String,String>> vector=null;
+    Vector vector=null;
+    SharedPreferences settings;
+    SharedPreferences.Editor editor;
     JSONArray menu_hits_jsonArray=null, jsonarray;
+    String[] users_favs_dishes ;//for the id of the dishes the user would like to save as favorites.
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,14 +92,16 @@ public class FirstFragment extends Fragment implements Comparable  {
         listView = (ListView) view.findViewById( R.id.list_view );
         // fav =(FloatingActionButton)view.findViewById( R.id.addToFav_btn ) ;
 
-
+        //settinng our sp
+        settings=this.getActivity().getSharedPreferences( "myPrefsFile",0  );
+        editor=settings.edit();
 
         myValue = bundle.getString( "dish_list" );
+        log.i(" in first fragment my list before parsing",myValue);
 
         location_res_jsn = null;
          hashMap_ = null;
         vector = new Vector<>();
-
 
         try {
             if (myValue != null) {
@@ -105,16 +109,16 @@ public class FirstFragment extends Fragment implements Comparable  {
                 Log.i( "f", " \n\n" );
                 for (int i = 0; i < jsonarray.length(); i++) {
                     JSONObject js3 = jsonarray.getJSONObject( i );
-                    System.out.println( "json array at place " + i + js3.toString() + "\n" );
+                   // System.out.println( "json array at place " + i + js3.toString() + "\n" );
                 }
             } else {
                 Toast.makeText( getActivity(), " אין ערכים", Toast.LENGTH_SHORT ).show();
             }
             int count = -1;
-            Log.i( "dish_list in if", String.valueOf( jsonarray ) );
-            Log.i( "f", " \n\n" );
+           // Log.i( "dish_list in if", String.valueOf( jsonarray ) );
+         //   Log.i( "f", " \n\n" );
             List<Map<String, String>> myMap = new ArrayList<Map<String, String>>();
-            Log.i( "jsonArray length", String.valueOf( jsonarray.length() ) );
+          //  Log.i( "jsonArray length", String.valueOf( jsonarray.length() ) );
 
 
             for (int i = 0; i < jsonarray.length(); i++) {
@@ -123,49 +127,52 @@ public class FirstFragment extends Fragment implements Comparable  {
                 JSONObject obj = jsonarray.getJSONObject( i );
                 _source = new JSONObject();
                 _source = obj.getJSONObject( "_source" );
-                log.i( "_source", String.valueOf( _source ) );
+             //   log.i( "_source", String.valueOf( _source ) );
                 //rest_address
                 rest_address = _source.getString( "rest_address" );
-                System.out.println( "rest_address" + rest_address );
+           //     System.out.println( "rest_address" + rest_address );
                 // hashMap_.put("rest_address",rest_address);
                 ///name_res
                 name_res = _source.getString( "rest_name" );
-                System.out.println( "name_res" + name_res );
+              //  System.out.println( "name_res" + name_res );
                 //  hashMap_.put("rest_name",name_res);
                 //location res
                 location_res_str = _source.getString( "rest_location" );
                 location_res_jsn = new JSONObject( location_res_str );
-                System.out.println( "location_res_jsn" + location_res_jsn.toString() );
+              //  System.out.println( "location_res_jsn" + location_res_jsn.toString() );
                 // hashMap_.put("rest_location", String.valueOf( location_res_jsn ) );
+
                 ///kosher
                 kosher = _source.getString( "Kosher" );
-                System.out.println( "kosher" + kosher );
+              //  System.out.println( "kosher" + kosher );
                 //  hashMap_.put("Kosher", kosher );
                 //
                 inner_hits = new JSONObject();
                 inner_hits = obj.getJSONObject( "inner_hits" );
-                log.i( "inner_hits", String.valueOf( inner_hits ) );
+              //  log.i( "inner_hits", String.valueOf( inner_hits ) );
                 menu = new JSONObject();
                 menu = inner_hits.getJSONObject( "menu" );
-                log.i( "menu", String.valueOf( menu ) );
+              //  log.i( "menu", String.valueOf( menu ) );
                 hits_1 = new JSONObject();
                 hits_1 = menu.getJSONObject( "hits" );
                 String hits_arr = hits_1.getString( "hits" );
-                System.out.println( "hits_arr" + hits_arr );
+              //  System.out.println( "hits_arr" + hits_arr );
                 menu_hits_jsonArray = new JSONArray( hits_arr );
                 //    log.i("menu_hits_jsonArray", String.valueOf( menu_hits_jsonArray ));
-                Log.i( "name restuartant:", name_res );
+              //  Log.i( "name restuartant:", name_res );
                 for (int j = 0; j < menu_hits_jsonArray.length(); j++) {
-                    count++;
+                 //   count++;
                     hashMap_ = new HashMap<>();
-                    //getting res detailes
+
+                    //getting restaurant details.
                     hashMap_.put( "index", String.valueOf( count ) );
                     hashMap_.put( "rest_address", rest_address );
                     hashMap_.put( "rest_name", name_res );
                     hashMap_.put( "rest_location", String.valueOf( location_res_jsn ) );
                     hashMap_.put( "Kosher", kosher );
-                    hashMap_.put( "Kosher", kosher );
+
                     //getting dish detailes
+
                     JSONObject obj2 = menu_hits_jsonArray.getJSONObject( j );
                     JSONObject _source2 = new JSONObject();
                     _source2 = obj2.getJSONObject( "_source" );
@@ -175,13 +182,30 @@ public class FirstFragment extends Fragment implements Comparable  {
                     hashMap_.put( "dish_name", name_dish );
                     price_dish = _source2.getString( "dish_price" );
                     hashMap_.put( "dish_price", price_dish );
-                    System.out.println( "dish_desc" + dish_desc );
-                    System.out.println( "name_dish" + name_dish );
-                    System.out.println( "price_dish" + price_dish );
+
+                    //getting the id of our dish in restaurant
+                    dish_id_inRest = _source2.getString( "dish_id_inRest" );
+                    hashMap_.put( "dish_id_inRest", dish_id_inRest );
+
+                   // System.out.println( "dish_desc" + dish_desc );
+                //    System.out.println( "name_dish" + name_dish );
+                 //   System.out.println( "price_dish" + price_dish );
                     vector.add( hashMap_ );
+
                 }
             }
-Log.i("vector is",vector.toString());
+
+
+//            users_favs_dishes= new String[vector.size()];
+//            editor.putInt("array_size", users_favs_dishes.length);
+//            for(int i=0;i<users_favs_dishes.length; i++)
+//                editor.putString("users_favs_dishes" + i, users_favs_dishes[i]);
+//            editor.commit();
+
+            Log.i("my array in first", String.valueOf( users_favs_dishes ) );
+            Log.i("size of my array ", String.valueOf( vector.size() ) );
+
+
 
         } catch (JSONException e) {
             e.printStackTrace();

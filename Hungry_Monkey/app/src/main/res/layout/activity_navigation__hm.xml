@@ -90,6 +90,7 @@
                     android:gravity="fill_vertical|center_horizontal|center"
                     android:hint="הכנס/י שם מנה "
                     android:padding="5dp"
+
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp">
 

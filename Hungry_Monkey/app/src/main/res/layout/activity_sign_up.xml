@@ -9,14 +9,31 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="84dp"
             android:fontFamily="@font/danafont"
+            android:gravity="center"
+            android:text="הרשמה"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center"
+        android:orientation="vertical">
+
+        <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="57dp"
+            android:fontFamily="@font/danafont"
             android:gravity="center"
             android:text="הכנס פרטים :"
             android:textIsSelectable="false"
@@ -27,13 +44,9 @@
             android:id="@+id/user_name_et"
             android:layout_width="200dp"
             android:layout_height="56dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="120dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="28dp"
             android:ems="10"
             android:fontFamily="@font/danafont"
-            android:hint="Enter username"
+            android:hint="הכנס שם משתמש"
             android:inputType="textPersonName"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/Npass"
@@ -48,7 +61,7 @@
             android:layout_height="56dp"
             android:ems="10"
             android:fontFamily="@font/danafont"
-            android:hint="Enter Password"
+            android:hint="הכנס ססמא"
             android:inputType="textPersonName"
             android:textStyle="bold" />
 
@@ -57,42 +70,46 @@
             android:layout_width="200dp"
             android:layout_height="56dp"
             android:fontFamily="@font/danafont"
-            android:hint="Confirm password"
+            android:gravity="right"
+            android:hint="חזור על הססמא "
             android:inputType="textPassword"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/Email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
-        <EditText
-            android:id="@+id/Email"
-            android:layout_width="200dp"
-            android:layout_height="56dp"
-            android:layout_marginBottom="60dp"
-            android:layout_marginEnd="108dp"
-            android:layout_marginLeft="16dp"
-            android:ems="10"
-            android:fontFamily="@font/danafont"
-            android:hint="Enter E-mail"
-            android:inputType="textEmailAddress"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/Register_btn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+        <LinearLayout
+            android:layout_width="107dp"
+            android:layout_height="65dp"
+            android:gravity="center_vertical|center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_signUp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttonstylesselector"
+
+                android:fontFamily="@font/danafont"
+                android:text="הרשם"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <Button
-            android:id="@+id/btn_signUp"
-
-            android:layout_width="278dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/buttonstylesselector"
-            android:onClick="onClickSignUp"
-            android:text="הרשם"
-            android:fontFamily="@font/danafont"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_width="match_parent"
+            android:text="SuperUser"
+            android:autoLink="web"
+            android:clickable="true"
+            android:id="@+id/button_su"
+            android:onClick="goToSu">
+
+        </Button>
 
     </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>

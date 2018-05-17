@@ -5,6 +5,8 @@ package com.example.shanijoffe.hungry_monkey; /**
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,11 +41,12 @@ import java.util.Vector;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import static com.loopj.android.http.AsyncHttpClient.log;
+
 
 public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implements Comparator<HashMap<String, String>> {
     Button show_det_for_dish;
-    private LayoutInflater inflater;
-    private Activity _activity;
+
     private final String[] rest_address = new String[1];
     private final String[] rest_location = new String[1];
     private final String[] rest_name = new String[1];
@@ -49,12 +54,18 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
     private final String[] dish_description = new String[1];
     private final String[] dish_name = new String[1];
     private final String[] dish_price = new String[1];
+    private final String[] num_dishes = new String[1];
     private final boolean[] dish_like = new boolean[1];
+   String[] users_favs_dishes ;//for the id of the dishes the user would like to save as favorites.
+
+    private final String[] dish_id_inRest1 = new String[1];
     int position;
     TextView flag_price;
     TextView flag_loc;
-    FloatingActionButton fav_btn;
     CheckBox like_btn;
+    SharedPreferences settings;
+    SharedPreferences.Editor editor;
+    String token =null;
 
     private Vector<HashMap<String, String>> _vec;
     private Context context;
@@ -72,6 +83,8 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+
+
         this.position = position;
         View view = LayoutInflater.from( context ).inflate( this.resource, parent, false );
 
@@ -83,11 +96,17 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
         //fav_btn=(FloatingActionButton)view.findViewById( R.id.addToFav_btn );
         like_btn = (CheckBox) view.findViewById( R.id.likeIcon );
 
-        //Button open_Contact_Button = (Button)view.findViewById(R.id.choose_Dish);
+        ///getting our token from SharedPreferences.
+
+        settings=context.getSharedPreferences( "myPrefsFile",0  );
+        editor=settings.edit();
+        token=settings.getString( "user_token" ,"null" );
+
+        Log.i("token  in costume is",token);
+
+       /////parsing the data of our dish
 
 
-        //
-        //
         Log.i( "position", String.valueOf( position ) );
         rest_address[0] = _vec.get( position ).get( "rest_address" );
         rest_location[0] = _vec.get( position ).get( "rest_location" );
@@ -96,9 +115,16 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
         dish_description[0] = _vec.get( position ).get( "dish_description" );
         dish_name[0] = _vec.get( position ).get( "dish_name" );
         dish_price[0] = _vec.get( position ).get( "dish_price" );
+        num_dishes[0] = String.valueOf( _vec.get( position ).size() );
+        dish_id_inRest1[0] = _vec.get( position ).get( "dish_id_inRest" ) ;
+        Log.i("dish id in res", String.valueOf( dish_id_inRest1[0] ) );
+
+
        // dish_like[0] = Boolean.parseBoolean( _vec.get( position ).get( "dish_like" ) );//field from server
        // dish_like[0] = Boolean.parseBoolean("false" );//field from server
         ///
+
+
         final String rest_address2 = rest_address[0];
         final String rest_location2 = rest_location[0];
         final String rest_name2 = rest_name[0];
@@ -106,23 +132,33 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
         final String dish_description2 = dish_description[0];
         final String dish_name2 = dish_name[0];
         final String dish_price2 = dish_price[0];
+        final String num_dishes2 = num_dishes[0] ;
+        final String dish_id_inRest = dish_id_inRest1[0];
+
      //  final boolean dish_like2 = dish_like[0];//dish_like2 will have true of is liked or false if not
       // final boolean dish_like2 = dish_like[0];//dish_like2 will have true of is liked or false if not
-
-        Log.i( "rest_name2", rest_name2 );
-
 
         name_res_txtv.setText( rest_name[0] );
         name_dish_txtv.setText( dish_name[0] );
         PriceDish_txtv.setText( dish_price[0] + "שח " );
+        users_favs_dishes= new String[1];
 
-    //    like_btn.setChecked( dish_like2 );
+       //getting our  array from
+        int size = settings.getInt("array_size", 0);
+      //  users_favs_dishes = new String[size];
+        Log.i("size i got is  ", String.valueOf( size ) );
+
+
+
+        ////
+
+        //checkbox listener -when user adds a dish to favorites.
 
         show_det_for_dish = (Button) view.findViewById( R.id.choose_Dish );
         show_det_for_dish.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i( "btn choose", "chhose" );
+                //Log.i( "btn choose", "chhose" );
                 Intent i = new Intent( getContext(), ResturantDetails.class );
                 i.putExtra( "rest_address2", rest_address2 );
                 i.putExtra( "rest_location2", rest_location2 );
@@ -135,35 +171,54 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
             }
         } );
 
-//        like_btn.setOnClickListener( new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.i("add to fav ","clicked");
-//                new SendPostRequest().execute();//authentication to server .
-//                Log.i("add to fav ","333");
-//                HashMap<String, String> rest = _vec.get( position );
-//                rest.put(  "dish_like", !dish_like2 + "");//you are a genius !!!!
-//                _vec.set( position, rest);
-//                notifyDataSetChanged();
-//            }
-//        } );
+        like_btn.setChecked( false );
+
+        like_btn.setOnClickListener( new View.OnClickListener() { //heart btn clicked !!
+            @Override
+            public void onClick(View view)
+            {
+               Log.i("add to fav ","clicked");
+                users_favs_dishes[0]=dish_id_inRest;
+               // log.i("my array is ", Arrays.toString(users_favs_dishes));
+
+              //  editor.putString( "my_fav_list", Arrays.toString(users_favs_dishes) ).apply();
+
+               // Log.i("my position", String.valueOf( position ) );
+               // System.out.println( "my array "+ Arrays.toString(users_favs_dishes));
+                new SendPostRequest().execute();//authentication to server .
+                 notifyDataSetChanged();
+            }
+
+
+
+
+
+       } );
+
+        like_btn.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+
+                if (isChecked) {
+                    log.i("hi there","im checked? "+ isChecked);
+                    compoundButton.setBackgroundColor( Color.RED);
+                } else {
+                    compoundButton.setBackgroundColor(Color.BLUE);
+                }
+            }
+        } );
         return view;
     }
-
     @Override
     public void notifyDataSetChanged() {
 
         super.notifyDataSetChanged();
-
-
         this.setNotifyOnChange( true );
     }
 
     private void sortMyList() {
-
         notifyDataSetChanged();
     }
-
 
     @Override
     public int compare(HashMap<String, String> lhs, HashMap<String, String> rhs) {
@@ -237,11 +292,12 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
         protected String doInBackground(String... arg0) {
             Log.i( "in custom", "SendPostRequest" );
             try {
+
                 URL url = new URL( "http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/setFavs" ); // here is your URL path
                 JSONObject postDataParams = new JSONObject();
+                postDataParams.put( "favs",users_favs_dishes);
 
-                postDataParams.put( "favs", "[ 1.2 , 2.3 ]" );
-                postDataParams.put( "id", "1" );
+                Log.i("json to setfavs", String.valueOf( postDataParams ) );
                 //POST
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout( 50000 /* milliseconds */ );
@@ -250,6 +306,7 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
                 conn.setDoInput( true );
                 conn.setDoOutput( true );
 
+                conn.setRequestProperty( "Authorization", token);               // conn.setRequestProperty( "Authorization","Basic ",token );
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter( os, "UTF-8" ) );

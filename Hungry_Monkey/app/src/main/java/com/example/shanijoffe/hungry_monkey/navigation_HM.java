@@ -1,6 +1,7 @@
 package com.example.shanijoffe.hungry_monkey;
 
 
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -75,9 +76,12 @@ public class navigation_HM extends AppCompatActivity
     int ACCESS_FINE_LOCATION_CODE = 3310;
     Toolbar toolbar=null;
     Bundle user_det;
+    String token=null;
     FloatingActionButton  backToMain;
     NavigationView navigationView=null;
     ActionBarDrawerToggle toggle;
+    SharedPreferences settings;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -90,10 +94,6 @@ public class navigation_HM extends AppCompatActivity
 
         //connecting  our components
          username=(TextView)findViewById( R.id.username );
-
-
-
-
        backToMain =(FloatingActionButton)findViewById(R.id.home_btn);
         //mono = (TextView) findViewById( R.id.welcome_txt );
         sss =(TextView)findViewById( R.id.sss );
@@ -141,7 +141,6 @@ public class navigation_HM extends AppCompatActivity
             createSearch(); //building the search request.
         }
 
-
         //adjusting fragments to main activity
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -176,6 +175,13 @@ public class navigation_HM extends AppCompatActivity
         emailText.setText("newemail@email.com");
 
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+        ///getting our token
+        settings =getSharedPreferences( "myPrefsFile",MODE_PRIVATE );
+        token=settings.getString( "user_token" ,"null" );
+        Log.i("token  in main is",token);
 
     }
 

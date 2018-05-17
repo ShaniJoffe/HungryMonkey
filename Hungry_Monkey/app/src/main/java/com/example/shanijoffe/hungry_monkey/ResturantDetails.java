@@ -238,8 +238,6 @@ public class ResturantDetails extends AppCompatActivity {
                 log.i( "in post basic  ", "1" );
                 URL url2 = new URL( "http://hungrymonkey-env.vivacrpttt.ec2-18-196-119-82.eu-central-1.compute.amazonaws.com/api/v1/basicSearch" ); // here is your URL path
                 //  URL url2 = new URL( "https://www.facebook.com/" ); // here is your URL path
-
-
                 //buidling our json object
 
 

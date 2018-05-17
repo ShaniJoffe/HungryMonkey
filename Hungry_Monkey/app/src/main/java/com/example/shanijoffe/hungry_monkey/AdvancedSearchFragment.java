@@ -406,7 +406,7 @@ public class AdvancedSearchFragment extends Fragment {
             super.onPreExecute();
             productList = new JSONArray();
             jParser = new JSONParser();
-            Log.i("heyoo","i crushed shani now");
+
             pd = new ProgressDialog( getActivity() );
             pd.setCancelable( false );
              pd.setMessage( "Searching ..." );
@@ -460,7 +460,7 @@ public class AdvancedSearchFragment extends Fragment {
                 log.i( "in post basic  ", "1" );
                URL url2 = new URL( "http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/basicSearch" ); // here is your URL path
                 //buidling our json object
-                dish_inp.put( "dishName", search_adv.getQuery() ); //dish name
+                dish_inp.put( "dishName", "שקשוקה" ); //dish name
                 dish_inp.put("lon",lon);//lon
                 dish_inp.put("lat",lat);//lat
 

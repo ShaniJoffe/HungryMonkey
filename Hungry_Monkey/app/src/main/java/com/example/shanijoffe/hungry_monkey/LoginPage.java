@@ -41,17 +41,29 @@ public class LoginPage extends AppCompatActivity {
     static final int CODE_REQ=1;// for intent
     String line="";
     SharedPreferences preferences;
-    String userName_res="",token="";
+    String userName_res="",token=null;
     private static final String TAG = "MyActivity";
+    SharedPreferences settings;
+
     String user2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
+        ///
         setContentView( R.layout.activity_login_page );
         user_name_edit=(EditText)findViewById(R.id.txt_usrname);
         password_edit=(EditText)findViewById(R.id.txt_password);
         loginButton=(Button)findViewById(R.id.btn_login);
+
+        ////
+        Log.i("token is","b4");
+         settings =getSharedPreferences( "myPrefsFile",MODE_PRIVATE );
+        token=settings.getString( "user_token" , String.valueOf( false ) );
+        Log.i("token is",token);
+
+
+
         user_name_edit.setOnClickListener( new View.OnClickListener() {
                                                @Override
                                                public void onClick(View view) {
@@ -79,6 +91,12 @@ public class LoginPage extends AppCompatActivity {
 //        view.setEnabled( false );
         JSONParser parser_obj = new JSONParser();
 
+        settings =getSharedPreferences( "myPrefsFile",MODE_PRIVATE );
+        token=settings.getString( "user_token" ,"null" );
+        Log.i("token is",token);
+
+
+
         if(( user_name_edit.getText().toString().trim().length() >0)&&(password_edit.getText().toString().trim().length() >0))
         {
 
@@ -99,9 +117,6 @@ public class LoginPage extends AppCompatActivity {
                 Bundle user_det = new Bundle();
                 user_det.putString("user_name",userName_res);//here i shpuld insert user_name
                 Intent i = new Intent( this, navigation_HM.class );
-                SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
-                preferences.edit().putString("token", token).commit();
-                preferences.edit().putString("id", userName_res).commit();
                 i.putExtras(user_det);
                 startActivityForResult( i, CODE_REQ );
             }
@@ -121,7 +136,7 @@ public class LoginPage extends AppCompatActivity {
         {
             try
             {
-                URL url = new URL("http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/auth"); // here is your URL path
+                URL url = new URL("http://newapp-env.eiymf2wfdn.eu-central-1.elasticbeanstalk.com/api/v1/users"); // here is your URL path
                 JSONObject postDataParams = new JSONObject();
                 postDataParams.put("name",user);
                 postDataParams.put("password",user_pass);

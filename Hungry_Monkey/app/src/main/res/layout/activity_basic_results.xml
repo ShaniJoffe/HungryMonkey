@@ -108,18 +108,27 @@
                     android:background="@drawable/buttonstyles"
                     android:fontFamily="@font/danafont"
                     android:text="להצגת תפריט המסעדה לחץ כאן "
-                    android:textStyle="bold|italic" />
 
+                    android:textStyle="bold|italic" />
+                <Button
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+
+                    android:autoLink="web"
+                    android:fontFamily="@font/danafont"
+                    android:text="להצגת תפריט המסעדה לחץ כאן "
+                    android:clickable="true"
+                    android:id="@+id/button_su"
+                    android:onClick="goToSu">
+
+                </Button>
 
                 <RatingBar
                     android:id="@+id/ratingBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-
             </LinearLayout>
-
-
 
             <LinearLayout
                 android:id="@+id/dish_det"
