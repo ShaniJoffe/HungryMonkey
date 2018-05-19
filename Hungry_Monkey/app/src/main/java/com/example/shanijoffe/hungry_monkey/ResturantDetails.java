@@ -52,7 +52,7 @@ public class ResturantDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         String[] teams = {"Man Utd", "Man City", "Chelsea", "Arsenal", "Liverpool", "Totenham", "Man Utd", "Man City", "Chelsea", "Arsenal", "Liverpool", "Totenham"};
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_basic_results );
+        setContentView( R.layout.resturant_det );
         //connecting the UI
         dish_price_txtv = findViewById( R.id.dish_price_txtv );
         dish_name_txtv = findViewById( R.id.dish_name_txtv );

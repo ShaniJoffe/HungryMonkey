@@ -238,7 +238,7 @@ public class navigation_HM extends AppCompatActivity
         } else if (id == R.id.nav_showFav) {
 
             //Set the fragment initially
-            Intent i = new Intent(this, FavioratesResults.class);
+            Intent i = new Intent(this, showFavioratesResults.class);
             String keyId  = "1";
             i.putExtra("id", keyId );
             startActivity(i);

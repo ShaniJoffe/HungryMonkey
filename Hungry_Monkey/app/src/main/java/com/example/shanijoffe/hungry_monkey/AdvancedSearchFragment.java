@@ -68,6 +68,7 @@ public class AdvancedSearchFragment extends Fragment {
     OnHeadlineSelectedListener mCallback;
     
     boolean show=false;
+    boolean adv_btn_flag=false;
     boolean asked=false;
     String line=""; //for response server.
     Spinner sp_kosher;
@@ -168,12 +169,20 @@ public class AdvancedSearchFragment extends Fragment {
 
 
         //listener button that will show the advanced details
+        if(!adv_btn_flag)//case where we havnt clicked yet
+        {
+
+        }
 
         Advnced_btn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                if(!adv_btn_flag)//case where we havnt clicked yet
+                {
 
+                }
+                adv_btn_flag=true;
                 Bundle bundle = mCallback.getBundle();//getting location from main activity.
                 // We need to use a different list item layout for devices older than Honeycomb
                 int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?

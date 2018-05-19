@@ -295,22 +295,23 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
 
                 URL url = new URL( "http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/setFavs" ); // here is your URL path
                 JSONObject postDataParams = new JSONObject();
-                postDataParams.put( "favs",users_favs_dishes);
+                //put our id in the json object.
 
-                Log.i("json to setfavs", String.valueOf( postDataParams ) );
-                //POST
+                postDataParams.put( "favs",users_favs_dishes[0]);//sending the dish id .
+                // build the POST request with jwt .
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout( 50000 /* milliseconds */ );
                 conn.setConnectTimeout( 50000 /* milliseconds */ );
                 conn.setRequestMethod( "POST" );
                 conn.setDoInput( true );
                 conn.setDoOutput( true );
-
-                conn.setRequestProperty( "Authorization", token);               // conn.setRequestProperty( "Authorization","Basic ",token );
+                //jwt
+                conn.setRequestProperty( "Authorization", token);               //  conn.setRequestProperty( "Authorization","Basic ",token );
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter( os, "UTF-8" ) );
                 writer.write( getPostDataString( postDataParams ) );//sending the json object to server after encoding .
+                Log.i("json to setfavs", String.valueOf( postDataParams ) );
                 writer.flush();
                 writer.close();
                 os.close();

@@ -90,6 +90,7 @@ public class FirstFragment extends Fragment implements Comparable  {
         flag_loc=(TextView)view.findViewById( R.id.txtv_flag_loc );
         flag_price.setText( "false" );
         listView = (ListView) view.findViewById( R.id.list_view );
+
         // fav =(FloatingActionButton)view.findViewById( R.id.addToFav_btn ) ;
 
         //settinng our sp
