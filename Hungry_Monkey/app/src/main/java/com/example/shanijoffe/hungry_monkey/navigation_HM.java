@@ -95,7 +95,6 @@ public class navigation_HM extends AppCompatActivity
         //connecting  our components
          username=(TextView)findViewById( R.id.username );
        backToMain =(FloatingActionButton)findViewById(R.id.home_btn);
-        //mono = (TextView) findViewById( R.id.welcome_txt );
         sss =(TextView)findViewById( R.id.sss );
         loginButton = (Button) findViewById( R.id.btn_login );
         search = (SearchView) findViewById( R.id.DishSearch );
@@ -261,15 +260,7 @@ public class navigation_HM extends AppCompatActivity
     }
 
 
-    public void OnClickSign(View view) {
-        // Log.e( "OnClickSign", "here " );
 
-        Intent i = new Intent( this, SignUpActivity.class );
-        String s = getString(R.string.newUser);
-        i.putExtra( "myString", s );
-        startActivityForResult( i, CODE_REQ );
-
-    }
 
     public void OnClickShowAdvancedSearch(View view) {
         LinearLayout linearLayout = (LinearLayout) findViewById( R.id.adv_leyout );

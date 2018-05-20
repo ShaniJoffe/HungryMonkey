@@ -56,7 +56,7 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
     private final String[] dish_price = new String[1];
     private final String[] num_dishes = new String[1];
     private final boolean[] dish_like = new boolean[1];
-   String[] users_favs_dishes ;//for the id of the dishes the user would like to save as favorites.
+    String[] users_favs_dishes ;//for the id of the dishes the user would like to save as favorites.
 
     private final String[] dish_id_inRest1 = new String[1];
     int position;
@@ -104,10 +104,10 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
 
         Log.i("token  in costume is",token);
 
-       /////parsing the data of our dish
+        /////parsing the data of our dish
 
 
-        Log.i( "position", String.valueOf( position ) );
+       // Log.i( "position", String.valueOf( position ) );
         rest_address[0] = _vec.get( position ).get( "rest_address" );
         rest_location[0] = _vec.get( position ).get( "rest_location" );
         rest_name[0] = _vec.get( position ).get( "rest_name" );
@@ -117,11 +117,11 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
         dish_price[0] = _vec.get( position ).get( "dish_price" );
         num_dishes[0] = String.valueOf( _vec.get( position ).size() );
         dish_id_inRest1[0] = _vec.get( position ).get( "dish_id_inRest" ) ;
-        Log.i("dish id in res", String.valueOf( dish_id_inRest1[0] ) );
+       // Log.i("dish id in res", String.valueOf( dish_id_inRest1[0] ) );
 
 
-       // dish_like[0] = Boolean.parseBoolean( _vec.get( position ).get( "dish_like" ) );//field from server
-       // dish_like[0] = Boolean.parseBoolean("false" );//field from server
+        // dish_like[0] = Boolean.parseBoolean( _vec.get( position ).get( "dish_like" ) );//field from server
+        // dish_like[0] = Boolean.parseBoolean("false" );//field from server
         ///
 
 
@@ -135,18 +135,18 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
         final String num_dishes2 = num_dishes[0] ;
         final String dish_id_inRest = dish_id_inRest1[0];
 
-     //  final boolean dish_like2 = dish_like[0];//dish_like2 will have true of is liked or false if not
-      // final boolean dish_like2 = dish_like[0];//dish_like2 will have true of is liked or false if not
+        //  final boolean dish_like2 = dish_like[0];//dish_like2 will have true of is liked or false if not
+        // final boolean dish_like2 = dish_like[0];//dish_like2 will have true of is liked or false if not
 
         name_res_txtv.setText( rest_name[0] );
         name_dish_txtv.setText( dish_name[0] );
         PriceDish_txtv.setText( dish_price[0] + "שח " );
         users_favs_dishes= new String[1];
 
-       //getting our  array from
+        //getting our  array from
         int size = settings.getInt("array_size", 0);
-      //  users_favs_dishes = new String[size];
-        Log.i("size i got is  ", String.valueOf( size ) );
+        //  users_favs_dishes = new String[size];
+       // Log.i("size i got is  ", String.valueOf( size ) );
 
 
 
@@ -177,30 +177,30 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
             @Override
             public void onClick(View view)
             {
-               Log.i("add to fav ","clicked");
+             //   Log.i("add to fav ","clicked");
                 users_favs_dishes[0]=dish_id_inRest;
-               // log.i("my array is ", Arrays.toString(users_favs_dishes));
+                // log.i("my array is ", Arrays.toString(users_favs_dishes));
 
-              //  editor.putString( "my_fav_list", Arrays.toString(users_favs_dishes) ).apply();
+                //  editor.putString( "my_fav_list", Arrays.toString(users_favs_dishes) ).apply();
 
-               // Log.i("my position", String.valueOf( position ) );
-               // System.out.println( "my array "+ Arrays.toString(users_favs_dishes));
+                // Log.i("my position", String.valueOf( position ) );
+                // System.out.println( "my array "+ Arrays.toString(users_favs_dishes));
                 new SendPostRequest().execute();//authentication to server .
-                 notifyDataSetChanged();
+                notifyDataSetChanged();
             }
 
 
 
 
 
-       } );
+        } );
 
         like_btn.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
 
                 if (isChecked) {
-                    log.i("hi there","im checked? "+ isChecked);
+                 //   log.i("hi there","im checked? "+ isChecked);
                     compoundButton.setBackgroundColor( Color.RED);
                 } else {
                     compoundButton.setBackgroundColor(Color.BLUE);
@@ -224,14 +224,14 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
     public int compare(HashMap<String, String> lhs, HashMap<String, String> rhs) {
 
         if (flag_btn == 1) {
-            Log.i( "button filer by price ", "in compare" );
+          //  Log.i( "button filer by price ", "in compare" );
             if (Integer.parseInt( lhs.get( "dish_price" ) ) > Integer.parseInt( rhs.get( "dish_price" ) )) {
 
                 return 1;
             }
         } else if (flag_btn == -1) {
 
-            Log.i( "button filer by price ", "in compare left is " + lhs.toString() + "right is" + rhs.toString() );
+         //   Log.i( "button filer by price ", "in compare left is " + lhs.toString() + "right is" + rhs.toString() );
             JSONObject location_lhs = new JSONObject();
             JSONObject location_rhs = new JSONObject();
             double lon_lhs = 0, lat_lhs = 0, lat_rhs = 0, lon_rhs = 0;
@@ -241,10 +241,10 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
                 location_lhs = new JSONObject( lhs.get( "rest_location" ) );
                 lon_lhs = Double.parseDouble( String.valueOf( location_lhs.get( "lon" ) ) );
                 lat_lhs = Double.parseDouble( String.valueOf( location_lhs.get( "lat" ) ) );
-                Log.i( "button filer by price ", "in compare left is " + location_lhs.toString() );
+               // Log.i( "button filer by price ", "in compare left is " + location_lhs.toString() );
 
                 location_rhs = new JSONObject( lhs.get( "rest_location" ) );
-                Log.i( "button filer by price ", "right is" + location_rhs.toString() );
+               // Log.i( "button filer by price ", "right is" + location_rhs.toString() );
 
                 lon_rhs = Double.parseDouble( String.valueOf( location_rhs.get( "lon" ) ) );
                 lat_rhs = Double.parseDouble( String.valueOf( location_rhs.get( "lat" ) ) );
@@ -253,10 +253,10 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
                 e.printStackTrace();
             }
 
-            Log.i( "in compare", "loaction LHS is 1" + "lon1" + lon_lhs + "lat1" + lat_lhs + "loaction2 RHS is" + "lon2" + lon_lhs + "lat2 " + lat_rhs );
+           // Log.i( "in compare", "loaction LHS is 1" + "lon1" + lon_lhs + "lat1" + lat_lhs + "loaction2 RHS is" + "lon2" + lon_lhs + "lat2 " + lat_rhs );
             if (distance( lon_lhs, lat_lhs, lat_rhs, lon_rhs ) > 0) { // if distance < 0.1 miles we take locations as equal
                 //do what you want to do...
-                Log.i( "loc 1 is bigger then2 ", "in compare" );
+              //  Log.i( "loc 1 is bigger then2 ", "in compare" );
             }
         }
         return -1;
@@ -295,23 +295,23 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
 
                 URL url = new URL( "http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/setFavs" ); // here is your URL path
                 JSONObject postDataParams = new JSONObject();
-                //put our id in the json object.
+                postDataParams.put( "favs",users_favs_dishes[0]);
 
-                postDataParams.put( "favs",users_favs_dishes[0]);//sending the dish id .
-                // build the POST request with jwt .
+                Log.i("json to setfavs", String.valueOf( postDataParams ) );
+                //POST
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout( 50000 /* milliseconds */ );
                 conn.setConnectTimeout( 50000 /* milliseconds */ );
                 conn.setRequestMethod( "POST" );
                 conn.setDoInput( true );
                 conn.setDoOutput( true );
-                //jwt
-                conn.setRequestProperty( "Authorization", token);               //  conn.setRequestProperty( "Authorization","Basic ",token );
+                //token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAiLCJpYXQiOjE1MjU2MjI3NDF9.GW3-wcU5MizmoZGtmzQdyNLbFedCJAwfDnHqrnVglkg";
+
+                conn.setRequestProperty( "Authorization", token);               // conn.setRequestProperty( "Authorization","Basic ",token );
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter( os, "UTF-8" ) );
                 writer.write( getPostDataString( postDataParams ) );//sending the json object to server after encoding .
-                Log.i("json to setfavs", String.valueOf( postDataParams ) );
                 writer.flush();
                 writer.close();
                 os.close();

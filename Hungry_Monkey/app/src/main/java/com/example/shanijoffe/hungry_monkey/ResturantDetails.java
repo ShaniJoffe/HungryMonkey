@@ -63,7 +63,6 @@ public class ResturantDetails extends AppCompatActivity {
         FloatingActionButton toggleButton = (FloatingActionButton) findViewById( R.id.myToggleButton );
         res_obj=new JSONObject(  );
 
-        Log.i( "sup", "in basic" );
         Intent i = getIntent();
         String rest_address2 = i.getStringExtra( "rest_address2" );
         String rest_location2 = i.getStringExtra( "rest_location2" );
@@ -72,7 +71,6 @@ public class ResturantDetails extends AppCompatActivity {
         String dish_name2 = i.getStringExtra( "dish_name2" );
         String dish_price2 = i.getStringExtra( "dish_price2" );
         String dish_description2 = i.getStringExtra( "dish_description2" );
-        System.out.println( "in basic res rest name " + rest_name2 + "\n" );
 
         dish_price_txtv.setText( dish_price2 + "ש''ח " + " " );
         dish_name_txtv.setText( dish_name2 );
@@ -101,25 +99,25 @@ public class ResturantDetails extends AppCompatActivity {
             e.printStackTrace();
         }
 
-//get the locations from main activty
 
 
-        //get the resturant location
+
+        //get the restaurant location
 
 
         try {
-             lon_dest= (double) res_obj.get("lon");
-             lat_dest= (double) res_obj.get("lat");
+            lon_dest= (double) res_obj.get("lon");
+            lat_dest= (double) res_obj.get("lat");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         toggleButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                   log.i("res location", (String) res_obj.get( "rest_location" ) );
+                    log.i("res location", (String) res_obj.get( "rest_location" ) );
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -138,38 +136,28 @@ public class ResturantDetails extends AppCompatActivity {
                 }
                 Log.i("loc","lon_dest"+lon_dest + "lat_dest" +lat_dest);
 
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:" +lat_dest +"," + lon_dest));
+                startActivity(intent);
 
-                //
-                Intent intent = new Intent(Intent.ACTION_VIEW,
 
-                Uri.parse("http://ditu.google.cn/maps?f=d&source=s_d" + "&daddr="+lat_dest+ ","+lon_dest+ "&hl=zh&t=m&dirflg=d"));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK & Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                intent.setClassName("com.google.android.apps.maps","com.google.android.maps.MapsActivity");
-                startActivityForResult(intent, 1);
-                //
-           //     Uri gmmIntentUri = Uri.parse("geo:" + lon_dest + "," + lat_dest);
-//                Uri gmmIntentUri = Uri.parse("google.navigation:q=lat_dest,lon_dest");
-//                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-//                mapIntent.setPackage("com.google.android.apps.maps");
-//                if (mapIntent.resolveActivity(getPackageManager()) != null) {
-//                    startActivity(mapIntent);
-//                }
+
 
             }
         } );
-//fav button
+
     }
 
+    public void goToSu(View view) {
+        Log.i("sup ","show menu");
+        goToUrl ( "http://newapp-env.eiymf2wfdn.eu-central-1.elasticbeanstalk.com/api/v1/viewMenu/12"); //show menu on web page.
+    }
 
-    public void OnclickDirections(View view) {
-        Log.i("OnclickDirections","OnclickDirections");
-
-        Uri gmmIntentUri = Uri.parse("geo:37.7749,-122.4194");
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        if (mapIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(mapIntent);
-        }
+    private void goToUrl (String url) {
+        Log.i("b4 web","web&&&&&&&&&&&&&&&&&&");
+        Uri uriUrl = Uri.parse(url);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        Log.i("after web","web&&&&&&&&&&&&&&&&");
+        startActivity(launchBrowser);
     }
 
 
@@ -217,96 +205,96 @@ public class ResturantDetails extends AppCompatActivity {
             }
             pd.dismiss();
 
-            }
-        }
-
-        @SuppressLint({"MissingPermission", "LongLogTag"})
-        public String getDishList_basic(String url) {
-
-//            String matchFound = "N";
-            BufferedReader reader = null;
-            String text = "";
-            String nameDish;
-            HttpURLConnection conn = null;
-
-            nameDish = null;
-
-            ////
-            try {
-                //eatblishing our connection to our basic search api
-
-                log.i( "in post basic  ", "1" );
-                URL url2 = new URL( "http://hungrymonkey-env.vivacrpttt.ec2-18-196-119-82.eu-central-1.compute.amazonaws.com/api/v1/basicSearch" ); // here is your URL path
-                //  URL url2 = new URL( "https://www.facebook.com/" ); // here is your URL path
-                //buidling our json object
-
-
-                //POST
-                conn = (HttpURLConnection) url2.openConnection();
-                conn.setReadTimeout( 50000 /* milliseconds */ );
-                conn.setConnectTimeout( 50000 /* milliseconds */ );
-                conn.setRequestMethod( "POST" );
-                conn.setDoInput( true );
-                conn.setDoOutput( true );
-
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter( os, "UTF-8" ) );
-                writer.write( getPostDataString( res_obj ) );
-                writer.flush();
-                writer.close();
-                os.close();
-                //check connection status
-                int responseCode = conn.getResponseCode();
-                Log.i( "responseCode@:", String.valueOf( responseCode ) );
-
-                //getting our restaurants  from server
-                if (responseCode >= 400 && responseCode <= 499) {
-                    Log.e("basic_search", "HTTPx Response: " + responseCode + " - " + conn.getResponseMessage());
-                    BufferedInputStream in = new BufferedInputStream( conn.getErrorStream() );
-                }
-                if (responseCode == HttpsURLConnection.HTTP_OK) {
-                    reader = new BufferedReader(
-                            new InputStreamReader(
-                                    conn.getInputStream() ) );
-                    StringBuffer sb = new StringBuffer( "" );
-
-                    //parsing the response ...
-                    while ((line = reader.readLine()) != null) {
-
-                        Log.i( "res is:",line +"\n");
-                        sb.append( line );
-                        break;
-                    }
-                    // Toast.makeText( getActivity(), sb.toString(), Toast.LENGTH_SHORT ).show();
-
-                    reader.close();
-
-                    return sb.toString();
-                } else {
-                    return new String( "false : " + responseCode );
-                }
-            } catch (Exception e) {
-                return new String( "Exception: " + e.getMessage() );
-            }
-        }
-
-        public String getPostDataString(JSONObject params) throws Exception {
-            StringBuilder result = new StringBuilder();
-            boolean first = true;
-            Iterator<String> itr = params.keys();
-            while(itr.hasNext()){
-                String key= itr.next();
-                Object value = params.get(key);
-                if (first)
-                    first = false;
-                else
-                    result.append("&");
-                result.append( URLEncoder.encode(key, "UTF-8"));
-                result.append("=");
-                result.append(URLEncoder.encode(value.toString(), "UTF-8"));
-            }
-            return result.toString();
         }
     }
+
+    @SuppressLint({"MissingPermission", "LongLogTag"})
+    public String getDishList_basic(String url) {
+
+//            String matchFound = "N";
+        BufferedReader reader = null;
+        String text = "";
+        String nameDish;
+        HttpURLConnection conn = null;
+
+        nameDish = null;
+
+        ////
+        try {
+            //eatblishing our connection to our basic search api
+
+            log.i( "in post basic  ", "1" );
+            URL url2 = new URL( "http://hungrymonkey-env.vivacrpttt.ec2-18-196-119-82.eu-central-1.compute.amazonaws.com/api/v1/basicSearch" ); // here is your URL path
+            //  URL url2 = new URL( "https://www.facebook.com/" ); // here is your URL path
+            //buidling our json object
+
+
+            //POST
+            conn = (HttpURLConnection) url2.openConnection();
+            conn.setReadTimeout( 50000 /* milliseconds */ );
+            conn.setConnectTimeout( 50000 /* milliseconds */ );
+            conn.setRequestMethod( "POST" );
+            conn.setDoInput( true );
+            conn.setDoOutput( true );
+
+            OutputStream os = conn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter( os, "UTF-8" ) );
+            writer.write( getPostDataString( res_obj ) );
+            writer.flush();
+            writer.close();
+            os.close();
+            //check connection status
+            int responseCode = conn.getResponseCode();
+            Log.i( "responseCode@:", String.valueOf( responseCode ) );
+
+            //getting our restaurants  from server
+            if (responseCode >= 400 && responseCode <= 499) {
+                Log.e("basic_search", "HTTPx Response: " + responseCode + " - " + conn.getResponseMessage());
+                BufferedInputStream in = new BufferedInputStream( conn.getErrorStream() );
+            }
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
+                reader = new BufferedReader(
+                        new InputStreamReader(
+                                conn.getInputStream() ) );
+                StringBuffer sb = new StringBuffer( "" );
+
+                //parsing the response ...
+                while ((line = reader.readLine()) != null) {
+
+                    Log.i( "res is:",line +"\n");
+                    sb.append( line );
+                    break;
+                }
+                // Toast.makeText( getActivity(), sb.toString(), Toast.LENGTH_SHORT ).show();
+
+                reader.close();
+
+                return sb.toString();
+            } else {
+                return new String( "false : " + responseCode );
+            }
+        } catch (Exception e) {
+            return new String( "Exception: " + e.getMessage() );
+        }
+    }
+
+    public String getPostDataString(JSONObject params) throws Exception {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        Iterator<String> itr = params.keys();
+        while(itr.hasNext()){
+            String key= itr.next();
+            Object value = params.get(key);
+            if (first)
+                first = false;
+            else
+                result.append("&");
+            result.append( URLEncoder.encode(key, "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(value.toString(), "UTF-8"));
+        }
+        return result.toString();
+    }
+}
 

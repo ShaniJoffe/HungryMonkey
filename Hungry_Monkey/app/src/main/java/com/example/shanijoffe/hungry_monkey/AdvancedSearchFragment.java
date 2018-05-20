@@ -463,13 +463,12 @@ public class AdvancedSearchFragment extends Fragment {
 
             ////
             try {
-                //eatblishing our connection to our basic search api
-                //eatblishing our connection to our basic search api
+                //establishing our connection to our basic search api
 
                 log.i( "in post basic  ", "1" );
                URL url2 = new URL( "http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/basicSearch" ); // here is your URL path
                 //buidling our json object
-                dish_inp.put( "dishName", "שקשוקה" ); //dish name
+                dish_inp.put( "dishName", search_adv.getQuery() ); //dish name
                 dish_inp.put("lon",lon);//lon
                 dish_inp.put("lat",lat);//lat
 
@@ -609,13 +608,7 @@ public class AdvancedSearchFragment extends Fragment {
            this.Dishname_adv=Dishname_adv;
            this.lon=lon;
            this.lat=lat;
-//
-//            dish_inp.put( "lon", this.lon );
-//            dish_inp.put( "lat", this.lat );
-//            dish_inp.put( "distance_adv", this.distance_adv );
-//            dish_inp.put( "price_val_adv", this.price_val_adv );
-//            dish_inp.put( "kosher_adv", this.kosher_adv );
-//            dish_inp.put( "Dishname_adv", this.Dishname_adv );
+
 
 
         }

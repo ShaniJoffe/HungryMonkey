@@ -91,9 +91,7 @@ public class FirstFragment extends Fragment implements Comparable  {
         flag_price.setText( "false" );
         listView = (ListView) view.findViewById( R.id.list_view );
 
-        // fav =(FloatingActionButton)view.findViewById( R.id.addToFav_btn ) ;
 
-        //settinng our sp
         settings=this.getActivity().getSharedPreferences( "myPrefsFile",0  );
         editor=settings.edit();
 
@@ -101,139 +99,32 @@ public class FirstFragment extends Fragment implements Comparable  {
         log.i(" in first fragment my list before parsing",myValue);
 
         location_res_jsn = null;
-         hashMap_ = null;
+        hashMap_ = null;
         vector = new Vector<>();
-
-        try {
-            if (myValue != null) {
-                jsonarray = new JSONArray( myValue );
-                Log.i( "f", " \n\n" );
-                for (int i = 0; i < jsonarray.length(); i++) {
-                    JSONObject js3 = jsonarray.getJSONObject( i );
-                   // System.out.println( "json array at place " + i + js3.toString() + "\n" );
-                }
-            } else {
-                Toast.makeText( getActivity(), " אין ערכים", Toast.LENGTH_SHORT ).show();
-            }
-            int count = -1;
-           // Log.i( "dish_list in if", String.valueOf( jsonarray ) );
-         //   Log.i( "f", " \n\n" );
-            List<Map<String, String>> myMap = new ArrayList<Map<String, String>>();
-          //  Log.i( "jsonArray length", String.valueOf( jsonarray.length() ) );
-
-
-            for (int i = 0; i < jsonarray.length(); i++) {
-                Log.i( "index", String.valueOf( i ) );
-                //HashMap<String,String> hashMap_ = new HashMap<>();
-                JSONObject obj = jsonarray.getJSONObject( i );
-                _source = new JSONObject();
-                _source = obj.getJSONObject( "_source" );
-             //   log.i( "_source", String.valueOf( _source ) );
-                //rest_address
-                rest_address = _source.getString( "rest_address" );
-           //     System.out.println( "rest_address" + rest_address );
-                // hashMap_.put("rest_address",rest_address);
-                ///name_res
-                name_res = _source.getString( "rest_name" );
-              //  System.out.println( "name_res" + name_res );
-                //  hashMap_.put("rest_name",name_res);
-                //location res
-                location_res_str = _source.getString( "rest_location" );
-                location_res_jsn = new JSONObject( location_res_str );
-              //  System.out.println( "location_res_jsn" + location_res_jsn.toString() );
-                // hashMap_.put("rest_location", String.valueOf( location_res_jsn ) );
-
-                ///kosher
-                kosher = _source.getString( "Kosher" );
-              //  System.out.println( "kosher" + kosher );
-                //  hashMap_.put("Kosher", kosher );
-                //
-                inner_hits = new JSONObject();
-                inner_hits = obj.getJSONObject( "inner_hits" );
-              //  log.i( "inner_hits", String.valueOf( inner_hits ) );
-                menu = new JSONObject();
-                menu = inner_hits.getJSONObject( "menu" );
-              //  log.i( "menu", String.valueOf( menu ) );
-                hits_1 = new JSONObject();
-                hits_1 = menu.getJSONObject( "hits" );
-                String hits_arr = hits_1.getString( "hits" );
-              //  System.out.println( "hits_arr" + hits_arr );
-                menu_hits_jsonArray = new JSONArray( hits_arr );
-                //    log.i("menu_hits_jsonArray", String.valueOf( menu_hits_jsonArray ));
-              //  Log.i( "name restuartant:", name_res );
-                for (int j = 0; j < menu_hits_jsonArray.length(); j++) {
-                 //   count++;
-                    hashMap_ = new HashMap<>();
-
-                    //getting restaurant details.
-                    hashMap_.put( "index", String.valueOf( count ) );
-                    hashMap_.put( "rest_address", rest_address );
-                    hashMap_.put( "rest_name", name_res );
-                    hashMap_.put( "rest_location", String.valueOf( location_res_jsn ) );
-                    hashMap_.put( "Kosher", kosher );
-
-                    //getting dish detailes
-
-                    JSONObject obj2 = menu_hits_jsonArray.getJSONObject( j );
-                    JSONObject _source2 = new JSONObject();
-                    _source2 = obj2.getJSONObject( "_source" );
-                    dish_desc = _source2.getString( "dish_description" );
-                    hashMap_.put( "dish_description", dish_desc );
-                    name_dish = _source2.getString( "dish_name" );
-                    hashMap_.put( "dish_name", name_dish );
-                    price_dish = _source2.getString( "dish_price" );
-                    hashMap_.put( "dish_price", price_dish );
-
-                    //getting the id of our dish in restaurant
-                    dish_id_inRest = _source2.getString( "dish_id_inRest" );
-                    hashMap_.put( "dish_id_inRest", dish_id_inRest );
-
-                   // System.out.println( "dish_desc" + dish_desc );
-                //    System.out.println( "name_dish" + name_dish );
-                 //   System.out.println( "price_dish" + price_dish );
-                    vector.add( hashMap_ );
-
-                }
-            }
-
-
-//            users_favs_dishes= new String[vector.size()];
-//            editor.putInt("array_size", users_favs_dishes.length);
-//            for(int i=0;i<users_favs_dishes.length; i++)
-//                editor.putString("users_favs_dishes" + i, users_favs_dishes[i]);
-//            editor.commit();
-
-            Log.i("my array in first", String.valueOf( users_favs_dishes ) );
-            Log.i("size of my array ", String.valueOf( vector.size() ) );
-
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
+        vector=parseMyList( myValue );
         aa = new custom_adapter( getContext(), R.layout.single_dish_item, vector,flag_btn );
-       // Collections.sort(vector, new custom_adapter( getContext(), R.layout.single_dish_item, vector,flag_btn));
+        // Collections.sort(vector, new custom_adapter( getContext(), R.layout.single_dish_item, vector,flag_btn));
         listView.setAdapter( aa );
 
 
-        // aa.notifyDataSetChanged()
+
+
+        // filter_by_price button
         FloatingActionButton b = (FloatingActionButton) getActivity().findViewById( filter_by_price );
-                b.setOnClickListener( new View.OnClickListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override
-                    public void onClick(View view) {
-                        // TODO Auto-generated method stub
-                        log.i( "firstFragment", "onOptionsItemSelected" );
-                        flag_btn=1;
-                        flag_price.setText( "true" );
-                        Comparator<String> ALPHABETICAL_ORDER1 = new Comparator<String>() {
-                            public int compare(String object1, String object2) {
-                                int res = String.CASE_INSENSITIVE_ORDER.compare( object1.toString(), object2.toString() );
-                                return res;
-                            }
-                        };
+        b.setOnClickListener( new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View view) {
+                // TODO Auto-generated method stub
+                log.i( "firstFragment", "onOptionsItemSelected" );
+                flag_btn=1;
+                flag_price.setText( "true" );
+                Comparator<String> ALPHABETICAL_ORDER1 = new Comparator<String>() {
+                    public int compare(String object1, String object2) {
+                        int res = String.CASE_INSENSITIVE_ORDER.compare( object1.toString(), object2.toString() );
+                        return res;
+                    }
+                };
 
                 //  Arrays.sort(vector.toArray(), (Comparator<? super Object>) vector.get( Integer.parseInt( "price_dish" ) ) );
 
@@ -243,7 +134,7 @@ public class FirstFragment extends Fragment implements Comparable  {
             }
 
         } );
-        // aa.notifyDataSetChanged()
+        // filter_by_loc button
         FloatingActionButton b2 = (FloatingActionButton) getActivity().findViewById( filter_by_loc );
         b2.setOnClickListener( new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -329,9 +220,81 @@ public class FirstFragment extends Fragment implements Comparable  {
         }
     }
 
-        protected void onPostExecute(String result) throws JSONException {
-            JSONObject jObj = new JSONObject( result );
-            Log.i( "my res is :", result );
+
+    public  Vector<HashMap<String,String>> parseMyList (String list)
+    {
+        myValue=list;
+        try {
+            if (myValue != null) {
+                jsonarray = new JSONArray( myValue );
+                Log.i( "f", " \n\n" );
+                for (int i = 0; i < jsonarray.length(); i++) {
+                    JSONObject js3 = jsonarray.getJSONObject( i );
+                    // System.out.println( "json array at place " + i + js3.toString() + "\n" );
+                }
+            } else {
+                Toast.makeText( getContext(), " אין ערכים", Toast.LENGTH_SHORT ).show();
+            }
+            int count = -1;
+
+            List<Map<String, String>> myMap = new ArrayList<Map<String, String>>();
+            for (int i = 0; i < jsonarray.length(); i++) {
+                Log.i( "index", String.valueOf( i ) );
+                //HashMap<String,String> hashMap_ = new HashMap<>();
+                JSONObject obj = jsonarray.getJSONObject( i );
+                _source = new JSONObject();
+                _source = obj.getJSONObject( "_source" );
+                rest_address = _source.getString( "rest_address" );
+                name_res = _source.getString( "rest_name" );
+                location_res_str = _source.getString( "rest_location" );
+                location_res_jsn = new JSONObject( location_res_str );
+                ///kosher
+                kosher = _source.getString( "Kosher" );
+                inner_hits = new JSONObject();
+                inner_hits = obj.getJSONObject( "inner_hits" );
+                menu = new JSONObject();
+                menu = inner_hits.getJSONObject( "menu" );
+                hits_1 = new JSONObject();
+                hits_1 = menu.getJSONObject( "hits" );
+                String hits_arr = hits_1.getString( "hits" );
+                menu_hits_jsonArray = new JSONArray( hits_arr );
+                for (int j = 0; j < menu_hits_jsonArray.length(); j++)
+                {
+                    //   count++;
+                    hashMap_ = new HashMap<>();
+
+                    //getting restaurant details.
+                    hashMap_.put( "index", String.valueOf( count ) );
+                    hashMap_.put( "rest_address", rest_address );
+                    hashMap_.put( "rest_name", name_res );
+                    hashMap_.put( "rest_location", String.valueOf( location_res_jsn ) );
+                    hashMap_.put( "Kosher", kosher );
+                    JSONObject obj2 = menu_hits_jsonArray.getJSONObject( j );
+                    JSONObject _source2 = new JSONObject();
+                    _source2 = obj2.getJSONObject( "_source" );
+                    dish_desc = _source2.getString( "dish_description" );
+                    hashMap_.put( "dish_description", dish_desc );
+                    name_dish = _source2.getString( "dish_name" );
+                    hashMap_.put( "dish_name", name_dish );
+                    price_dish = _source2.getString( "dish_price" );
+                    hashMap_.put( "dish_price", price_dish );
+                    dish_id_inRest= _source2.getString( "dish_id_inRest" );
+
+                    hashMap_.put( "dish_id_inRest", dish_id_inRest );
+                    vector.add( hashMap_ );
+
+                }
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return vector;
+    }
+    protected void onPostExecute(String result) throws JSONException {
+        JSONObject jObj = new JSONObject( result );
+        Log.i( "my res is :", result );
 
 //            userName_res = jObj.getString("message");
 //            token=jObj.getString("token");
@@ -344,12 +307,12 @@ public class FirstFragment extends Fragment implements Comparable  {
 //            i.putExtras(user_det);
 //            startActivityForResult( i );
 
-        }
+    }
 
 
     @Override
     public int compareTo(@NonNull Object o) {
-return -1;
+        return -1;
     }
 }
 
