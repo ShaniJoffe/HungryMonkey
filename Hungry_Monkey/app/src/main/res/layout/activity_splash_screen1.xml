@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/oil"
     tools:showIn="@layout/activity_splash_screen1"
-    tools:context="com.example.shanijoffe.hungry_monkey.SplashScreen1">
+    tools:context="com.example.shanijoffe.hungry_monkey.hungryMonkey">
     <LinearLayout
         android:gravity="center"
         android:layout_width="match_parent"

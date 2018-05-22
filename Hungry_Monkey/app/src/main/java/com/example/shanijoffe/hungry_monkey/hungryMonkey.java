@@ -8,7 +8,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class SplashScreen1 extends AppCompatActivity {
+public class hungryMonkey extends AppCompatActivity {
     TextView tv;
     private ImageView iv;
     @Override

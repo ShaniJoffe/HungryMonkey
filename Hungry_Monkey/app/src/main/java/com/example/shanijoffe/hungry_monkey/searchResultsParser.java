@@ -41,7 +41,7 @@ import static com.example.shanijoffe.hungry_monkey.R.id.filter_by_loc;
 import static com.example.shanijoffe.hungry_monkey.R.id.filter_by_price;
 import static com.loopj.android.http.AsyncHttpClient.log;
 
-public class FirstFragment extends Fragment implements Comparable  {
+public class searchResultsParser extends Fragment implements Comparable  {
 
 
     //parsing fragment
@@ -169,7 +169,7 @@ public class FirstFragment extends Fragment implements Comparable  {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                Log.i( "FirstFragment", "in onPreExecute" );
+               // Log.i( "searchResultsParser", "in onPreExecute" );
             }
 
             @Override

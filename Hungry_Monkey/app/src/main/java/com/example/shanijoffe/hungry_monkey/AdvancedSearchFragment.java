@@ -2,13 +2,10 @@ package com.example.shanijoffe.hungry_monkey;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -17,7 +14,6 @@ import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -49,9 +45,6 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -548,13 +541,13 @@ public class AdvancedSearchFragment extends Fragment {
 
     public void OnClick(View view)//login button
     {
-            Intent i = new Intent(getActivity(), LoginPage.class);
+            Intent i = new Intent(getActivity(), loginPage.class);
             startActivity(i);
     }
 
     public void OnClickSign(View view)
     {
-        Intent i = new Intent(getActivity(), SignUpActivity.class);
+        Intent i = new Intent(getActivity(), signUpPage.class);
         startActivity(i);
     }
 
@@ -568,7 +561,7 @@ public class AdvancedSearchFragment extends Fragment {
             public void run() {
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                FirstFragment first = new FirstFragment();
+                searchResultsParser first = new searchResultsParser();
                 //planting our restaurants results in fragment
                 Bundle bundle2 = new Bundle();
                 try {

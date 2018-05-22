@@ -29,7 +29,7 @@ import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class SignUpActivity extends AppCompatActivity
+public class signUpPage extends AppCompatActivity
 {
 
     EditText username;
@@ -38,7 +38,7 @@ public class SignUpActivity extends AppCompatActivity
     EditText email;
     Button btn_signUp1;
     JSONObject jObj;
-    String token=null,userName_res,status=null;
+    String token=null,userName_res="",passrowd_res="",status=null;
     String line="";
     SharedPreferences settings;
     SharedPreferences.Editor editor;
@@ -48,8 +48,8 @@ public class SignUpActivity extends AppCompatActivity
         ///
         setContentView( R.layout.activity_sign_up );
         username=findViewById( R.id.user_name_et );
-        password=findViewById( R.id.user_name_et );
-        c_password=findViewById( R.id.user_name_et );
+        password=findViewById( R.id.et_password );
+        c_password=findViewById( R.id.confirmPass );
 
         btn_signUp1=(Button)findViewById( R.id.btn_signUp );
 
@@ -61,13 +61,25 @@ public class SignUpActivity extends AppCompatActivity
         btn_signUp1.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!password.getText().toString().equals( c_password.getText().toString())){
+
+
+                userName_res=username.getText().toString();
+                passrowd_res=password.getText().toString();
+                if(!password.getText().toString().equals( c_password.getText().toString()))
+                {
 //do things if these 2 are correct.
+                    Toast.makeText(getApplicationContext(), "please confirm your password  :" ,
+                            Toast.LENGTH_LONG).show();
+                }
+                else if(userName_res.equals( ""))
+                {
                     Toast.makeText(getApplicationContext(), "please confirm your password  :" ,
                             Toast.LENGTH_LONG).show();
                 }
                 else
                 {
+                    Toast.makeText(getApplicationContext(), "lets register :) "+ userName_res+passrowd_res ,
+                            Toast.LENGTH_LONG).show();
                     new SendPostRequest().execute();//registering to server .
                 }
             }
@@ -100,8 +112,8 @@ public class SignUpActivity extends AppCompatActivity
                 Log.i("in onClickSignUp","heyoo");
                 URL url = new URL("http://newapp-env.eiymf2wfdn.eu-central-1.elasticbeanstalk.com/api/v1/users"); // here is your URL path
                 JSONObject postDataParams = new JSONObject();
-                postDataParams.put("name",username);
-                postDataParams.put("password",password);
+                postDataParams.put("name",username.getText().toString());
+                postDataParams.put("password",passrowd_res);
              //   postDataParams.put("id","1");
 
                 //POST
@@ -180,8 +192,9 @@ public class SignUpActivity extends AppCompatActivity
             {
                 Log.i("in token","token is not null");
                 editor.putString( "user_token",token ).apply();
+                Log.i("generted token is :",token);
             }
-            Toast.makeText(getApplicationContext(), " welcome ! :" +userName_res ,
+            Toast.makeText(getApplicationContext(), " welcome ! :" +userName_res  ,
                     Toast.LENGTH_LONG).show();
         }
     }

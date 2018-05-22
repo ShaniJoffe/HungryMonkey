@@ -31,7 +31,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import static com.loopj.android.http.AsyncHttpClient.log;
 
-public class LoginPage extends AppCompatActivity {
+public class loginPage extends AppCompatActivity {
 
     EditText user_name_edit;
     EditText password_edit;

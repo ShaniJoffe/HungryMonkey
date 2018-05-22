@@ -4,17 +4,22 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,9 +33,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+
 import static java.lang.Thread.sleep;
 
-public class showFavioratesResults extends AppCompatActivity {
+public class showRecActivity extends AppCompatActivity {
     ListView list_fav;
     custom_adapter ad;
     HashMap<String, String> hashMap_;
@@ -48,18 +54,17 @@ public class showFavioratesResults extends AppCompatActivity {
 
     SharedPreferences settings;
     SharedPreferences.Editor editor;
-    ListView fav_dish_list;
+    ListView rec_dish_list;
     custom_adapter aa;
     Vector<HashMap<String,String>> vector=null;
 
-
     JSONArray menu_hits_jsonArray=null, jsonarray;
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.activity_show_rec );
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_faviorates_results);
-        fav_dish_list =  findViewById( R.id.list_fav );
+        rec_dish_list =  findViewById( R.id.list_rec );
         location_res_jsn = null;
         hashMap_ = null;
         vector = new Vector<>();
@@ -67,13 +72,23 @@ public class showFavioratesResults extends AppCompatActivity {
         //getting our token
         settings =getSharedPreferences( "myPrefsFile",MODE_PRIVATE );
         token=settings.getString( "user_token" ,"null" );
-        Log.i("token  in getFav is",token);
+        Log.i("token  in getRec is",token);
         //getting our favorites dishes.
         my_fav_list=getFavlist();
         Log.i("after parsing", String.valueOf( vector ) );
 
-    }
+        Toolbar toolbar = (Toolbar) findViewById( R.id.toolbar );
+        setSupportActionBar( toolbar );
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById( R.id.fab );
+        fab.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make( view, "Replace with your own action", Snackbar.LENGTH_LONG )
+                        .setAction( "Action", null ).show();
+            }
+        } );
+    }
     public  Vector<HashMap<String,String>> parseMyList (String list)
     {
         my_fav_list=list;
@@ -86,7 +101,7 @@ public class showFavioratesResults extends AppCompatActivity {
                     // System.out.println( "json array at place " + i + js3.toString() + "\n" );
                 }
             } else {
-                Toast.makeText( showFavioratesResults.this, " אין ערכים", Toast.LENGTH_SHORT ).show();
+                Toast.makeText( showRecActivity.this, " אין ערכים", Toast.LENGTH_SHORT ).show();
             }
             int count = -1;
 
@@ -148,7 +163,7 @@ public class showFavioratesResults extends AppCompatActivity {
     {
         Log.i("heyo","im in getFAV ");
         myAsyncTask m= (myAsyncTask) new myAsyncTask(token).execute(  );
-        Log.i("heyo","im in getFAV 3333333333");
+        Log.i("heyo","im in geFAV 3333333333");
         return m.list;
     }
     class myAsyncTask extends AsyncTask<String, Void, String> {
@@ -173,7 +188,7 @@ public class showFavioratesResults extends AppCompatActivity {
             super.onPreExecute();
             productList = new JSONArray();
             jParser = new JSONParser();
-            pd = new ProgressDialog( showFavioratesResults.this );
+            pd = new ProgressDialog( showRecActivity.this );
             pd.setCancelable( false );
             pd.setMessage( "getting your fav dishes  ..." );
             pd.getWindow().setGravity( Gravity.CENTER );
@@ -202,9 +217,9 @@ public class showFavioratesResults extends AppCompatActivity {
                 Log.i("my fav dishes  vector", String.valueOf( vector ) );
 
                 //connecting to our  list view
-                aa = new custom_adapter( showFavioratesResults.this, R.layout.single_dish_item, vector,0 );
+                aa = new custom_adapter( showRecActivity.this, R.layout.single_dish_item, vector,0 );
                 //  Collections.sort(vector, new custom_adapter( getContext(), R.layout.single_dish_item, vector,flag_btn));
-                fav_dish_list.setAdapter( aa );
+                rec_dish_list.setAdapter( aa );
             }
             try {
                 sleep( 2000 );
@@ -236,7 +251,7 @@ public class showFavioratesResults extends AppCompatActivity {
             try {
                 //eatblishing our connection to our basic search api
 
-                URL  url2 = new URL( "http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/getFavs" ); // here is your URL path
+                URL url2 = new URL( "http://newapp-env.eiymf2wfdn.eu-central-1.elasticbeanstalk.com/api/v1/recsForUser" ); // here is your URL path
 
                 //building the request
 
@@ -249,7 +264,7 @@ public class showFavioratesResults extends AppCompatActivity {
                 conn.setRequestMethod( "GET" );
 
                 int httpStatus = conn.getResponseCode();
-                Log.v("response man ", "httpStatus " + httpStatus);
+                Log.v("response rec man ", "httpStatus " + httpStatus);
 
                 if (httpStatus == 200) {
                     Log.v("response success ", "httpStatus " + httpStatus);
@@ -283,7 +298,9 @@ public class showFavioratesResults extends AppCompatActivity {
                     // print result
                     System.out.println(response.toString());
                     return response.toString();
-                } else {
+                }
+                else
+                {
                     System.out.println("GET request not worked");
                 }
 

@@ -225,12 +225,12 @@ public class navigation_HM extends AppCompatActivity
 
         if (id == R.id.nav_login) {
             //Set the fragment initially
-            Intent i = new Intent(this, LoginPage.class);
+            Intent i = new Intent(this, loginPage.class);
             startActivity(i);
             // Handle the camera action
         } else if (id == R.id.nav_sign_up) {
             //Set the fragment initially
-            Intent i = new Intent(this, SignUpActivity.class);
+            Intent i = new Intent(this, signUpPage.class);
             startActivity(i);
 
 
@@ -241,7 +241,12 @@ public class navigation_HM extends AppCompatActivity
             String keyId  = "1";
             i.putExtra("id", keyId );
             startActivity(i);
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_showRec) {
+            //Set the fragment initially
+            Intent i = new Intent(this, showRecActivity.class);
+            String keyId  = "1";
+            i.putExtra("id", keyId );
+            startActivity(i);
 
         } else if (id == R.id.nav_share) {
 
@@ -285,7 +290,7 @@ public class navigation_HM extends AppCompatActivity
     public void OnClick(View view)//login button
     {
 
-        Intent i = new Intent( this, LoginPage.class );
+        Intent i = new Intent( this, loginPage.class );
         startActivityForResult( i, CODE_REQ );
 
     }
@@ -522,19 +527,6 @@ public class navigation_HM extends AppCompatActivity
                     ActivityCompat.requestPermissions( this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}
                             , MY_PERMISSIONS_REQUEST_LOCATION );
 
-//                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-//                    alertDialog.setTitle(getString(R.string.locMsgTitle));
-//                    alertDialog.setMessage(getString(R.string.locMsg));
-//                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-//                            new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    Log.i("here","onRequestPermissionsResult");
-//                                    finish();
-//                                    System.exit(0);
-//
-//                                }
-//                            });
-//                    alertDialog.show();
                 }
             }
         }

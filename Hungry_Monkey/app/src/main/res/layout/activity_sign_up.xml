@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fffdd0"
-    tools:context="com.example.shanijoffe.hungry_monkey.SignUpActivity">
+    tools:context="com.example.shanijoffe.hungry_monkey.signUpPage">
 
     <LinearLayout
         android:layout_width="match_parent"

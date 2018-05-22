@@ -15,7 +15,11 @@
         <item
             android:id="@+id/nav_showFav"
             android:icon="@drawable/ic_favorite_red_500_24dp"
-            android:title="מועדפים" />
+            android:title="המועדפים שלי" />
+        <item
+            android:id="@+id/nav_showRec"
+            android:icon="@drawable/round_fastfood_black_48"
+            android:title="ההמלצות שלי" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"

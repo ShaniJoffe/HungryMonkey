@@ -14,23 +14,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".showFavioratesResults" />
-        <activity android:name=".HistoryResults" />
         <activity android:name=".AdvancedSearch" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".LoginPage" />
+        <activity android:name=".signUpPage" />
+        <activity android:name=".loginPage" />
         <activity android:name=".ResturantDetails" />
         <activity
-            android:name=".SplashScreen1"
+            android:name=".hungryMonkey"
             android:label="@string/title_activity_splash_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".navigation_HM"
             android:label="@string/title_activity_navigation__hm"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".showRecActivity"
+            android:label="@string/title_activity_show_rec"
             android:theme="@style/AppTheme"></activity>
     </application>
 

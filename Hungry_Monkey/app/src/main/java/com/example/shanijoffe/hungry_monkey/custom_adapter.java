@@ -179,7 +179,7 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
             {
              //   Log.i("add to fav ","clicked");
                 users_favs_dishes[0]=dish_id_inRest;
-                // log.i("my array is ", Arrays.toString(users_favs_dishes));
+                 log.i("my dish id is ", users_favs_dishes[0]);
 
                 //  editor.putString( "my_fav_list", Arrays.toString(users_favs_dishes) ).apply();
 
@@ -295,19 +295,45 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
 
                 URL url = new URL( "http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/setFavs" ); // here is your URL path
                 JSONObject postDataParams = new JSONObject();
-                postDataParams.put( "favs",users_favs_dishes[0]);
+                postDataParams.put( "favs",users_favs_dishes[0].toString());
 
                 Log.i("json to setfavs", String.valueOf( postDataParams ) );
                 //POST
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout( 50000 /* milliseconds */ );
-                conn.setConnectTimeout( 50000 /* milliseconds */ );
-                conn.setRequestMethod( "POST" );
-                conn.setDoInput( true );
-                conn.setDoOutput( true );
-                //token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAiLCJpYXQiOjE1MjU2MjI3NDF9.GW3-wcU5MizmoZGtmzQdyNLbFedCJAwfDnHqrnVglkg";
+              //  conn.setReadTimeout( 50000 /* milliseconds */ );
+              //  conn.setConnectTimeout( 50000 /* milliseconds */ );
+             //  conn.setRequestMethod( "POST" );
 
-                conn.setRequestProperty( "Authorization", token);               // conn.setRequestProperty( "Authorization","Basic ",token );
+              //  conn.setDoOutput( true );
+                //token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAiLCJpYXQiOjE1MjU2MjI3NDF9.GW3-wcU5MizmoZGtmzQdyNLbFedCJAwfDnHqrnVglkg";
+               // conn.setRequestProperty("Content-Type", "application/json");
+               // conn.setRequestProperty("Authorization", "JWT "
+                 //       + token);
+                //conn.setRequestProperty( "Authorization", token);               // conn.setRequestProperty( "Authorization","Basic ",token );
+                conn.setDoOutput(true);
+                conn.setRequestMethod("POST");
+             //   conn.setRequestProperty("User-Agent", "Mozilla/5.0");
+               conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty ("Authorization", "JWT " +" " +token);
+                Log.i("my token is ",token);
+               // conn.setRequestProperty( "Content-type", "application/x-www-form-urlencoded");
+                //conn.setRequestProperty( "Accept", "*/*" );
+              //  conn.setRequestProperty ("Authorization", "Basic " + token);
+                // For POST only - START
+
+
+
+                int responseCode = conn.getResponseCode();
+                System.out.println("POST Response Code :: " + responseCode);
+            //    OutputStream os = conn.getOutputStream();
+             //   os.write(POST_PARAMS.getBytes());
+              //  os.flush();
+              //  os.close();
+                // For POST only - END
+
+
+               // conn.connect();
+
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter( os, "UTF-8" ) );
@@ -315,8 +341,9 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
                 writer.flush();
                 writer.close();
                 os.close();
-                int responseCode = conn.getResponseCode();
-                Log.i( "responseCode", String.valueOf( responseCode ) );
+
+              //  int responseCode = conn.getResponseCode();
+              //  Log.i( "responseCode", String.valueOf( responseCode ) );
                 if (responseCode == HttpsURLConnection.HTTP_OK) {
 
                     BufferedReader in = new BufferedReader(
