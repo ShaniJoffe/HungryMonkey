@@ -10,12 +10,10 @@ const search = function search(index, body){
 const mergeJSON = require("merge-json") ;		
 	exports.advancedS = (dish_name,kosher,minPrice,maxPrice,distance,lat,lon) => 
 		new Promise((resolve,reject) => {
-			//console.log(dish_name);
-		esClient.search({//check if exists 
+		esClient.search({//check if dish exists
 			index: 'hungrymonkeyrests',
 			type: 'restaurants',
-			_source: ['rest_name','rest_description','rest_location','Kosher','rest_address'],
-			
+			_source: ['rest_name','rest_description','rest_location','Kosher','rest_address'],//keys of rest object which will be presented		
 			body :{
 				"query": { 
 					"bool":{
@@ -24,13 +22,13 @@ const mergeJSON = require("merge-json") ;
 								path: 'menu',
 								"inner_hits": { 
 								//explain:true,
-									_source: ['menu.dish_name','menu.dish_description','menu.dish_price']
+								_source: ['menu.dish_name','menu.dish_description','menu.dish_price','menu.imgUrl','menu.dish_id_inRest']//keys of menu object which will be presented		
 								},
 								"query": {
 									"bool": {
 										"must":[
 											{"bool" : {
-												"should" : [
+												"should" : [// 1 of 2 should happend or the dish name must equal to input or the input must be all in the dish description
 													{"term": {"menu.dish_name": dish_name}},
 													{"bool": {
 														"should" : [
@@ -47,13 +45,13 @@ const mergeJSON = require("merge-json") ;
 													}
 												]
 											}},
-											{"range": { "menu.dish_price": { "gte": minPrice, "lte":maxPrice }} }
-											
+											{"range": { "menu.dish_price": { "gte": minPrice, "lte":maxPrice }} }// query for range of prices input 
+									
 										]
 									 }
 								}	 
 							}}],
-							"filter" : {
+							"filter" : {// query to filter results by distance user had input 
 								"geo_distance" : {
 									"distance" : distance,
 									"validation_method":"IGNORE_MALFORMED",
@@ -67,24 +65,16 @@ const mergeJSON = require("merge-json") ;
 					}	
 				}				
 			}		
-	}).then(results => {
-				console.log(results);
-			console.log(`found ${results.hits.total} items in ${results.took}ms`);
-			if (results.hits.total > 0)
+		}).then(results => {
+			if (results.hits.total > 0)// case there are results it will resolve the dishes objects
 			{				
-					//results.hits.hits.forEach((hit, index) => 
-						//console.log(`\t${body.from + ++index} - ${hit._source} (score: ${hit._score})`)
-					//);
-					resolve({ status: 200, message: results.hits.hits});	
-					//resolve({ status: 200, message: results.hits.hits._source, message2:results.hits.hits.inner_hits.menu.hits.hits[0]._source});	
-
+				resolve({ status: 200, message: results.hits.hits});	
 			}
-			else
+			else//case not will return string 'no dishes found'
 			{
 				console.log('no dishes found');
 				reject({ status: 400, message: 'No dishes !' });
 			}
 		}).catch(console.error);
-		});
-		
+	});
 		
