@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.shanijoffe.hungry_monkey">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".showFavioratesResults" />
+        <activity android:name=".AdvancedSearch" />
+        <activity android:name=".signUpPage" />
+        <activity android:name=".LoginPage" />
+        <activity android:name=".ResturantDetails" />
+        <activity
+            android:name=".hungryMonkey"
+            android:label="@string/title_activity_splash_screen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".navigation_HM"
+            android:label="@string/title_activity_navigation__hm"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".showRecActivity"
+            android:label="@string/title_activity_show_rec"
+            android:theme="@style/AppTheme"></activity>
+    </application>
+
+</manifest>
