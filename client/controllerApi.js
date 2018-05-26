@@ -25,7 +25,6 @@ $(document).ready(function() {
 							+"<input type='text' name='menu["+x+"][dish_price]'placeholder='מחיר המנה'><br>"
 							+"<label for='menu["+x+"][imgUploader]'>תמונה:</label>"
 							+"<input type='file' id='image_file' name='menu["+x+"][imgUploader]'><br>"
-							+"<input type='submit' id='submitPicture' class='imgUploaderbutton' value='Upload'>"
 							+"<button type='button' class='removebb'>x</button></span>");
         }
     });
@@ -38,9 +37,10 @@ $(document).ready(function() {
 		}
 		
     });
-	$(wrapper).on('click','#submitPicture',function(ev){// upload image and store the url in array
-		ev.preventDefault()// cancel form submission
-		if($(this).attr("value")=="Upload"){
+	$(wrapper).on('change','#image_file',function(ev){// upload image and store the url in array
+		console.log("here");
+		//ev.preventDefault()// cancel form submission
+		//if($(this).attr("value")=="Upload"){
 			tempDishNumber=$(this).closest('span').attr('name');
 			console.log("y: "+y);
 			console.log("x: "+x);	
@@ -66,21 +66,19 @@ $(document).ready(function() {
 						res.location+='0';
 					}
 					else
-					{
-						
+					{			
 						res.location+=tempDishNumber.toString();
 					}
 					console.log(res.location);
 					ajaxResults.push(res.location);
-				//	console.log(ajaxResults);
+					console.log(ajaxResults);
 				},
 				async: false,
 				crossDomain:true
 			});
 			y++;
-		}
+		//}
 	});
-
 (function($){
     $.fn.serializeObject = function(){
 
@@ -148,7 +146,6 @@ $(document).ready(function() {
     };
 })(jQuery);
 
-
 	$('.mybody').on('click','.showMenu',function(){	
 		$('#myModal').modal('show');
 	});
@@ -157,7 +154,7 @@ $(document).ready(function() {
 		ev.preventDefault();// cancel form submission
 		//alert('Saved!!');
 		$.ajax({
-			url: "http://localhost:3000/api/v1/set_menu/12", // Url to which the request is send
+			url: "http://localhost:3000/api/v1/set_menu/"+restid, // Url to which the request is send
 			type: "POST",             // Type of request to be send, called as method
 			data: formDataMenu, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
 			contentType: false/*'application/json'*/,       // The content type used when sending data to the server.
@@ -229,7 +226,7 @@ $(document).ready(function() {
 						var td1="<td>"+temp.menu[i]['dish_name']+"</td>";
 						var td2="<td>"+temp.menu[i]["dish_description"]+"</td>";
 						var td3="<td>"+temp.menu[i]["dish_price"]+"</td></tr>";
-						$(".modal-body").append(tr+td1+td2+td3); 
+						$(".modal-body").append(tr+td1+td2+td3);
 					}	
 				}
 			}

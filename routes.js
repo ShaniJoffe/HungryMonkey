@@ -5,12 +5,15 @@ const jwt = require('jsonwebtoken');
 var NodeGeocoder = require('node-geocoder');
 const register = require('./functions/register');
 const login = require('./functions/login');
-const profile = require('./functions/profile');
-const password = require('./functions/password');
+const setFavorites = require('./functions/setFavs');
+const getRecs = require('./functions/recommendationsForUser');
+const getFavorites = require('./functions/getFavs');
 const config = require('./config/config.json');
 const setRestDetails= require('./functions/setRestDetails');
 const setRestMenu= require('./functions/setRestMenu');
+const setAllMenus= require('./functions/setAllMenus');
 const getRestDetails= require('./functions/getRestDetails');
+const getRestMenu = require('./functions/getRestMenu');
 const advancedSearch= require('./functions/advancedSearch');
 const basicSearch= require('./functions/basicSearch');
 const mergeJSON = require("merge-json") ;	
@@ -18,13 +21,14 @@ const multer 	 = require('multer');
 const multerS3	 = require('multer-s3');
 const aws = require('aws-sdk');
 const passport = require('passport');
-
+var tableify = require('tableify');
+var secrets = require('./config/secrets');
 module.exports = router => {
 	var s3;
 	var options = {
 		provider: 'google',
 		httpAdapter: 'https', // Default
-	    apiKey: 'AIzaSyBwMyNbVpmbIbHeQDmXwIDoDfu6i65IRVw', // for Mapquest, OpenCage, Google Premier
+	    apiKey: secrets.apiKey, // for Mapquest, OpenCage, Google Premier
 		formatter: '%S'         // 'gpx', 'string', ...
 	};
 	var geocoder = NodeGeocoder(options);
@@ -32,8 +36,8 @@ module.exports = router => {
 	
 	//aws config
 	aws.config.update({
-    secretAccessKey: 'Xi4xCO/vCYwkBJDsh6b/j4qAllbKpS6OlwJBegoy',
-    accessKeyId: 'AKIAITDMQNPWWZS2QTQA',
+    secretAccessKey: secrets.secretAccessKey,
+    accessKeyId: secrets.accessKeyId,
     region: 'eu-central-1'
 	});
 	s3 = new aws.S3();
@@ -55,11 +59,12 @@ module.exports = router => {
 	router.get('/viewMenu',(req,res)=> {
 		console.log('user accessing viewMenu page');
 		res.render('viewMenu')});
-	
-	router.get('/viewMenu/:restid',(req,res)=> {
-		console.log('user accessing viewMenu page');
-		console.log("restid: "+req.params.restid);	
-		res.render('viewMenu',{restid : req.params.restid})});
+
+		
+	router.get('/login',(req,res)=> {
+		console.log('user accessing login page');
+		res.render('login')});
+
 		
 	router.get('/set_menu',(req,res)=> {
 		console.log('user accessing set_menu page');
@@ -132,6 +137,16 @@ module.exports = router => {
 		}			
 	});
 		
+	
+	router.get('/viewMenu/:rest_id',(req,res)=>{	
+		console.log(req.params.rest_id);
+		getRestMenu.getRestM(req.params.rest_id)
+		.then(result=>{
+			var data = result.message[0]._source.menu;
+			res.render('viewMenu', {data: data});
+		})
+		.catch(err => res.status(err.status).json({ message: err.message }));
+	});
 	
 	router.post('/basicSearch', (req, res) => {
 		var tempObj={};
@@ -220,134 +235,174 @@ module.exports = router => {
 
 	});	
 	
+	router.post('/setAllMenus',(req,res)=>{
+		setAllMenus.importData(req.body.data)
+		.then(result=>{
+			res.json("ok");
+		}).catch(err => res.status(err.status).json({ message: err.message }));
+	});
+	
 	router.get('/', (req, res) =>{
-		client.on('connect', function(){
-			console.log('connected');
-		});
+		
 		res.end('Welcome to Learn2Crack !')
 		
 		});
+	
+	router.post('/setFavs', (req, res) => {
+		var temp=checkToken(req);
+		console.log("token"+temp);
+		if (temp) {
+			var dishId=req.body.favs;
+			var id=temp;
+			setFavorites.setFavorites(dishId,id)
+			.then(result=>{
+				res.status(result.status).json({ message: result.message });
+			})
+			.catch(err => res.status(err.status).json({ message: err.message }));	
+		}else{
+			res.status(401).json({ message: 'Invalid Token !' });
+		}		
+	});
+	
+	router.get('/recsForUser', (req, res) => {
+		var temp=checkToken(req);
+		console.log(temp);
+		if (temp) {	
+			var id=temp;
+			getRecs.getRecs(id)
+			.then(result=>{
+			console.log(result.message.length);			
+				size=result.message.length;
+				//res.json(result.message);
+				if(result.message=='No dishes !')
+					res.json(result.message);
+				else
+				{
+					for(var i=0;i<size;i++)
+					{
+						delete result.message[i]._index;
+						delete result.message[i]._type;
+						delete result.message[i]._id;
+						delete result.message[i]._score;
+						delete result.message[i].inner_hits.menu.hits.total;
+						delete result.message[i].inner_hits.menu.hits.max_score;
+						size2=result.message[i].inner_hits.menu.hits.hits.length;
+						
+						for(var j=0;j<size2;j++)
+						{
+							delete result.message[i].inner_hits.menu.hits.hits[j]._nested;
+							delete result.message[i].inner_hits.menu.hits.hits[j]._score;
+							//console.log(mergeJSON.isJSON(result.message[0].inner_hits.menu.hits));			
+						}
+					}
+					console.log("balls");
+					res.json(result.message);
+				}
+			}).catch(err => res.status(err.status).json({ message: err.message }));
+		}else{
+				res.status(401).json({ message: 'Invalid Token !' });
+		}
+	});
+	
+	
+	
+	router.get('/getFavs', (req, res) => {
+		var temp=checkToken(req);
+		console.log(temp);
+		if (temp) {
+			var id=temp;
+			var size,size2;
+			getFavorites.getFavorites(id)
+			.then(result=>{
+				console.log(result.message.length);			
+				size=result.message.length;
+				//res.json(result.message);
+				if(result.message=='No dishes !')
+					res.json(result.message);
+				else
+				{
+					for(var i=0;i<size;i++)
+					{
+						delete result.message[i]._index;
+						delete result.message[i]._type;
+						delete result.message[i]._id;
+						delete result.message[i]._score;
+						delete result.message[i].inner_hits.menu.hits.total;
+						delete result.message[i].inner_hits.menu.hits.max_score;
+						size2=result.message[i].inner_hits.menu.hits.hits.length;
+						
+						for(var j=0;j<size2;j++)
+						{
+							delete result.message[i].inner_hits.menu.hits.hits[j]._nested;
+							delete result.message[i].inner_hits.menu.hits.hits[j]._score;
+							//console.log(mergeJSON.isJSON(result.message[0].inner_hits.menu.hits));			
+						}
+					}
+					console.log("balls");
+					res.json(result.message);
+				}
+			}).catch(err => res.status(err.status).json({ message: err.message }));
+		}else{
+				res.status(401).json({ message: 'Invalid Token !' });
+		}
+	});
 
-	router.post('/auth', (req, res) => {
-		var tempName=req.body.name;
-		var tempPass=req.body.password;
-		
-		login.loginUser(tempName, tempPass,req.body.id)
+	
+	router.post('/auth',(req,res) => {
+		var email=req.body.email;
+		var password=req.body.password;
+		//console.log(tempName);
+		//var tempId=req;
+		//console.log("tempId "+JSON.stringify(tempId));
+		login.loginUser(email,password)
 		.then(result => {
-			var payload={id:result.message};
-			const token = jwt.sign(payload, config.secret, { expiresIn: 1440 });
-			res.status(result.status).json({ message: result.message, token: token });
+			var payload={id:email};
+			const token = jwt.sign(payload, config.secret);
+			console.log(token);
+			res.status(result.status).json({ message: result.message.name,token:token});
 		})
 		.catch(err => res.status(err.status).json({ message: err.message }));
+			
 	});
-	router.post('/users', (req, res) => {
-
+	router.post('/users', (req, res) => {	
 		const name = req.body.name;
+		const email = req.body.email;
 		const password = req.body.password;
-		const id=req.body.id;
-
-		if (!name || !password || !id || !name.trim() || !password.trim()) {
-
+		if (!name || !email || !password || !name.trim() || !email.trim() || !password.trim()) {
 			res.status(400).json({message: 'Invalid Request !'});
-
 		} else {
-			register.registerUser(name, password,id)
+			register.registerUser(name, password,email)
 			.then(result => {
-				console.log("after registertion");
-				//res.setHeader('Location', '/users/'+email);
-				res.status(result.status).json({ message: result.message })
+				console.log(JSON.stringify(result));
+				res.json({ status: result.status, message:result.message});
+				//res.status(result.status).json({ message: result.message })
 			})
-
 			.catch(err => res.status(err.status).json({ message: err.message }));
 		}
 	});
 	
-/*
-	router.get('/users/:id', (req,res) => {
-
-		if (checkToken(req)) {
-
-			profile.getProfile(req.params.id)
-
-			.then(result => res.json(result))
-
-			.catch(err => res.status(err.status).json({ message: err.message }));
-
-		} else {
-
-			res.status(401).json({ message: 'Invalid Token !' });
-		}
-	});
-
-	router.put('/users/:id', (req,res) => {
-
-		if (checkToken(req)) {
-
-			const oldPassword = req.body.password;
-			const newPassword = req.body.newPassword;
-
-			if (!oldPassword || !newPassword || !oldPassword.trim() || !newPassword.trim()) {
-
-				res.status(400).json({ message: 'Invalid Request !' });
-
-			} else {
-
-				password.changePassword(req.params.id, oldPassword, newPassword)
-
-				.then(result => res.status(result.status).json({ message: result.message }))
-
-				.catch(err => res.status(err.status).json({ message: err.message }));
-
-			}
-		} else {
-
-			res.status(401).json({ message: 'Invalid Token !' });
-		}
-	});
-
-	router.post('/users/:id/password', (req,res) => {
-
-		const email = req.params.id;
-		const token = req.body.token;
-		const newPassword = req.body.password;
-
-		if (!token || !newPassword || !token.trim() || !newPassword.trim()) {
-
-			password.resetPasswordInit(email)
-
-			.then(result => res.status(result.status).json({ message: result.message }))
-
-			.catch(err => res.status(err.status).json({ message: err.message }));
-
-		} else {
-
-			password.resetPasswordFinish(email, token, newPassword)
-
-			.then(result => res.status(result.status).json({ message: result.message }))
-
-			.catch(err => res.status(err.status).json({ message: err.message }));
-		}
-	});
-*/
 	function checkToken(req) {
 
-		const token = req.headers['x-access-token'];
-
+		var token = req.headers['authorization'];
+	
 		if (token) {
-
+			
 			try {
-
+				token = token.replace(/^JWT\s/, '');
+				console.log("here1");
+				console.log(token);
   				var decoded = jwt.verify(token, config.secret);
-
-  				return decoded.message === req.params.id;
+				//	console.log(decoded.id);
+					return decoded.id;
 
 			} catch(err) {
-
+				console.log(err);
+			console.log("here2");
 				return false;
 			}
 
 		} else {
-
+console.log("here3");
 			return false;
 		}
 	}
