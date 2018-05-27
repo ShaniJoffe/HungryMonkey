@@ -50,7 +50,7 @@ public class searchResultsParser extends Fragment implements Comparable  {
 
     JSONObject location_res_jsn,_source,inner_hits,menuJ,hits_1;
     String[] teams={""};
-    String name_res="",name_dish="",kosher="",rest_address="",dish_desc="",location_res_str="",price_dish="",dish_id_inRest="";
+    String name_res="",imgUrl="",name_dish="",kosher="",rest_address="",dish_desc="",location_res_str="",price_dish="",dish_id_inRest="";
     JSONObject rest_location = new JSONObject();
     JSONObject menu = new JSONObject();
     View view;
@@ -276,8 +276,12 @@ public class searchResultsParser extends Fragment implements Comparable  {
                     price_dish = _source2.getString( "dish_price" );
                     hashMap_.put( "dish_price", price_dish );
                     dish_id_inRest= _source2.getString( "dish_id_inRest" );
-
                     hashMap_.put( "dish_id_inRest", dish_id_inRest );
+
+                    //get dish image
+                    imgUrl= _source2.getString( "imgUrl" );
+                    hashMap_.put( "imgUrl", imgUrl );
+
                     vector.add( hashMap_ );
 
                 }

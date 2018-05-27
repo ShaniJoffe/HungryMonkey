@@ -5,6 +5,8 @@ package com.example.shanijoffe.hungry_monkey; /**
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -22,6 +25,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -43,6 +47,7 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
     Button show_det_for_dish;
 
     private final String[] rest_address = new String[1];
+    private final String[] imageUrl1 = new String[1];
     private final String[] rest_location = new String[1];
     private final String[] rest_name = new String[1];
     private final String[] Kosher = new String[1];
@@ -90,6 +95,7 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
         flag_loc = (TextView) view.findViewById( R.id.txtv_flag_loc );
         //fav_btn=(FloatingActionButton)view.findViewById( R.id.addToFav_btn );
         like_btn = (CheckBox) view.findViewById( R.id.likeIcon );
+       ImageView dishImage = (ImageView) view.findViewById( R.id.roundedImageView );
 
         ///getting our token from SharedPreferences.
 
@@ -106,7 +112,7 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
 
 
         // Log.i( "position", String.valueOf( position ) );
-        rest_address[0] = _vec.get( position ).get( "rest_address" );
+        imageUrl1[0] = _vec.get( position ).get( "imgUrl" );
         rest_location[0] = _vec.get( position ).get( "rest_location" );
         rest_name[0] = _vec.get( position ).get( "rest_name" );
         Kosher[0] = _vec.get( position ).get( "Kosher" );
@@ -124,6 +130,7 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
 
 
         final String rest_address2 = rest_address[0];
+        final String imgUrl = imageUrl1[0];
         final String rest_location2 = rest_location[0];
         final String rest_name2 = rest_name[0];
         final String Kosher2 = Kosher[0];
@@ -146,6 +153,9 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
         //  users_favs_dishes = new String[size];
         // Log.i("size i got is  ", String.valueOf( size ) );
 
+        //*******************image******************//
+         new DownloadImageTask((ImageView) view.findViewById(R.id.roundedImageView))
+          .execute(imgUrl);
 
 
         ////
@@ -165,9 +175,13 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
                 i.putExtra( "dish_name2", dish_name2 );
                 i.putExtra( "rest_name2", rest_name2 );
                 i.putExtra( "dish_price2", dish_price2 );
+                i.putExtra( "imgUrl", imgUrl );
                 context.startActivity( i );
             }
         } );
+
+
+
 
         like_btn.setChecked( false );
 
@@ -205,6 +219,11 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
                 }
             }
         } );
+
+
+        //handle image in view
+
+
         return view;
     }
     @Override
@@ -372,4 +391,31 @@ public class custom_adapter extends ArrayAdapter<HashMap<String, String>> implem
         }
 
     }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
+
+
 }

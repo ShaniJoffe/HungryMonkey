@@ -3,6 +3,8 @@ package com.example.shanijoffe.hungry_monkey;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -23,6 +26,7 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -59,12 +63,15 @@ public class ResturantDetails extends AppCompatActivity {
         rest_name_txtv = findViewById( R.id.rest_name_txtv );
         Kosher_txtv = findViewById( R.id.Kosher_txtv );
         rest_address_txtv = findViewById( R.id.rest_address_txtv );
+       TextView imgUrlView = findViewById( R.id.rest_address_txtv );
         dish_description_txtv = findViewById( R.id.dish_description_txtv );
         FloatingActionButton toggleButton = (FloatingActionButton) findViewById( R.id.myToggleButton );
         res_obj=new JSONObject(  );
 
         Intent i = getIntent();
         String rest_address2 = i.getStringExtra( "rest_address2" );
+        //String imgUrl = i.getStringExtra( "imgUrl" );
+      //  Log.e("Resturant activity",imgUrl);
         String rest_location2 = i.getStringExtra( "rest_location2" );
         String rest_name2 = i.getStringExtra( "rest_name2" );
         String Kosher2 = i.getStringExtra( "Kosher2" );
@@ -75,6 +82,8 @@ public class ResturantDetails extends AppCompatActivity {
         dish_price_txtv.setText( dish_price2 + "ש''ח " + " " );
         dish_name_txtv.setText( dish_name2 );
         rest_name_txtv.setText( rest_name2 );
+
+
         if (Kosher2.equals( "true" )) {
 
             Kosher_txtv.setText( "כשרות מהדרין" );
@@ -86,6 +95,8 @@ public class ResturantDetails extends AppCompatActivity {
         dish_description_txtv.setText( dish_description2 + "." );
         rest_address_txtv.setText( rest_address2 );
 
+       // new DownloadImageTask((ImageView) findViewById(R.id.roundedImageView))
+              //  .execute(imgUrl);
         //build our json object
         try {
             res_obj.put( "rest_name", rest_name2);
@@ -145,6 +156,31 @@ public class ResturantDetails extends AppCompatActivity {
             }
         } );
 
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 
     public void goToSu(View view) {

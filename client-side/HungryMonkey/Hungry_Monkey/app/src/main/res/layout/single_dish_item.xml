@@ -12,13 +12,13 @@
 
 
     <LinearLayout
-        android:layout_width="299dp"
-        android:layout_height="256dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
-            android:layout_width="285dp"
-            android:layout_height="90dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_marginRight="20dp"
             android:elevation="30dp"
@@ -26,12 +26,11 @@
 
             <ImageView
                 android:id="@+id/roundedImageView"
-                android:layout_width="232dp"
+                android:layout_width="290dp"
                 android:layout_height="147dp"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:background="@color/cardview_light_background"
-                android:scaleType="centerCrop"
-                android:src="@drawable/shaksh" />
+                android:scaleType="centerCrop" />
 
 
         </android.support.v7.widget.CardView>

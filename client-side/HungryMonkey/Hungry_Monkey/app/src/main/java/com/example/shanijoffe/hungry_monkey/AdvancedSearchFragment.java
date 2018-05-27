@@ -459,7 +459,7 @@ public class AdvancedSearchFragment extends Fragment {
                 //establishing our connection to our basic search api
 
                 log.i( "in post basic  ", "1" );
-               URL url2 = new URL( "http://hmfproject-env-2.dcnrhkkgqs.eu-central-1.elasticbeanstalk.com/api/v1/basicSearch" ); // here is your URL path
+               URL url2 = new URL( "http://newapp-env.eiymf2wfdn.eu-central-1.elasticbeanstalk.com/api/v1/basicSearch" ); // here is your URL path
                 //buidling our json object
                 dish_inp.put( "dishName", search_adv.getQuery() ); //dish name
                 dish_inp.put("lon",lon);//lon
