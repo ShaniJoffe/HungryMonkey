@@ -19,18 +19,20 @@ client.on('error', function(err){
   console.log('Something went wrong ', err)
 });
 
-exports.getRecs = (id) => 		
-	new Promise((resolve,reject) => {	
+exports.getRecs = (id) =>
+	new Promise((resolve,reject) => {
 		var key="u"+id+"fs";// the key for user set of favorites
 		var userRecs="u"+id+"recs";// the key for user set of recomends
 		var arrayOfDishes=[];
 		var arrayOfUsers=[];
+		var tempArray=[];
 		client.smembers(key,function(err,result){
-			if(!err){
+			if(!err && result.length>0){
 				arrayOfDishes=arrayOfDishes.concat(result);//array with all the favorites
+				console.log(result.length);
 				client.sunion(arrayOfDishes,function(err,result1){
 					if(!err){
-						for(var i=0;i<result.length;i++)//getting array of each user favorites set
+						for(var i=0;i<result.length;i++)//getting array of each user's favorites set
 						{
 							var tempIndex=result1[i].substr(5,result1[i].length);
 							var temp="u"+tempIndex+"fs";
@@ -40,17 +42,20 @@ exports.getRecs = (id) =>
 							if(!err){
 								client.sdiff(userRecs,key,function(err,result3){//Get the list of items that aren’t yet associated with the user, but are associated with other users with similar behavior.
 									if(!err){
-										esClient.search({//check if exists 
+										console.log(result3);
+										tempArray=result3.filter(Boolean);
+										console.log(tempArray);
+										esClient.search({//check if exists
 											index: 'hungrymonkeyrests',
 											type: 'restaurants',
 											_source: ['rest_name','rest_description','rest_location','Kosher','rest_address'],
 											body :{
-												"query": { 
+												"query": {
 													"bool":{
 														"must": [
 															{"nested": {
 																path: 'menu',
-																"inner_hits": { 
+																"inner_hits": {
 																//explain:true,
 																	_source: ['menu.dish_name','menu.dish_description','menu.dish_price','menu.imgUrl','menu.dish_id_inRest']
 																},
@@ -59,20 +64,20 @@ exports.getRecs = (id) =>
 																		"should" : [
 																			{
 																				"terms": {
-																					"menu.dish_id_inRest": result3
+																					"menu.dish_id_inRest": tempArray
 																					}
-																			}		
+																			}
 																		]
 																	 }
-																}	 
+																}
 															}}]
-													}	
-												}				
-											}		
+													}
+												}
+											}
 										}).then(results => {
 											if (results.hits.total > 0)
-											{				
-													resolve({ status: 200, message: results.hits.hits});//return the results				
+											{
+													resolve({ status: 200, message: results.hits.hits});//return the results
 											}
 											else
 											{
@@ -82,22 +87,19 @@ exports.getRecs = (id) =>
 										}).catch(console.error);
 									}
 									else
-										reject({ status: 500, message: 'Internal Server Error !' });
+										reject({ status: 500, message: 'Internal Server Error3 !' });
 								})
-								
+
 							}
 							else
-								reject({ status: 500, message: 'Internal Server Error !' });
+								reject({ status: 500, message: 'Internal Server Error2 !' });
 						})
 					}
 					else
-						reject({ status: 500, message: 'Internal Server Error !' });
+						reject({ status: 500, message: 'Internal Server Error1 !' });
 				})
 			}
 			else
-				reject({ status: 500, message: 'Internal Server Error !' });
+				reject({ status: 400, message: 'User got no favorites' });
 		});
 	});
-		
- 
-    

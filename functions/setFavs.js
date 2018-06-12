@@ -26,12 +26,12 @@ exports.setFavorites = (dishId,id) =>
 				//console.log(obj);
 				client.sadd(obj[0],dishId,function(err, reply) {//setting the set of favorites 
 					if(err){
+						
 						console.log("1error\n"+err);
 						reject({ status: 500, message: 'Internal Server Error !' });
 					}
 					else
 					{			
-						console.log("reply"+reply);
 						client.sadd(dishId,key,function(err, reply) {//adding for each dish the user who likes it
 							if(!err)
 								resolve({ status: 200, message:"successfully done"});	
