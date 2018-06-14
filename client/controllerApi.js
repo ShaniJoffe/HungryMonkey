@@ -1,4 +1,4 @@
-
+// api for the restaurnast menu details insertion and
 $(document).ready(function() {
   var max_fields      = 100; //maximum input boxes
   var ajaxResults=[];
@@ -51,10 +51,10 @@ $(document).ready(function() {
           var image_file = $("[name='menu["+tempDishNumber+"][imgUploader]'").get(0).files[0];
           temp=tempDishNumber;
     }
-    readURL(this,temp);
-    $("#img"+temp).css('visibility','visible');
+    readURL(this,temp);// function which will present image before uploading it to db
+    $("#img"+temp).css('visibility','visible');// change its css when image was uploaded
       $("#img"+temp).css('width','25%');
-    var formData = new FormData();
+    var formData = new FormData();// objcts which stores the image data before upload
     formData.append("imgUploader", image_file);
     formData.append("flag",1);
     $.ajax({
@@ -149,16 +149,15 @@ $(document).ready(function() {
       return json;
     };
   })(jQuery);
-
+// listner for the menu button, opens the menu in modal
   $('.container').on('click','.showMenu',function(ev){
     ev.preventDefault();
 
     $('#myModal').modal('show');
   });
-
+// listner for button inide the modal for uploading all the dishes data
   $('#confirm-save-button').on('click', function(ev) {
     ev.preventDefault();// cancel form submission
-    //alert('Saved!!');
     $.ajax({
       url: "http://localhost:3000/api/v1/set_menu/"+restid, // Url to which the request is send
       type: "POST",             // Type of request to be send, called as method
@@ -172,24 +171,24 @@ $(document).ready(function() {
     });
     $('#myModal').modal('hide');
   });
-
+// listner for cancle button
   $('#confirm-cancel-button').on('click', function(ev) {
     ev.preventDefault();// cancel form submission
     $('#myModal').val("");
     $('.showMenu').hide();
     $('#myModal').data('modal', null);
   });
-
+//
   $(function(){
     $('#set-menu').submit(function(ev){
       $.post($(this).attr('action'));
       $('.showMenu').show();
       var temp=$(this).serializeObject();
+      //sorting the array of dishes by dish cat before the menu producing
       temp.menu.sort(function(a, b){
         return a.dish_cat > b.dish_cat;
       });
       var tempCat=temp.menu[0]['dish_cat'];
-      //console.log("ajax array"+ajaxResults);
       //first table for the first category
       var tbl=$("<table/>").attr("id","mytable");
       $(".modal-body").append(tbl);
@@ -252,19 +251,20 @@ $(document).ready(function() {
           }
         }
       }
+      // storing the dishs and the images data in object before the ajax call
       console.log(tempFormObj.menu);
       formDataMenu.set("menu",JSON.stringify(tempFormObj));
       return false;
     });
   });
+  //lister which hides the modal when its empty
   $("#myModal").on("hidden.bs.modal", function(){
-    //alert("in here");
     $('.showMenu').hide();
     $(".modal-body").html("");
     $('#myModal').data('modal', null);
   });
 
-
+//function to present images 
 function readURL(input,temp){
   if (input.files && input.files[0]) {
     var tempDishNumber;

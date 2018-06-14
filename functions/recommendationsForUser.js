@@ -1,6 +1,7 @@
 'use strict';
 const config = require('../config/secrets');
 const redis = require('redis');
+//data base configurtions and connection before we query
 const client = redis.createClient(6379, '18.184.83.111');
 client.auth(config.passwordForRedis);
 const elasticsearch = require('elasticsearch');
@@ -19,7 +20,7 @@ client.on('error', function(err){
   console.log('Something went wrong ', err)
 });
 
-exports.getRecs = (id) =>
+exports.getRecs = (id) =>// get recomendations by user's id
 	new Promise((resolve,reject) => {
 		var key="u"+id+"fs";// the key for user set of favorites
 		var userRecs="u"+id+"recs";// the key for user set of recomends

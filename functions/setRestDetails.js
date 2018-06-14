@@ -1,22 +1,23 @@
 const elasticsearch = require('elasticsearch');
+//data base configurtions and connection before we query
 const esClient = new elasticsearch.Client({
 		host: 'https://search-hungrymonkey-3eiz5dewb4yoyjt6ykeufmsjn4.eu-central-1.es.amazonaws.com',
 		log: 'error'
 	});
-	
-	
-	exports.setRestD = (rest) => 
-		
+
+
+	exports.setRestD = (rest) =>
+
 	new Promise((resolve,reject) => {
 		var tempString= '(rest_name:'+rest.rest_name+')  AND (rest_zip:'+rest.rest_zip+')';
 		let bulkBody = [];
 		esClient.count({
 			  index: 'hungrymonkeyrests',
 			  type: 'restaurants',
-			 
+
 		}).then(temp => {
-	
-			if(temp.count==0)//case the db is empety
+
+			if(temp.count==0)//case the db is empety and we insert the first restaurant
 			{
 				bulkBody.push({
 					index: {
@@ -36,7 +37,7 @@ const esClient = new elasticsearch.Client({
 			else// case not emepty
 			{
 				console.log("counter: "+temp.count);
-				esClient.search({//check if exists 
+				esClient.search({//check if exists before insrtion
 					index: 'hungrymonkeyrests',
 					type: 'restaurants',
 					body: {
@@ -48,17 +49,17 @@ const esClient = new elasticsearch.Client({
 											query:tempString
 										}
 									}
-								]    
+								]
 							}
 						}
 					}
-				}).then(temp1 => {					
+				}).then(temp1 => {
 					if (temp1.hits.total > 0)
 					{
 						console.log("Rest's details exists");
-						reject({ status: 409, message: "Rest's details Already Registered !" });				
+						reject({ status: 409, message: "Rest's details Already Registered !" });
 					}
-					else// case not
+					else// case not we
 					{
 						bulkBody.push({
 							index: {
@@ -76,6 +77,5 @@ const esClient = new elasticsearch.Client({
 				}).catch(console.error);
 			}
 		}).catch(console.error);
-	
-	});			
-		
+
+	});

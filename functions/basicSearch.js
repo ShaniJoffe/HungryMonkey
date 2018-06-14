@@ -1,4 +1,5 @@
 const elasticsearch = require('elasticsearch');
+//data base configurtions and connection before we query
 const esClient = new elasticsearch.Client({
 		host: 'https://search-hungrymonkey-3eiz5dewb4yoyjt6ykeufmsjn4.eu-central-1.es.amazonaws.com',
 		log: 'error'
@@ -25,12 +26,12 @@ const mergeJSON = require("merge-json") ;
 								},
 								"query": {
 									 "bool" : {
-										"should" : [// 1 of 2 should happend or the dish name must equal to input or the input must be all in the dish description
-											{"term": {"menu.dish_name": dish_name}},
+										"should" : [// 1 of 2 should happend or the part of the input should be in the dish name or all of it the dish category
+											{"term": {"menu.dish_cat": dish_name}},
 											{"bool": {
 												"should" : [
 													{"match": {
-															"menu.dish_description":{
+															"menu.dish_name":{
 																"query": dish_name,
 																"operator": "and",
 																//"minimum_should_match": "75%"
