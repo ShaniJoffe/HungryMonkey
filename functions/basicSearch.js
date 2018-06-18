@@ -22,19 +22,32 @@ const mergeJSON = require("merge-json") ;
 							{"nested": {
 								path: 'menu',
 								"inner_hits": {
+									//	explain:true,
 									_source: ['menu.dish_name','menu.dish_description','menu.dish_price','menu.dish_id_inRest','menu.imgUrl']//keys of menu object which will be presented
 								},
 								"query": {
 									 "bool" : {
 										"should" : [// 1 of 2 should happend or the part of the input should be in the dish name or all of it the dish category
-											{"term": {"menu.dish_cat": dish_name}},
+											{"bool": {
+												"should" : [
+													{"match": {
+														"menu.dish_cat":{
+															"query": dish_name,
+															"operator": "and",
+															"fuzziness":"1"
+
+														}
+													}
+												}
+											]
+										}},
 											{"bool": {
 												"should" : [
 													{"match": {
 															"menu.dish_name":{
 																"query": dish_name,
 																"operator": "and",
-																//"minimum_should_match": "75%"
+																"fuzziness":"1"
 															}
 														}
 													}
