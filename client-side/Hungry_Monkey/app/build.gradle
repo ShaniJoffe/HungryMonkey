@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.example.shanijoffe.hungry_monkey"
+        minSdkVersion 23
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+dependencies {
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:23.1.1'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:cardview-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.google.android.gms:play-services-location:10.0.1'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+    implementation 'com.googlecode.json-simple:json-simple:1.1'
+
+    implementation 'de.hdodenhof:circleimageview:1.3.0'
+    implementation 'com.crystal:crystalrangeseekbar:1.1.3'
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation 'com.stormpath.sdk:stormpath-sdk-android:1.1.3'
+    // Retrofit & OkHttp
+    implementation 'com.squareup.retrofit:retrofit:1.9.0'
+    implementation 'com.squareup.okhttp:okhttp:2.7.2'
+    implementation 'com.loopj.android:android-async-http:1.4.9'
+//
+//  //  compile 'com.android.support:appcompat-v7:26.1.0'
+//   // compile 'com.android.support:design:26.1.0'
+//    compile 'com.android.support:cardview-v7:26.1.0'
+//    compile 'com.github.jd-alexander:LikeButton:0.2.3'
+//    implementation 'com.android.support:design:26.1.0'
+//    implementation 'com.android.support:cardview-v7:26.1.0'
+//    implementation 'com.android.support:recyclerview-v7:26.1.0'
+//    compile 'com.google.android.gms:play-services-location:10.0.1'
+//    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+//    compile 'com.googlecode.json-simple:json-simple:1.1'
+//    compile 'com.crystal:crystalrangeseekbar:1.1.3'
+//    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    compile "com.android.support:appcompat-v7:26.1.+"
+//    implementation 'com.android.support:appcompat-v7:26.1.0'
+//    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+//    compile 'com.stormpath.sdk:stormpath-sdk-android:1.1.3'
+//    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+//    // Retrofit & OkHttp
+//    compile 'com.squareup.retrofit:retrofit:1.9.0'
+//    compile 'com.squareup.okhttp:okhttp:2.7.2'
+//    compile 'com.loopj.android:android-async-http:1.4.9'
+}

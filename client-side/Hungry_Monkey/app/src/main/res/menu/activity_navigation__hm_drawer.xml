@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_login"
+            android:fontFamily="@font/danafont"
+            android:icon="@drawable/ic_account_box_black_24dp"
+            android:title="התחבר " />
+        <item
+            android:id="@+id/nav_sign_up"
+            android:fontFamily="@font/danafont"
+            android:icon="@drawable/ic_account_box_black_24dp"
+            android:title="הרשם" />
+        <item
+            android:id="@+id/nav_showFav"
+            android:icon="@drawable/ic_favorite_red_500_24dp"
+            android:fontFamily="@font/danafont"
+            android:title="המועדפים שלי" />
+        <item
+            android:id="@+id/nav_showRec"
+            android:icon="@drawable/round_fastfood_black_48"
+            android:fontFamily="@font/danafont"
+
+            android:title="ההמלצות שלי" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_logOut"
+                android:icon="@drawable/ic_menu_manage"
+                android:fontFamily="@font/danafont"
+                android:title="התנתק " />
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Hungry_Monkey</string>
+
+    <string name="welcome"> ברוך הבא </string>
+    <string name="newUser"> משתמש חדש </string>
+    <string name="title_activity_results_activity">results_activity</string>
+    <string name="title_activity_searchable">SearchableActivity</string>
+    <string name="title_activity_search_result">SearchResult</string>
+    <string name="welcome_title">ברוך הבא לHUNGRY MONKEY </string>
+    <string name="locMsgTitle">מיקום </string>
+    <string name="locMsg">אנא הפעל מיקום </string>
+    <string name="sort_by_price">מיין לפי מחיר  </string>
+    <string name="sort_by_loc">מיין לפי מרחק  </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_splash_screen">splashScreen</string>
+</resources>
