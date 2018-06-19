@@ -209,13 +209,29 @@ public class navigation_HM extends AppCompatActivity
         }
     }
 
+
+
+
     @Override
     public void onBackPressed() {
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        }
+        else {
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Closing Activity")
+                    .setMessage("Are you sure you want to close this activity?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
         }
     }
 
@@ -264,34 +280,34 @@ public class navigation_HM extends AppCompatActivity
            {
                 Log.e("MainActivity  ", "token else ");
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                        this);
-                // set title
-                alertDialogBuilder.setTitle("שלום אורח !");
-                // set dialog message
-                alertDialogBuilder
-                        .setMessage("עלייך להתחבר על מנת לצפות במנות מועדפות שלך")
-                        .setCancelable(false)
-                        .setPositiveButton("יאללה,חבר אותי", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // if this button is clicked, close
-                                // current activity
-                                Intent i = new Intent(getApplicationContext(),LoginPage.class);
-                                startActivity(i);
-                            }
-                        })
-                        .setNegativeButton("לא ,תודה ", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // if this button is clicked, just close
-                                // the dialog box and do nothing
-                                dialog.cancel();
-                            }
-                        });
+                this);
+            // set title
+            alertDialogBuilder.setTitle("שלום אורח !");
+            // set dialog message
+            alertDialogBuilder
+                    .setMessage("עלייך להתחבר על מנת לצפות במנות מועדפות שלך")
+                    .setCancelable(false)
+                    .setPositiveButton("יאללה,חבר אותי", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // if this button is clicked, close
+                            // current activity
+                            Intent i = new Intent(getApplicationContext(),LoginPage.class);
+                            startActivity(i);
+                        }
+                    })
+                    .setNegativeButton("לא ,תודה ", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // if this button is clicked, just close
+                            // the dialog box and do nothing
+                            dialog.cancel();
+                        }
+                    });
 
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
-            }
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+        }
            else
             {
                 Log.e("MainActivity ", "TOKEN IS 33 " + token);

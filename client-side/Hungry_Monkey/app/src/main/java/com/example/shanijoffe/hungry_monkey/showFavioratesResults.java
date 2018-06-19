@@ -139,16 +139,12 @@ public class showFavioratesResults extends AppCompatActivity {
                     price_dish = _source2.getString( "dish_price" );
                     hashMap_.put( "dish_price", price_dish );
                     dish_id_inRest= _source2.getString( "dish_id_inRest" );
-
                     hashMap_.put( "dish_id_inRest", dish_id_inRest );
-
                     //img
-
                     imgUrl= _source2.getString( "imgUrl" );
                     Log.e("hopfully not null ",imgUrl);
                     hashMap_.put( "imgUrl", imgUrl );
                     vector.add(hashMap_);
-
                 }
             }
 
@@ -202,7 +198,6 @@ public class showFavioratesResults extends AppCompatActivity {
             }
             return returnResult;
         }
-
         protected void onPostExecute(String result) {
             my_fav_list = result;
             if(my_fav_list.equals(""))
@@ -227,12 +222,7 @@ public class showFavioratesResults extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-//            Log.i("my fav dishes  getfav",result);
-
-
             pd.dismiss();
-
-
         }
 
         @SuppressLint({"MissingPermission", "LongLogTag"})
