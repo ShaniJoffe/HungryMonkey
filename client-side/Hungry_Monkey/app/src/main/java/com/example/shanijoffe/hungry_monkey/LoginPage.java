@@ -205,29 +205,36 @@ public class LoginPage extends AppCompatActivity {
             Log.i("login res is:",result);
             try {
                 //handle the response .
-                JSONObject jObj = new JSONObject(result);
-                userName_res = jObj.getString("message");
-                token=jObj.getString("token");
+                if(result.contains("token")) {
+                    JSONObject jObj = new JSONObject(result);
+                    userName_res = jObj.getString("message");
+                    token = jObj.getString("token");
 
-                Log.i( "response from server :", "name is "+userName_res+"token is "+token );
+                    Log.i("response from server :", "name is " + userName_res + "token is " + token);
 
-                Bundle user_det = new Bundle();
-                user_det.putString("user_name",userName_res);//save username to send to different activity's.
-                editor.putString( "user_name",userName_res ).apply(); //save our token SP.
-                editor.putString( "user_token",token ).apply(); //save our token SP.
-                editor.commit();
-                Log.e("logged in :","uername is"+userName_res +"token is " +token);
-                //send username to main activity and open it.
-                Intent i = new Intent( getApplicationContext(), navigation_HM.class );
-                i.putExtras(user_det);
-                startActivityForResult( i, CODE_REQ );
+                    Bundle user_det = new Bundle();
+                    user_det.putString("user_name", userName_res);//save username to send to different activity's.
+                    editor.putString("user_name", userName_res).apply(); //save our token SP.
+                    editor.putString("user_token", token).apply(); //save our token SP.
+                    editor.commit();
+                    Log.e("logged in :", "uername is" + userName_res + "token is " + token);
+                    //send username to main activity and open it.
+                    Intent i = new Intent(getApplicationContext(), navigation_HM.class);
+                    i.putExtras(user_det);
+                    startActivityForResult(i, CODE_REQ);
+
+                    Toast.makeText(getApplicationContext(), " התחברת בהצלחה!:) :" + "" + userName_res,
+                            Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), " בעיית התחברות ,נסה שוב  " + ""  ,
+                            Toast.LENGTH_LONG).show();
+                }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            Toast.makeText(getApplicationContext(), " התחברת בהצלחה!:) :" +""+ userName_res,
-                    Toast.LENGTH_LONG).show();
         }
     }
 

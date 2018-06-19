@@ -82,6 +82,8 @@ public class showFavioratesResults extends AppCompatActivity {
 
     public Vector<HashMap<String, String>> parseMyList(String list) {
         my_fav_list = list;
+        Log.e("my list is:","ggg");
+        Log.e("my list is:",my_fav_list);
         try {
             if (my_fav_list != null) {
                 jsonarray = new JSONArray(my_fav_list);
@@ -90,7 +92,8 @@ public class showFavioratesResults extends AppCompatActivity {
                     JSONObject js3 = jsonarray.getJSONObject(i);
                     // System.out.println( "json array at place " + i + js3.toString() + "\n" );
                 }
-            } else {
+            }
+            else {
                 Toast.makeText(showFavioratesResults.this, " אין ערכים", Toast.LENGTH_SHORT).show();
             }
             int count = -1;
@@ -193,6 +196,7 @@ public class showFavioratesResults extends AppCompatActivity {
             String returnResult = null;         //call the function that will send the data to server and present our resturants response
             try {
                 returnResult = getDishList_basic(url);
+                Log.e("results man :",returnResult);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -200,11 +204,14 @@ public class showFavioratesResults extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-
-//            Looper.prepare();
-
             my_fav_list = result;
-            if (my_fav_list != null) {
+            if(my_fav_list.equals(""))
+            {
+                Log.e("eeee","eeee5");
+                Toast.makeText(getApplicationContext(), " לא נמצאו תוצאות עבורך " ,
+                        Toast.LENGTH_LONG).show();
+            }
+            else if (my_fav_list != null) {
                 this.list = my_fav_list;
 
                 vector = parseMyList(my_fav_list);
@@ -256,14 +263,15 @@ public class showFavioratesResults extends AppCompatActivity {
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setRequestProperty("Authorization", "JWT " + this.token);
-                Log.e("in try gfavs", "%%%%%%%%%%%%%%% 222222222222 %%%%%%%%%%%%%%%%%%%%");
+
 
                 Log.e("showFavioratesResults", String.valueOf(conn.getResponseCode()));
+
                 if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) { // success
                     BufferedReader in = new BufferedReader(new InputStreamReader(
                             conn.getInputStream()));
                     String inputLine;
-                     response = new StringBuffer();
+                    response = new StringBuffer();
 
                     while ((inputLine = in.readLine()) != null) {
                         response.append(inputLine);
@@ -273,7 +281,10 @@ public class showFavioratesResults extends AppCompatActivity {
                     //return "try"+con.toString();
                     Log.e("my dish in fav 01",response.toString());
                     return response.toString();
-                } else {
+                }
+
+                else {
+
                     return "";
                 }
 

@@ -198,12 +198,8 @@ public class signUpPage extends AppCompatActivity
                 e.printStackTrace();
             }
 
-             if(result.contains("201")) // msg you get from success like "Login Success"
-            {
-                Intent i = new Intent(getApplicationContext(),LoginPage.class);
-                startActivity(i);
-            }
-            else{
+
+             if(result.equals("false")){
                  AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(signUpPage.this);
 
                  // set title
@@ -217,8 +213,7 @@ public class signUpPage extends AppCompatActivity
                              public void onClick(DialogInterface dialog, int id) {
                                  // if this button is clicked, close
                                  // current activity
-                                 Intent i = new Intent(getApplicationContext(), LoginPage.class);
-                                 startActivity(i);
+
                              }
                          });
 
@@ -230,6 +225,13 @@ public class signUpPage extends AppCompatActivity
                 alertDialog.show();
 //                 Toast.makeText(getApplicationContext(), "wrong password/username :" ,
 //                         Toast.LENGTH_LONG).show();
+
+             }
+             else{
+                  // msg you get from success like "Login Success"
+
+                     Intent i = new Intent(getApplicationContext(),LoginPage.class);
+                     startActivity(i);
 
              }
         }
