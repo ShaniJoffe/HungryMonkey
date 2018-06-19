@@ -1,0 +1,50 @@
+<style type="text/css">
+
+th, td {
+    text-align: left;
+    padding: 8px;
+	border-style: dotted;
+  font-family:'Varela Round, sans-serif';
+  font-weight: bold;
+  font-size:30px;
+}
+
+table {
+	
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+   border-style: dotted;
+}
+
+body {
+  content: "";
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    background: url("menuB.jpg") no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+h3{
+    text-align:center;
+    font-size:40px;
+    font-family: 'Amatic SC';
+    cursive;
+}
+
+.table-div{
+padding:30px;
+align-items: center;
+justify-content: center;
+display:block;
+flex-direction: column;
+}
+</style>
