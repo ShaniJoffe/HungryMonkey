@@ -74,7 +74,7 @@ public class AdvancedSearchFragment extends Fragment {
     String dish_result = "";//for response.
     JSONObject postDataParams_adv,postDataParams_adv2;
     public static TextView dis_val,price_val,sss,MaxPrice_val;
-    String kosher="";
+    String kosher="לא כשר";
     SearchView search_adv=null;
     TextView flag_txtv,txtvMax_price,lbl_distance,lbl_price_range,lbl_kosher,tvMin,tvMax;
     double lon,lat;
@@ -84,7 +84,8 @@ public class AdvancedSearchFragment extends Fragment {
      CrystalSeekbar seekBar_distance;
     Button Advnced_btn;
     Bundle bundle;
-   String[] str = {"כשר", "לא כשר"};
+    int responseCode=0;
+    String[] str = {"כשר", "לא משנה לי"};
 
     public AdvancedSearchFragment() {
         // Required empty public constructor
@@ -189,6 +190,7 @@ public class AdvancedSearchFragment extends Fragment {
                    // Toast.makeText(getActivity(), "text " + bundle , Toast.LENGTH_LONG).show();
                     lon = Double.parseDouble(String.valueOf( bundle.get( "lon" ) ));
                     lat = Double.parseDouble(String.valueOf( bundle.get( "lat" ) )  );
+                    Log.e("my cor:","lon"+lon +"lat" +lat );
 
 
                 }
@@ -232,12 +234,22 @@ public class AdvancedSearchFragment extends Fragment {
                         }
                     });
                     // set final value listener
+                    try {
+                        postDataParams_adv.put("distance","0");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     seekBar_distance.setOnSeekbarFinalValueListener(new OnSeekbarFinalValueListener() {
                         @Override
                         public void finalValue(Number value) {
                             Log.d("CRS=>", String.valueOf(value));
+
                             try {
+                                if(value.equals(""))
+                                     postDataParams_adv.put("distance","0");
+
                                 postDataParams_adv.put("distance",value);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -255,6 +267,13 @@ public class AdvancedSearchFragment extends Fragment {
                     });
 
                     // set final value listener
+                    try {
+                        postDataParams_adv.put("minPrice","0");
+                        postDataParams_adv.put("maxPrice","0");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                     rangeSeekbar.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
                         @Override
                         public void finalValue(Number minValue, Number maxValue) {
@@ -266,7 +285,11 @@ public class AdvancedSearchFragment extends Fragment {
                             }
                         }
                     });
-
+                    try {
+                        postDataParams_adv.put("restKosher","לא משנה לי");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     kosher = sp_kosher.getSelectedItem().toString();//spinner
                     try {
                         postDataParams_adv.put("restKosher",kosher);
@@ -319,8 +342,8 @@ public class AdvancedSearchFragment extends Fragment {
                         {
 //                        lon = Double.parseDouble(String.valueOf( bundle.get( "lon" ) ));
 //                        lat = Double.parseDouble(String.valueOf( bundle.get( "lat" ) )  );
-                            lon= Double.parseDouble("35.310381");
-                            lat= Double.parseDouble("31.78302");
+                         //   lon= Double.parseDouble("35.310381");
+                           // lat= Double.parseDouble("31.78302");
                         postDataParams_adv.put("lon",lon);
                         postDataParams_adv.put("lat",lat);
                     }
@@ -347,8 +370,36 @@ public class AdvancedSearchFragment extends Fragment {
                         }
                         try {
                             Log.i("our json object for server ADVANCED MODE :", postDataParams_adv.toString());
+                            if (postDataParams_adv.getString("distance").equals("0")
+                                    ) {
 
-                            myAsyncTask2 m = (myAsyncTask2) new myAsyncTask2(postDataParams_adv.getString("restKosher").toString(), postDataParams_adv.getString("distance"), postDataParams_adv.getString("maxPrice"), postDataParams_adv.getString("minPrice"), Double.parseDouble(postDataParams_adv.getString("lon")), Double.parseDouble(postDataParams_adv.getString("lat")), postDataParams_adv.getString("dishName")).execute();
+                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                                        getActivity());
+                                // set title
+                                alertDialogBuilder.setTitle("שגיאת חיפוש !");
+                                // set dialog message
+                                alertDialogBuilder
+                                        .setMessage("עלייך להזין ערך ומרחק תקינים")
+                                        .setCancelable(false)
+                                 .setNegativeButton("תודה ", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // if this button is clicked, just close
+                                        // the dialog box and do nothing
+                                        dialog.cancel();
+                                    }
+                                });
+
+                                // create alert dialog
+                                AlertDialog alertDialog = alertDialogBuilder.create();
+                                // show it
+                                alertDialog.show();
+                            }
+                            else{
+                            myAsyncTask2 m = (myAsyncTask2) new myAsyncTask2(postDataParams_adv.getString("restKosher").toString(), postDataParams_adv.getString("distance"),
+                                    postDataParams_adv.getString("maxPrice"), postDataParams_adv.getString("minPrice"),
+                                    Double.parseDouble(postDataParams_adv.getString("lon")),
+                                    Double.parseDouble(postDataParams_adv.getString("lat")),
+                                    postDataParams_adv.getString("dishName")).execute();}
                             asked=true;
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -656,6 +707,36 @@ public class AdvancedSearchFragment extends Fragment {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if(responseCode==400){
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                // set title
+                alertDialogBuilder.setTitle("שלום!");
+                // set dialog message
+                alertDialogBuilder
+                        .setMessage("לא נמצאו תוצאות עבורך,להחזיר אותך לדף החיפוש?")
+                        .setCancelable(false)
+                        .setPositiveButton("כן,החזר אותי לדף החיפוש", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // if this button is clicked, close
+                                // current activity
+                                if(isAdded()){
+                                    Intent i = new Intent(getActivity(),navigation_HM.class);
+                                    startActivity(i);}
+                            }
+                        })
+                        .setNegativeButton("לא ,תודה ", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                dialog.cancel();
+                            }
+                        });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
+            }
             pd.dismiss();
             Log.i( "caling:", "freg1" );
             try {
@@ -722,7 +803,7 @@ public class AdvancedSearchFragment extends Fragment {
                 writer.flush();
                 writer.close();
                 os.close();
-                int responseCode = conn.getResponseCode();
+                 responseCode = conn.getResponseCode();
                 Log.i( "responseCode@:", String.valueOf( responseCode ) );
                 if (responseCode == HttpsURLConnection.HTTP_OK)
                 {

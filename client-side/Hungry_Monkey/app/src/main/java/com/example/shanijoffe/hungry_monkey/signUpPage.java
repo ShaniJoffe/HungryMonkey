@@ -27,6 +27,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -86,10 +88,22 @@ public class signUpPage extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "please enter Email  :" ,
                             Toast.LENGTH_LONG).show();
                 }
+                else if(!isEmailValid(userEmail))
+                {
+                    Toast.makeText(getApplicationContext(), "please enter  Valid Email  " ,
+                            Toast.LENGTH_LONG).show();
+                }
+                else if(isValidPassword(passrowd_res)) {
+                    {
+                        Toast.makeText(getApplicationContext(), "please enter  Valid Password  " ,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+
                 else
                 {
 
-                    Toast.makeText(getApplicationContext(), "התחברת בהצלחה!! :) "+ userName_res + ""+passrowd_res +""+userEmail,
+                    Toast.makeText(getApplicationContext(), "התחברת בהצלחה!! :) "+ userName_res + " " +passrowd_res + " " +userEmail,
                             Toast.LENGTH_LONG).show();
                     new SendPostRequest().execute();//registering to server .
 
@@ -98,7 +112,37 @@ public class signUpPage extends AppCompatActivity
         } );
 
     }
+    public static boolean isValidPassword(final String password) {
 
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
+
+    }
+    public boolean isEmailValid(String email)
+    {
+        String regExpn =
+                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                        +"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        +"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        +"([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+
+        if(matcher.matches())
+            return true;
+        else
+            return false;
+    }
     public void printOutMessage(String myMsg,String msgTitle)
     {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(signUpPage.this);

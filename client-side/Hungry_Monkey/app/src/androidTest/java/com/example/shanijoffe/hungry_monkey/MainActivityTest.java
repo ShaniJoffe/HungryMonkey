@@ -18,10 +18,10 @@ import static org.junit.Assert.*;
 /**
  * Created by Shani Joffe on 1/29/2018.
  */
-public class MainActivityTest {
+class navigation_HMTest {
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule= new ActivityTestRule<MainActivity>(MainActivity.class);
-    private  MainActivity mActiviy =null;
+    public ActivityTestRule<navigation_HM> mActivityTestRule= new ActivityTestRule<navigation_HM>(navigation_HM.class);
+    private  navigation_HM mActiviy =null;
 
 
     @Before
@@ -33,14 +33,14 @@ public class MainActivityTest {
 
         HttpURLConnection conn = null;
         View view=mActiviy.findViewById( R.id.DishSearch );
-        View view2=mActiviy.findViewById( R.id.welcome_txt );
+
         View view3=mActiviy.findViewById( R.id.fragment_container );
         //check the components
         assertNotNull( view );
-        assertNotNull( view2 );
+
         assertNotNull( view3 );
         //check connection
-        URL url2 = new URL( "http://hungrymonkey-env.vivacrpttt.eu-central-1.elasticbeanstalk.com/api/v1/basicSearch" );
+        URL url2 = new URL( "http://newapp-env.eiymf2wfdn.eu-central-1.elasticbeanstalk.com/api/v1/basicSearch" );
         conn = (HttpURLConnection) url2.openConnection();
         int responseCode = conn.getResponseCode();
         assertTrue( responseCode!=200 );
